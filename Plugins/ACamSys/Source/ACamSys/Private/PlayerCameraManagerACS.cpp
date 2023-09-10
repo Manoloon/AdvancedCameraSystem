@@ -14,7 +14,7 @@ UPermanentCameraMode* APlayerCameraManagerACS::GetCurrentCameraModeSettings() co
 	return CurrentCameraModeSettings;
 }
 
-void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UOneTimeCameraMode>& CameraModeClass)
+void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UPermanentCameraMode>& CameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
@@ -23,9 +23,13 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UOneTime
 	UPermanentCameraMode* NewCameraSettings = NewObject<UPermanentCameraMode>(this, CameraModeClass);
 
 	const FCameraConfig& CurrentModeConfig = NewCameraSettings->CameraConfig;
-
+	if(!IsValid(CurrentSpringArm))
+	{
+		UE_LOG(LogTemp,Error,TEXT("Current Spring arm is not Valid"));
+		return;
+	}
 	CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight, CurrentModeConfig.SpringArmLengthTransitionSpeed);
-	CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmLengthModifier, CurrentModeConfig.SocketOffsetTransitionSpeed);
+	CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmLengthModifier, CurrentModeConfig.SpringArmLengthTransitionSpeed);
 
 	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SocketOffsetModifier, CurrentModeConfig.SocketOffsetTransitionSpeed);
 	CurrentSpringArm->SetTargetOffset(CurrentModeConfig.TargetOffset);

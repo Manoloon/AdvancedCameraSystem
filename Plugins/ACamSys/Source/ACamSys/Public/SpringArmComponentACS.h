@@ -6,7 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "SpringArmComponentACS.generated.h"
 
-UCLASS()
+UCLASS(ClassGroup=Camera, meta=(BlueprintSpawnableComponent), hideCategories=(Mobility))
 class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
 {
 	GENERATED_BODY()

@@ -15,6 +15,6 @@ class IBPI_Pawn
 {
 	GENERATED_BODY()
 
-public:
-	virtual bool IsPlayerMoving() const = 0;
+//public:
+	//virtual bool IsPlayerMoving() const = 0;
 };

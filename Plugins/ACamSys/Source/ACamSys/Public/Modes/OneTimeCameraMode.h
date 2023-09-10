@@ -12,7 +12,5 @@ class ACAMSYS_API UOneTimeCameraMode : public UDataAsset {
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bCameraModeDisable = true;
 };

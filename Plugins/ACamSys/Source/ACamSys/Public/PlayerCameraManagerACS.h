@@ -14,7 +14,7 @@ class UPermanentCameraMode;
 
 DECLARE_DELEGATE_OneParam(FOnCameraDistanceToDitherFX, float /*DitherValue*/);
 
-UCLASS(Abstract)
+UCLASS(Blueprintable)
 class ACAMSYS_API APlayerCameraManagerACS : public APlayerCameraManager
 {
 	GENERATED_BODY()
@@ -23,8 +23,7 @@ public:
 	UPermanentCameraMode* GetCurrentCameraModeSettings() const;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyCameraModeSettings(
-		const TSubclassOf<UOneTimeCameraMode>& CameraModeClass);
+	void ApplyCameraModeSettings(const TSubclassOf<UPermanentCameraMode>& CameraModeClass);
 
 	UFUNCTION(BlueprintCallable)
 	bool IsInstantModifierClassApplied(
@@ -93,7 +92,7 @@ private:
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
 
 	UPROPERTY()
-	TObjectPtr<UPermanentCameraMode> CurrentCameraModeSettings;
+	UPermanentCameraMode* CurrentCameraModeSettings;
 
 	UPROPERTY()
 	TSet<FString> InstantModifiersApplied;
