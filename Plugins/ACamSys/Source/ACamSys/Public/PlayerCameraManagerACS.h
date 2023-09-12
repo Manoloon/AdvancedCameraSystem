@@ -26,20 +26,20 @@ public:
 	void ApplyCameraModeSettings(const TSubclassOf<UPermanentCameraMode>& CameraModeClass);
 
 	UFUNCTION(BlueprintCallable)
-	bool IsInstantModifierClassApplied(
-		const TSubclassOf<UOneTimeCameraMode>& InstantModifier) const;
+	bool IsOneTimeCameraModeClassApplied(
+		const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const;
 
 	UFUNCTION(BlueprintCallable)
-	void ToggleInstantModifier(const TSubclassOf<UOneTimeCameraMode>& InstantModifierClass);
+	void ToggleOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
 
 	UFUNCTION(BlueprintCallable)
-	bool IsInstantModifierApplied(const UOneTimeCameraMode* NewInstantModifier) const;
+	bool IsOneTimeCameraModeApplied(const UOneTimeCameraMode* OneTimeCameraMode) const;
 
 	UFUNCTION(BlueprintCallable)
-	void RemoveInstantModifier(const UOneTimeCameraMode* InstantModifier);
+	void RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyInstantModifier(const UOneTimeCameraMode* InstantModifier);
+	void ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	UFUNCTION(BlueprintCallable)
 	USpringArmComponentACS* GetCurrentSpringArmComponent() const;
@@ -73,9 +73,9 @@ private:
 	void SetSpringArmRefFromOwner();
 	void SetCurrentCameraReference();
 
-	void UpdateInstantModifiersSet(const UOneTimeCameraMode* InstantModifier);
-	void InternalApplyInstantModifier(const UOneTimeCameraMode* InstantModifier);
-	void InternalRemoveInstantModifier(const UOneTimeCameraMode* InstantModifier);
+	void UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode);
+	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
+	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
 	void ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings);
@@ -95,7 +95,7 @@ private:
 	UPermanentCameraMode* CurrentCameraModeSettings;
 
 	UPROPERTY()
-	TSet<FString> InstantModifiersApplied;
+	TSet<FString> OneTimeCameraModesApplied;
 
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;

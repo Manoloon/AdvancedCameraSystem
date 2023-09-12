@@ -42,51 +42,52 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UPermane
 	CurrentCameraModeSettings = NewCameraSettings;
 }
 
-bool APlayerCameraManagerACS::IsInstantModifierClassApplied(const TSubclassOf<UOneTimeCameraMode>& InstantModifier) const
+bool APlayerCameraManagerACS::IsOneTimeCameraModeClassApplied(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const
 {
-	return InstantModifiersApplied.Contains(InstantModifier->GetDefaultObject()->GetClass()->GetName());
+	return OneTimeCameraModesApplied.Contains(OneTimeCameraMode->GetDefaultObject()->GetClass()->GetName());
 }
 
-bool APlayerCameraManagerACS::IsInstantModifierApplied(const UOneTimeCameraMode* NewInstantModifier) const
+bool APlayerCameraManagerACS::IsOneTimeCameraModeApplied(const UOneTimeCameraMode* OneTimeCameraMode) const
 {
-	return InstantModifiersApplied.Contains(NewInstantModifier->GetClass()->GetName());
+	return OneTimeCameraModesApplied.Contains(OneTimeCameraMode->GetClass()->GetName());
 }
 
-void APlayerCameraManagerACS::ToggleInstantModifier(const TSubclassOf<UOneTimeCameraMode>& InstantModifierClass)
+void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
 		return;
 	}
-	const UOneTimeCameraMode* CurrentInstantModifier = NewObject<UOneTimeCameraMode>(this, InstantModifierClass);
-	UpdateInstantModifiersSet(CurrentInstantModifier);
+	const UOneTimeCameraMode* CurrentOneTimeCM = NewObject<UOneTimeCameraMode>(this, OneTimeCameraModeClass);
+	UpdateOneTimeCameraModesSet(CurrentOneTimeCM);
 }
 
-void APlayerCameraManagerACS::RemoveInstantModifier(const UOneTimeCameraMode* InstantModifier)
+void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	if (!IsOwnerLocalController())
 	{
 		return;
 	}
-	if (IsInstantModifierApplied(InstantModifier))
+	if (!IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
-		InstantModifiersApplied.Remove(InstantModifier->GetClass()->GetName());
-		InternalRemoveInstantModifier(InstantModifier);
+		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetClass()->GetName());
+		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 	}
 }
 
-void APlayerCameraManagerACS::ApplyInstantModifier(const UOneTimeCameraMode* InstantModifier)
+void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	if (!IsOwnerLocalController())
 	{
 		return;
 	}
-	if (!IsInstantModifierApplied(InstantModifier))
+	if (IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
-		InstantModifiersApplied.Add(InstantModifier->GetClass()->GetName());
-		InternalApplyInstantModifier(InstantModifier);
+		OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetClass()->GetName());
+		InternalRemoveOneTimeCameraMode(OneTimeCameraMode);
 	}
 }
+
 
 USpringArmComponentACS* APlayerCameraManagerACS::GetCurrentSpringArmComponent() const
 {
@@ -100,7 +101,6 @@ UCameraComponent* APlayerCameraManagerACS::GetCurrentCameraComponent() const
 
 void APlayerCameraManagerACS::SetSpringArmDistance(const float NewDistance) const
 {
-	// Need to ensure that the currentSpringArm still valid, this could not be true if the player have just died.
 	if (!IsValid(CurrentSpringArm))
 	{
 		return;
@@ -144,7 +144,7 @@ float APlayerCameraManagerACS::GetMinCameraFOV() const
 void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT, FViewTargetTransitionParams TransitionParams)
 {
 	Super::AssignViewTarget(NewTarget, VT, TransitionParams);
-	InstantModifiersApplied.Reset();
+	OneTimeCameraModesApplied.Reset();
 	if (GetViewTarget()->GetClass()->ImplementsInterface(UBPI_Pawn::StaticClass()))
 	{
 		SetSpringArmRefFromOwner();
@@ -182,25 +182,25 @@ void APlayerCameraManagerACS::SetCurrentCameraReference()
 	CurrentCamera = Cast<UCameraComponent>(GetViewTarget()->FindComponentByClass(UCameraComponent::StaticClass()));
 }
 
-void APlayerCameraManagerACS::UpdateInstantModifiersSet(const UOneTimeCameraMode* InstantModifier)
+void APlayerCameraManagerACS::UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode)
 {
-	(IsInstantModifierApplied(InstantModifier)) ? InternalRemoveInstantModifier(InstantModifier) : InternalApplyInstantModifier(InstantModifier);
+	(IsOneTimeCameraModeApplied(OneTimeCameraMode)) ? InternalRemoveOneTimeCameraMode(OneTimeCameraMode) : InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 }
 
-void APlayerCameraManagerACS::InternalApplyInstantModifier(const UOneTimeCameraMode* InstantModifier)
+void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	if (!IsOwnerLocalController())
 	{
 		return;
 	}
-	const FCameraConfig& CurrentInstantConfig = InstantModifier->CameraConfig;
-	if (InstantModifier->bCameraModeDisable)
+	const FCameraConfig& CurrentOneTimeCMConfig = OneTimeCameraMode->CameraConfig;
+	if (OneTimeCameraMode->bCameraModeDisable)
 	{
-		CurrentSpringArm->SetSpringArmLengthLimits(CurrentInstantConfig.MinLineOfSight, CurrentInstantConfig.MaxLineOfSight, CurrentInstantConfig.SpringArmLengthTransitionSpeed);
-		CurrentSpringArm->ChangeSpringArmLength(CurrentInstantConfig.SpringArmLengthModifier, CurrentInstantConfig.SpringArmLengthTransitionSpeed);
+		CurrentSpringArm->SetSpringArmLengthLimits(CurrentOneTimeCMConfig.MinLineOfSight, CurrentOneTimeCMConfig.MaxLineOfSight, CurrentOneTimeCMConfig.SpringArmLengthTransitionSpeed);
+		CurrentSpringArm->ChangeSpringArmLength(CurrentOneTimeCMConfig.SpringArmLengthModifier, CurrentOneTimeCMConfig.SpringArmLengthTransitionSpeed);
 
-		CurrentSpringArm->SetSocketOffset(CurrentInstantConfig.SocketOffsetModifier, CurrentInstantConfig.SocketOffsetTransitionSpeed);
-		TargetFOV = CurrentInstantConfig.FOV;
+		CurrentSpringArm->SetSocketOffset(CurrentOneTimeCMConfig.SocketOffsetModifier, CurrentOneTimeCMConfig.SocketOffsetTransitionSpeed);
+		TargetFOV = CurrentOneTimeCMConfig.FOV;
 
 		if (ModifierList.IsEmpty())
 		{
@@ -216,24 +216,24 @@ void APlayerCameraManagerACS::InternalApplyInstantModifier(const UOneTimeCameraM
 	}
 	else
 	{
-		CurrentSpringArm->AddSpringArmLengthLimits(CurrentInstantConfig.MinLineOfSight, CurrentInstantConfig.MaxLineOfSight, CurrentInstantConfig.SpringArmLengthTransitionSpeed);
-		CurrentSpringArm->AddSocketOffset(CurrentInstantConfig.SocketOffsetModifier, CurrentInstantConfig.SocketOffsetTransitionSpeed);
-		AddFOV(CurrentInstantConfig.FOV);
+		CurrentSpringArm->AddSpringArmLengthLimits(CurrentOneTimeCMConfig.MinLineOfSight, CurrentOneTimeCMConfig.MaxLineOfSight, CurrentOneTimeCMConfig.SpringArmLengthTransitionSpeed);
+		CurrentSpringArm->AddSocketOffset(CurrentOneTimeCMConfig.SocketOffsetModifier, CurrentOneTimeCMConfig.SocketOffsetTransitionSpeed);
+		AddFOV(CurrentOneTimeCMConfig.FOV);
 	}
-	InstantModifiersApplied.Add(InstantModifier->GetClass()->GetName());
-	UpdateCameraSettings(CurrentInstantConfig);
+	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetClass()->GetName());
+	UpdateCameraSettings(CurrentOneTimeCMConfig);
 }
 
-void APlayerCameraManagerACS::InternalRemoveInstantModifier(const UOneTimeCameraMode* InstantModifier)
+void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	const FCameraConfig& CurrentModeConfig = CurrentCameraModeSettings->CameraConfig;
-	const FCameraConfig& CurrentInstantConfig = InstantModifier->CameraConfig;
-	if (InstantModifier->bCameraModeDisable)
+	const FCameraConfig& CurrentOneTimeCMConfig = OneTimeCameraMode->CameraConfig;
+	if (OneTimeCameraMode->bCameraModeDisable)
 	{
 		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight, CurrentModeConfig.SpringArmLengthTransitionSpeed);
 		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmLengthModifier, CurrentModeConfig.SpringArmLengthTransitionSpeed);
 
-		CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SocketOffsetModifier, CurrentInstantConfig.SocketOffsetTransitionSpeed);
+		CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SocketOffsetModifier, CurrentOneTimeCMConfig.SocketOffsetTransitionSpeed);
 		TargetFOV = CurrentModeConfig.FOV;
 
 		if (ModifierList.IsEmpty())
@@ -247,11 +247,11 @@ void APlayerCameraManagerACS::InternalRemoveInstantModifier(const UOneTimeCamera
 	}
 	else
 	{
-		CurrentSpringArm->AddSpringArmLengthLimits(-CurrentInstantConfig.MinLineOfSight, -CurrentInstantConfig.MaxLineOfSight, CurrentModeConfig.SpringArmLengthTransitionSpeed);
-		CurrentSpringArm->SubSocketOffset(CurrentInstantConfig.SocketOffsetModifier, CurrentInstantConfig.SocketOffsetTransitionSpeed);
-		SubFOV(CurrentInstantConfig.FOV);
+		CurrentSpringArm->AddSpringArmLengthLimits(-CurrentOneTimeCMConfig.MinLineOfSight, -CurrentOneTimeCMConfig.MaxLineOfSight, CurrentModeConfig.SpringArmLengthTransitionSpeed);
+		CurrentSpringArm->SubSocketOffset(CurrentOneTimeCMConfig.SocketOffsetModifier, CurrentOneTimeCMConfig.SocketOffsetTransitionSpeed);
+		SubFOV(CurrentOneTimeCMConfig.FOV);
 	}
-	InstantModifiersApplied.Remove(InstantModifier->GetClass()->GetName());
+	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetClass()->GetName());
 	UpdateCameraSettings(CurrentModeConfig);
 }
 
