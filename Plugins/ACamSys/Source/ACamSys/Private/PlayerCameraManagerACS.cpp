@@ -14,13 +14,13 @@ UPermanentCameraMode* APlayerCameraManagerACS::GetCurrentCameraModeSettings() co
 	return CurrentCameraModeSettings;
 }
 
-void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UPermanentCameraMode>& CameraModeClass)
+void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
 		return;
 	}
-	UPermanentCameraMode* NewCameraSettings = NewObject<UPermanentCameraMode>(this, CameraModeClass);
+	UPermanentCameraMode* NewCameraSettings = NewObject<UPermanentCameraMode>(this, PermanentCameraModeClass);
 
 	const FCameraConfig& CurrentModeConfig = NewCameraSettings->CameraConfig;
 	if(!IsValid(CurrentSpringArm))
@@ -40,6 +40,32 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(const TSubclassOf<UPermane
 
 	ChangeCurrentModifiers(NewCameraSettings);
 	CurrentCameraModeSettings = NewCameraSettings;
+}
+
+void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode)
+{
+	if (!IsOwnerLocalController())
+	{
+		return;
+	}
+
+	const FCameraConfig& CurrentModeConfig = PermanentCameraMode->CameraConfig;
+	if(!IsValid(CurrentSpringArm))
+	{
+		UE_LOG(LogTemp,Error,TEXT("Current Spring arm is not Valid"));
+		return;
+	}
+	CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.CameraBasic.MinLineOfSight, CurrentModeConfig.CameraBasic.MaxLineOfSight, CurrentModeConfig.SpringArm.SpringArmLengthTransitionSpeed);
+	CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArm.SpringArmLengthModifier, CurrentModeConfig.SpringArm.SpringArmLengthTransitionSpeed);
+
+	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.CameraBasic.SocketOffsetModifier, CurrentModeConfig.SpringArm.SocketOffsetTransitionSpeed);
+	CurrentSpringArm->SetTargetOffset(CurrentModeConfig.CameraBasic.TargetOffset);
+
+	TargetFOV = CurrentModeConfig.CameraFOV.FOV;
+
+	UpdateCameraSettings(CurrentModeConfig);
+	ChangeCurrentModifiers(PermanentCameraMode);
+	CurrentCameraModeSettings = PermanentCameraMode;
 }
 
 bool APlayerCameraManagerACS::IsOneTimeCameraModeClassApplied(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const
@@ -62,7 +88,7 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(const TSubclassOf<U
 	UpdateOneTimeCameraModesSet(CurrentOneTimeCM);
 }
 
-void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
+void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
@@ -73,6 +99,19 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const TSubclassOf<UOneTimeC
 	{
 		OneTimeCameraModesApplied.Add(CurrentOneTimeCM->GetClass()->GetName());
 		InternalApplyOneTimeCameraMode(CurrentOneTimeCM);
+	}
+}
+
+void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
+{
+	if (!IsOwnerLocalController())
+	{
+		return;
+	}
+	if (!IsOneTimeCameraModeApplied(OneTimeCameraMode))
+	{
+		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetClass()->GetName());
+		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 	}
 }
 

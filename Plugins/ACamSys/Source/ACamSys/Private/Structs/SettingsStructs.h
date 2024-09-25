@@ -1,5 +1,8 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+/*
+ * This class holds all the config settings that can be made for modes
+ * Spring Arm , Camera distance ,FOV , rotation
+ */
 #pragma once
 
 #include "CoreMinimal.h"
@@ -13,11 +16,11 @@ struct FCameraSpringArmConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SpringArmLengthModifier = 600.0f;
 
-	// Transition Speed in delta time
+	// represents the rate or speed at which the Spring Arm Length changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SpringArmLengthTransitionSpeed = 400.0f;
 
-	// Transition Speed in delta time
+	// represents the rate or speed at which the SocketOffset value changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SocketOffsetTransitionSpeed = 200.0f;
 
@@ -27,12 +30,14 @@ struct FCameraSpringArmConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bCameraRotationLag = true;
 
+	// represents the rate or speed at which the CameraLocation reach target location (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	float CameraLocationLagSpeed = 10.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	float MaxLagDistance = 200.0f;
-
+	
+	// represents the rate or speed at which the cameraRotation reach target rotation (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraRotationLag"))
 	float CameraRotationLagSpeed = 10.0f;
 };
@@ -51,8 +56,9 @@ struct FCameraFOVConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float FOV = 85.0f;
 
+	// represents the rate or speed at which the FOV value changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 0.001f, ClampMax = 100.0f))
-	float FOVLerpSpeed = 5.0f;
+	float FOVLerpSpeed = 100.0f;
 };
 
 USTRUCT(BlueprintType)
@@ -142,77 +148,7 @@ USTRUCT(BlueprintType)
 struct FCameraConfig
 {
 	GENERATED_BODY()
-	/*
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	float SpringArmLengthModifier = 400.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	float MinLineOfSight = 75.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	float MaxLineOfSight = 900.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	FVector SocketOffsetModifier = { FVector::ZeroVector };
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	FVector TargetOffset = { FVector::ZeroVector };
 	
-	// Under 100 would be to slow
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	float SpringArmLengthTransitionSpeed = 100.0f;
-
-	// Under 100 would be to slow
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = SpringArm)
-	float SocketOffsetTransitionSpeed = 100.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 20.0f, ClampMax = 70.0f),Category = FOV)
-	float MinFOV = 40.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 50.0f, ClampMax = 120.0f),Category = FOV)
-	float MaxFOV = 90.0f;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = FOV)
-	float FOV = 85.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 0.001f, ClampMax = 100.0f),Category = FOV)
-	float FOVLerpSpeed = 5.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = Rotation)
-	float MinPitch = -60.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = Rotation)
-	float MaxPitch = 80.0f;
-
-	// Min Yaw in degrees
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = Rotation)
-	float MinYaw = 0.0f;
-
-	// Max Yaw in degrees
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = Rotation)
-	float MaxYaw = 359.9f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = CameraLag)
-	bool bCameraLocationLag = false;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"),Category = CameraLag)
-	float CameraLocationLagSpeed = 10.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"),Category = CameraLag)
-	float MaxLagDistance = 200.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly,Category = CameraLag)
-	bool bCameraRotationLag = true;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraRotationLag"),Category = CameraLag)
-	float CameraRotationLagSpeed = 10.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 100.0f, ClampMax = 200.0f),Category = "Dithering")
-	float MaxDistanceCamPlayer = 120.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 20.0f, ClampMax = 120.0f),Category = "Dithering")
-	float MinDistanceCamPlayer = 40.0f;
-	*/
 	UPROPERTY(EditAnywhere)
 	FCameraSpringArmConfig SpringArm;
 	UPROPERTY(EditAnywhere)

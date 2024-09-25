@@ -26,8 +26,10 @@ public:
 	UPermanentCameraMode* GetCurrentCameraModeSettings() const;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyCameraModeSettings(const TSubclassOf<UPermanentCameraMode>& CameraModeClass);
-
+	void ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass);
+	UFUNCTION(BlueprintCallable)
+	void ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode);
+	
 	UFUNCTION(BlueprintCallable)
 	bool IsOneTimeCameraModeClassApplied(
 		const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const;
@@ -42,8 +44,10 @@ public:
 	void RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyOneTimeCameraMode(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
-
+	void ApplyOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
+	UFUNCTION(BlueprintCallable)
+	void ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
+	
 	UFUNCTION(BlueprintCallable)
 	USpringArmComponentACS* GetCurrentSpringArmComponent() const;
 
