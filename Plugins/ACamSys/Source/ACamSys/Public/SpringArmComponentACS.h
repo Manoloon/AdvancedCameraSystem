@@ -1,7 +1,9 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+/*
+ * Custom SpringArm Component to works in tandem with the system.
+ */
 #include "CoreMinimal.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SpringArmComponentACS.generated.h"

@@ -1,7 +1,9 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+/*
+ * CameraModifierACS is the abstract class to create the camera modifiers for the system.
+ */
 #include "CoreMinimal.h"
 #include "Structs/SettingsStructs.h"
 #include "Camera/CameraModifier.h"

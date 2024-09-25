@@ -1,7 +1,10 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+/*
+ * PlayerCameraManagerACS is the custom PlayerCameraManager required for the system to work.
+ * Its need to be set in the PlayerController as default.
+ */
 #include "Camera/PlayerCameraManager.h"
 #include "CoreMinimal.h"
 #include "Structs/SettingsStructs.h"
@@ -39,7 +42,7 @@ public:
 	void RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
+	void ApplyOneTimeCameraMode(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
 
 	UFUNCTION(BlueprintCallable)
 	USpringArmComponentACS* GetCurrentSpringArmComponent() const;
