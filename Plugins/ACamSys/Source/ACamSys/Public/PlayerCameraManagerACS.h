@@ -36,7 +36,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ToggleOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
-
+	UFUNCTION(BlueprintCallable)
+	void ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	UFUNCTION(BlueprintCallable)
 	bool IsOneTimeCameraModeApplied(const UOneTimeCameraMode* OneTimeCameraMode) const;
 
@@ -68,7 +69,10 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float LineOfSightProbeSize = 12.0f;
-
+	// If the character have any Dither FX applying to avoid the camera clip with the mesh, turn this True.
+	UPROPERTY(EditAnywhere,Category = Settings)
+	bool bUseDitherFX = false;
+	
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 
 private:

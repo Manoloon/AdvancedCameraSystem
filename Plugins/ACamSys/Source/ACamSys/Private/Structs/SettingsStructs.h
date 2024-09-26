@@ -13,6 +13,7 @@ struct FCameraSpringArmConfig
 {
 	GENERATED_BODY()
 
+	// TODO : See this how its apply
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SpringArmLengthModifier = 600.0f;
 
@@ -24,11 +25,15 @@ struct FCameraSpringArmConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SocketOffsetTransitionSpeed = 200.0f;
 
+	// TODO : See this how its apply
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bCameraLocationLag = false;
+	FVector SocketOffsetModifier = { FVector::ZeroVector };
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bCameraRotationLag = true;
+	FVector TargetOffset = { FVector::ZeroVector };
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bCameraLocationLag = false;
 
 	// represents the rate or speed at which the CameraLocation reach target location (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
@@ -36,7 +41,10 @@ struct FCameraSpringArmConfig
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	float MaxLagDistance = 200.0f;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bCameraRotationLag = true;
+
 	// represents the rate or speed at which the cameraRotation reach target rotation (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraRotationLag"))
 	float CameraRotationLagSpeed = 10.0f;
@@ -80,19 +88,7 @@ struct FCameraRotationConfig
 };
 
 USTRUCT(BlueprintType)
-struct FCameraDistanceConfig
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 100.0f, ClampMax = 200.0f))
-	float MaxDistanceCamPlayer = 120.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 20.0f, ClampMax = 120.0f))
-	float MinDistanceCamPlayer = 40.0f;
-};
-
-USTRUCT(BlueprintType)
-struct FBasicCameraConfig
+struct FCameraConfig
 {
 	GENERATED_BODY()
 
@@ -102,25 +98,23 @@ struct FBasicCameraConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxLineOfSight = 900.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FVector SocketOffsetModifier = { FVector::ZeroVector };
+	/*	This values could be use to handle dither FX on the character
+	 *	to avoid clipping with the camera.
+	 *	To use this values you need to turn true the var bUseDitherFX in the CameraManagerACS
+	 *	Max distance from the player for DitherFX
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 100.0f, ClampMax = 200.0f))
+	float MaxDistanceCamPlayer = 120.0f;
+	// Min distance from the player for Activate DitherFX
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 20.0f, ClampMax = 120.0f))
+	float MinDistanceCamPlayer = 40.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FVector TargetOffset = { FVector::ZeroVector };
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bCameraLocationLag = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	bool bCameraRotationLag = true;
-
-	FCameraSpringArmConfig SpringArmConfig;
-
-	FCameraFOVConfig FOVConfig;
-
-	FCameraRotationConfig RotationConfig;
-
-	FCameraDistanceConfig DistanceConfig;
+	UPROPERTY(EditAnywhere)
+	FCameraSpringArmConfig SpringArmSettings;
+	UPROPERTY(EditAnywhere)
+	FCameraFOVConfig FOVSettings;
+	UPROPERTY(EditAnywhere)
+	FCameraRotationConfig CamRotationSettings;
 };
 
 USTRUCT(BlueprintType)
@@ -142,21 +136,4 @@ struct FCamInfoForModifiers
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
 	FVector SpringArmSocketOffset = { FVector::ZeroVector };
-};
-
-USTRUCT(BlueprintType)
-struct FCameraConfig
-{
-	GENERATED_BODY()
-	
-	UPROPERTY(EditAnywhere)
-	FCameraSpringArmConfig SpringArm;
-	UPROPERTY(EditAnywhere)
-	FBasicCameraConfig CameraBasic;
-	UPROPERTY(EditAnywhere)
-	FCameraFOVConfig CameraFOV;
-	UPROPERTY(EditAnywhere)
-	FCameraRotationConfig CameraRotation;
-	UPROPERTY(EditAnywhere)
-	FCameraDistanceConfig CameraDistance;
 };

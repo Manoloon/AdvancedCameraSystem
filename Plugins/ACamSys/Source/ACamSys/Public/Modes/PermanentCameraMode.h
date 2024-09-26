@@ -14,7 +14,7 @@
 #include "Engine/DataAsset.h"
 #include "PermanentCameraMode.generated.h"
 
-UCLASS(Abstract,Blueprintable)
+UCLASS(BlueprintType)
 class ACAMSYS_API UPermanentCameraMode : public UDataAsset {
   GENERATED_BODY()
 public:

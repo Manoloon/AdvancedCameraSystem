@@ -13,11 +13,16 @@
 #include "Engine/DataAsset.h"
 #include "OneTimeCameraMode.generated.h"
 
-UCLASS(Abstract,Blueprintable)
+UCLASS(BlueprintType)
 class ACAMSYS_API UOneTimeCameraMode : public UDataAsset {
   GENERATED_BODY()
 public:
+	UPROPERTY(EditAnywhere)
+	float EffectDuration = 2.f;
+	// if True disable any camera mode running at that time.
+	UPROPERTY(EditAnywhere)
+	bool bCameraModeDisable = true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;
-	bool bCameraModeDisable = true;
+	
 };
