@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
 /*
@@ -14,8 +14,10 @@
 #include "OneTimeCameraMode.generated.h"
 
 UCLASS(BlueprintType)
-class ACAMSYS_API UOneTimeCameraMode : public UDataAsset {
-  GENERATED_BODY()
+class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
+{
+	GENERATED_BODY()
+
 public:
 	UPROPERTY(EditAnywhere)
 	float EffectDuration = 2.f;
@@ -24,5 +26,5 @@ public:
 	bool bCameraModeDisable = true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;
-	
+
 };

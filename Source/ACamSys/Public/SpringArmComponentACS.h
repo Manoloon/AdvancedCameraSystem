@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
 /*
@@ -12,6 +12,7 @@ UCLASS(ClassGroup=Camera, meta=(BlueprintSpawnableComponent), hideCategories=(Mo
 class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
 {
 	GENERATED_BODY()
+
 public:
 	UFUNCTION(BlueprintCallable)
 	float GetSpringArmLengthMinLimit() const;

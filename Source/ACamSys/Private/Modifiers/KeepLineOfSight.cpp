@@ -1,22 +1,21 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "Modifiers/KeepLineOfSight.h"
 #include "PlayerCameraManagerACS.h"
 
 bool UKeepLineOfSight::IsInLineOfSight(const FVector& Origin, const FVector& Target) const
 {
-	if(!GetWorld())
+	if (!GetWorld())
 	{
 		return false;
 	}
-	if(const TObjectPtr<APlayerCameraManagerACS> CameraManager = Cast<APlayerCameraManagerACS>(CameraOwner))
+	if (const TObjectPtr<APlayerCameraManagerACS> CameraManager = Cast<APlayerCameraManagerACS>(CameraOwner))
 	{
-		FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(SpringArm),false,GetViewTarget());
+		FCollisionQueryParams QueryParams(SCENE_QUERY_STAT(SpringArm), false, GetViewTarget());
 		FHitResult Result;
-		GetWorld()->SweepSingleByChannel(Result,Origin,Target,FQuat::Identity,LOS_ProbeChannel,
-										FCollisionShape::MakeSphere(CameraManager->LineOfSightProbeSize),QueryParams);
-		if(bDebug)
+		GetWorld()->SweepSingleByChannel(Result, Origin, Target, FQuat::Identity, LOS_ProbeChannel,
+			FCollisionShape::MakeSphere(CameraManager->LineOfSightProbeSize), QueryParams);
+		if (bDebug)
 		{
 			DrawDebugLine(GetWorld(), Origin, Target, FColor::Green, false, 0.2, 0, 0.5);
 			DrawDebugSphere(GetWorld(), Target, CameraManager->LineOfSightProbeSize, 6, FColor::Cyan, false, 0.3, 0, 0.5);
@@ -27,7 +26,7 @@ bool UKeepLineOfSight::IsInLineOfSight(const FVector& Origin, const FVector& Tar
 }
 
 void UKeepLineOfSight::RotateAroundLocation(const FVector& TargetLocation, FVector& InOutViewLocation,
-											FRotator& InOutViewRotation, const float AngleInRadians) const
+	FRotator& InOutViewRotation, const float AngleInRadians) const
 {
 	FRotator TempRot = InOutViewRotation;
 	TempRot.Yaw += FMath::RadiansToDegrees(AngleInRadians);
@@ -49,7 +48,7 @@ void UKeepLineOfSight::RotateAroundLocation(const FVector& TargetLocation, FVect
 bool UKeepLineOfSight::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot)
 {
 	Super::ProcessViewRotation(ViewTarget, DeltaTime, OutViewRotation, OutDeltaRot);
-	if(OwnerHasChangedCamera())
+	if (OwnerHasChangedCamera())
 	{
 		return false;
 	}
@@ -61,8 +60,8 @@ bool UKeepLineOfSight::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, 
 	float CheckAngleInRads = -StepSizeInRadians;
 	while (CheckAngleInRads >= -MaxAngleInRads)
 	{
-		RotateAroundLocation(TargetLocation,DesiredLocation,DesiredRotation,CheckAngleInRads);
-		if(!IsInLineOfSight(TargetLocation,DesiredLocation))
+		RotateAroundLocation(TargetLocation, DesiredLocation, DesiredRotation, CheckAngleInRads);
+		if (!IsInLineOfSight(TargetLocation, DesiredLocation))
 		{
 			// Found obstacle
 			DesiredAngleInRads += CheckAngleInRads + MaxAngleInRads;
@@ -75,8 +74,8 @@ bool UKeepLineOfSight::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, 
 	CheckAngleInRads = StepSizeInRadians;
 	while (CheckAngleInRads <= StepSizeInRadians)
 	{
-		RotateAroundLocation(TargetLocation,DesiredLocation,DesiredRotation,CheckAngleInRads);
-		if(!IsInLineOfSight(TargetLocation,DesiredLocation))
+		RotateAroundLocation(TargetLocation, DesiredLocation, DesiredRotation, CheckAngleInRads);
+		if (!IsInLineOfSight(TargetLocation, DesiredLocation))
 		{
 			DesiredAngleInRads += CheckAngleInRads - MaxAngleInRads;
 			break;
@@ -86,8 +85,8 @@ bool UKeepLineOfSight::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, 
 	}
 	//Apply Rotation
 	const float ApplyAngleInRads = FMath::Clamp(DesiredAngleInRads,
-												-RotationSpeed * DeltaTime,
-												RotationSpeed * DeltaTime);
+		-RotationSpeed * DeltaTime,
+		RotationSpeed * DeltaTime);
 	OutDeltaRot.Yaw += FMath::RadiansToDegrees(ApplyAngleInRads);
 	return false;
 }

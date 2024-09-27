@@ -1,3 +1,5 @@
+// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -15,6 +17,6 @@ class IBPI_Pawn
 {
 	GENERATED_BODY()
 
-//public:
+	//public:
 	//virtual bool IsPlayerMoving() const = 0;
 };

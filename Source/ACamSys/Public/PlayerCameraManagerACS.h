@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
 /*
@@ -21,6 +21,7 @@ UCLASS(Blueprintable)
 class ACAMSYS_API APlayerCameraManagerACS : public APlayerCameraManager
 {
 	GENERATED_BODY()
+
 public:
 	UFUNCTION(BlueprintCallable)
 	UPermanentCameraMode* GetCurrentCameraModeSettings() const;
@@ -29,7 +30,7 @@ public:
 	void ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass);
 	UFUNCTION(BlueprintCallable)
 	void ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode);
-	
+
 	UFUNCTION(BlueprintCallable)
 	bool IsOneTimeCameraModeClassApplied(
 		const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const;
@@ -48,7 +49,7 @@ public:
 	void ApplyOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
 	UFUNCTION(BlueprintCallable)
 	void ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
-	
+
 	UFUNCTION(BlueprintCallable)
 	USpringArmComponentACS* GetSpringArmComponent() const;
 
@@ -70,14 +71,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float LineOfSightProbeSize = 12.0f;
 	// If the character have any Dither FX applying to avoid the camera clip with the mesh, turn this True.
-	UPROPERTY(EditAnywhere,Category = Settings)
+	UPROPERTY(EditAnywhere, Category = Settings)
 	bool bUseDitherFX = false;
-	
+
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 
 private:
 	virtual void
-	AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,FViewTargetTransitionParams TransitionParams) override;
+	AssignViewTarget(AActor* NewTarget, FTViewTarget& VT, FViewTargetTransitionParams TransitionParams) override;
 	virtual void UpdateCamera(float DeltaTime) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 

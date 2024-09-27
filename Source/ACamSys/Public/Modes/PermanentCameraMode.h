@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
 /*
@@ -15,8 +15,10 @@
 #include "PermanentCameraMode.generated.h"
 
 UCLASS(BlueprintType)
-class ACAMSYS_API UPermanentCameraMode : public UDataAsset {
-  GENERATED_BODY()
+class ACAMSYS_API UPermanentCameraMode : public UDataAsset
+{
+	GENERATED_BODY()
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<TSubclassOf<UCameraModifier>> CameraModifiersToApply;

@@ -1,4 +1,6 @@
-﻿#include "SpringArmComponentACS.h"
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
+
+#include "SpringArmComponentACS.h"
 
 float USpringArmComponentACS::GetSpringArmLengthMinLimit() const
 {
@@ -15,6 +17,7 @@ void USpringArmComponentACS::ChangeSpringArmLength(const float NewLengthToAdd, c
 	TargetArmLengthModifier = NewLengthToAdd;
 	SpringArmLengthTransitionSpeed = TransitionTime;
 }
+
 void USpringArmComponentACS::AddSpringArmLengthLimits(const float Min, const float Max, const float NewTransitionTime)
 {
 	MinLength += Min;

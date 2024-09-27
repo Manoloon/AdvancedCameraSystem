@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "ACamSys.h"
 
@@ -16,5 +16,5 @@ void FACamSysModule::ShutdownModule()
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FACamSysModule, ACamSys)

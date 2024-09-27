@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "CameraModifierACS.h"
 #include "Kismet/GameplayStatics.h"
@@ -32,8 +32,9 @@ bool UCameraModifierACS::ProcessViewRotation(AActor* ViewTarget, float DeltaTime
 
 FCamInfoForModifiers UCameraModifierACS::GetCurrentModifiers() const
 {
-	return CurrentModifiers;	
+	return CurrentModifiers;
 }
+
 bool UCameraModifierACS::OwnerHasChangedCamera() const
 {
 	return CooldownRemaining > 0;

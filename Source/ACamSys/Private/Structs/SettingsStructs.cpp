@@ -1,4 +1,7 @@
-﻿#include "SettingsStructs.h"
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
+
+#include "SettingsStructs.h"
+
 bool FCamInfoForModifiers::IsEqualTo(const FCamInfoForModifiers& Other) const
 {
 	FCamInfoForModifiers Current;
@@ -14,10 +17,10 @@ bool FCamInfoForModifiers::IsEqualTo(const FCamInfoForModifiers& Other) const
 bool FCamInfoForModifiers::IsZero() const
 {
 	return
-	FMath::Abs(FOV) < SMALL_NUMBER &&
-	FMath::Abs(SpringArmLength) < SMALL_NUMBER &&
-	FMath::Abs(DOF_FocalDistance) < SMALL_NUMBER &&
-	FMath::Abs(SpringArmSocketOffset.X) < SMALL_NUMBER &&
-	FMath::Abs(SpringArmSocketOffset.Y) < SMALL_NUMBER &&
-	FMath::Abs(SpringArmSocketOffset.Z) < SMALL_NUMBER;
+		FMath::Abs(FOV) < SMALL_NUMBER &&
+		FMath::Abs(SpringArmLength) < SMALL_NUMBER &&
+		FMath::Abs(DOF_FocalDistance) < SMALL_NUMBER &&
+		FMath::Abs(SpringArmSocketOffset.X) < SMALL_NUMBER &&
+		FMath::Abs(SpringArmSocketOffset.Y) < SMALL_NUMBER &&
+		FMath::Abs(SpringArmSocketOffset.Z) < SMALL_NUMBER;
 }

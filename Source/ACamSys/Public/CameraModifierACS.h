@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
 /*
@@ -9,10 +9,11 @@
 #include "Camera/CameraModifier.h"
 #include "CameraModifierACS.generated.h"
 
-UCLASS(Abstract,BlueprintType)
+UCLASS(Abstract, BlueprintType)
 class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 {
 	GENERATED_BODY()
+
 public:
 	virtual bool ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot) override;
 

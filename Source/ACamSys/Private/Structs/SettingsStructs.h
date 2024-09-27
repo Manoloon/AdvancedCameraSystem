@@ -1,8 +1,5 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-/*
- * This class holds all the config settings that can be made for modes
- * Spring Arm , Camera distance ,FOV , rotation
- */
+﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
