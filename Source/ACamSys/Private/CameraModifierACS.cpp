@@ -1,9 +1,9 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "CameraModifierASC.h"
+#include "CameraModifierACS.h"
 #include "Kismet/GameplayStatics.h"
 
-bool UCameraModifierASC::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot)
+bool UCameraModifierACS::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot)
 {
 	Super::ProcessViewRotation(ViewTarget, DeltaTime, OutViewRotation, OutDeltaRot);
 	if (!IsValid(ViewTarget))
@@ -30,11 +30,11 @@ bool UCameraModifierASC::ProcessViewRotation(AActor* ViewTarget, float DeltaTime
 	return false;
 }
 
-FCamInfoForModifiers UCameraModifierASC::GetCurrentModifiers() const
+FCamInfoForModifiers UCameraModifierACS::GetCurrentModifiers() const
 {
 	return CurrentModifiers;	
 }
-bool UCameraModifierASC::OwnerHasChangedCamera() const
+bool UCameraModifierACS::OwnerHasChangedCamera() const
 {
 	return CooldownRemaining > 0;
 }

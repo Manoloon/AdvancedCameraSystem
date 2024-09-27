@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CameraModifierASC.h"
+#include "CameraModifierACS.h"
 #include "KeepLineOfSight.generated.h"
 
 /**
  * Keep line of sight with the target (could it be the player or another object)
  */
 UCLASS(Abstract,Blueprintable)
-class ACAMSYS_API UKeepLineOfSight : public UCameraModifierASC
+class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
 {
 	GENERATED_BODY()
 

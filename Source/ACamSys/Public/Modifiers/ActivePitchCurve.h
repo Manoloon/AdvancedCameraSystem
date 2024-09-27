@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CameraModifierASC.h"
+#include "CameraModifierACS.h"
 #include "ActivePitchCurve.generated.h"
 
 /**
@@ -12,7 +12,7 @@
 class UCurveFloat;
 
 UCLASS(Abstract,Blueprintable)
-class ACAMSYS_API UActivePitchCurve : public UCameraModifierASC
+class ACAMSYS_API UActivePitchCurve : public UCameraModifierACS
 {
 	GENERATED_BODY()
 

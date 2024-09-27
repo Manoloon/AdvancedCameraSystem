@@ -7,10 +7,10 @@
 #include "CoreMinimal.h"
 #include "Structs/SettingsStructs.h"
 #include "Camera/CameraModifier.h"
-#include "CameraModifierASC.generated.h"
+#include "CameraModifierACS.generated.h"
 
 UCLASS(Abstract,BlueprintType)
-class ACAMSYS_API UCameraModifierASC : public UCameraModifier
+class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 {
 	GENERATED_BODY()
 public:
