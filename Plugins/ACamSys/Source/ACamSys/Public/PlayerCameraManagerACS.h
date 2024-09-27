@@ -50,10 +50,10 @@ public:
 	void ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	
 	UFUNCTION(BlueprintCallable)
-	USpringArmComponentACS* GetCurrentSpringArmComponent() const;
+	USpringArmComponentACS* GetSpringArmComponent() const;
 
 	UFUNCTION(BlueprintCallable)
-	UCameraComponent* GetCurrentCameraComponent() const;
+	UCameraComponent* GetCameraComponent() const;
 
 	void SetSpringArmDistance(const float NewDistance) const;
 
@@ -87,7 +87,6 @@ private:
 	void UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
-
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
 	void ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings);
 	void AddFOV(const float Value);
@@ -122,4 +121,5 @@ private:
 	float MinDitherCameraThreshold = 30.0f;
 	float MaxDitherCameraThreshold = 120.0f;
 	FTimerHandle DitherTimerHandler;
+	FTimerHandle OneTimeModeHandler;
 };
