@@ -59,7 +59,10 @@ void USpringArmComponentACS::SetTargetOffset(const FVector& NewOffset)
 void USpringArmComponentACS::UpdateDesiredArmLocation(bool bDoTrace, bool bDoLocationLag, bool bDoRotationLag, float DeltaTime)
 {
 	Super::UpdateDesiredArmLocation(bDoTrace, bDoLocationLag, bDoRotationLag, DeltaTime);
-	const float TempLength = FMath::FInterpConstantTo(TargetArmLength, TargetArmLengthModifier, DeltaTime, SpringArmLengthTransitionSpeed);
-	TargetArmLength = FMath::Clamp(TempLength, MinLength, MaxLength);
-	SocketOffset = FMath::VInterpConstantTo(SocketOffset, SocketOffsetModifier, DeltaTime, SocketOffsetTransitionSpeed);
+	if(GetWorld() && GetWorld()->IsGameWorld())
+	{
+		const float TempLength = FMath::FInterpConstantTo(TargetArmLength, TargetArmLengthModifier, DeltaTime, SpringArmLengthTransitionSpeed);
+		TargetArmLength = FMath::Clamp(TempLength, MinLength, MaxLength);
+		SocketOffset = FMath::VInterpConstantTo(SocketOffset, SocketOffsetModifier, DeltaTime, SocketOffsetTransitionSpeed);
+	}
 }
