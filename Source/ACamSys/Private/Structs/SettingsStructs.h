@@ -112,6 +112,8 @@ struct FCameraConfig
 	FCameraFOVConfig FOVSettings;
 	UPROPERTY(EditAnywhere)
 	FCameraRotationConfig CamRotationSettings;
+	UPROPERTY(EditAnywhere)
+	FPostProcessSettings CamPostProcessSettings;
 };
 
 USTRUCT(BlueprintType)

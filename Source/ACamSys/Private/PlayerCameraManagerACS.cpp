@@ -342,6 +342,9 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 
 	(NewCameraConfig.SpringArmSettings.bCameraLocationLag) ? EnableSpringArmLocationLag(NewCameraConfig.SpringArmSettings.CameraLocationLagSpeed, NewCameraConfig.SpringArmSettings.MaxLagDistance) : DisableSpringArmLocationLag();
 	(NewCameraConfig.SpringArmSettings.bCameraRotationLag) ? EnableSpringArmRotationLag(NewCameraConfig.SpringArmSettings.CameraRotationLagSpeed) : DisableSpringArmRotationLag();
+
+	// Camera postprocess
+	CurrentCamera->PostProcessSettings = NewCameraConfig.CamPostProcessSettings;
 }
 
 void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings)
