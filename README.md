@@ -18,3 +18,6 @@ ACS is a modular camera system that let the designers create custom cameras beha
 
 # ToDo :
 * aspect ratio modifier
+* Applying PostProcess camera to external
+* Changing camera to external camera actor applying post process effective
+* Trigger should activate new camera mode if not == currentmode , else back to previous camera mode.
