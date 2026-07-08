@@ -1,0 +1,70 @@
+# ============================================================================
+# Unreal Engine Plugin .gitignore
+# ============================================================================
+
+# Build artifacts
+Binaries/
+Build/
+
+# Intermediate files
+Intermediate/
+
+# Cached data
+DerivedDataCache/
+
+# Saved data
+Saved/
+
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Visual Assist
+*.VAState
+
+# Unreal generated project files
+*.sln
+*.xcodeproj
+*.xcworkspace
+
+# Mac
+.DS_Store
+
+# Linux
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Crash reports
+crashinfo--*
+
+# Temporary files
+*.tmp
+*.temp
+
+# ============================================================================
+# Keep plugin source and resources
+# ============================================================================
+
+!Source/
+!Resources/
+!Config/
+!Content/
+
+# Optional: keep build scripts
+!*.Build.cs
+!*.Target.cs
+!*.uplugin
