@@ -1,4 +1,4 @@
-﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
+﻿// The Occultist®, Copyright 2024, Pentakill Studios SL. All rights reserved.
 
 #include "Modifiers/KeepLineOfSight.h"
 #include "PlayerCameraManagerACS.h"

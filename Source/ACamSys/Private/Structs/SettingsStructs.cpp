@@ -1,6 +1,6 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
-#include "SettingsStructs.h"
+#include "Structs/SettingsStructs.h"
 
 bool FCamInfoForModifiers::IsEqualTo(const FCamInfoForModifiers& Other) const
 {

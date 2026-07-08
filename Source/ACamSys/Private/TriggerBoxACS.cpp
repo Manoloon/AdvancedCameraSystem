@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// The Occultist®, Copyright 2024, Pentakill Studios SL. All rights reserved.
 
 #include "TriggerBoxACS.h"
 

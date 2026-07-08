@@ -29,11 +29,23 @@ public:
 	void SubSocketOffset(const FVector& NewVector, const float TransitionTime);
 
 	void SetTargetOffset(const FVector& NewOffset);
-
+	
+	UPROPERTY()
+	TObjectPtr<class UCurveFloat> RotationLagCurve;
+	UPROPERTY()
+	TObjectPtr<class UCurveFloat> LocationLagCurve;
 protected:
+	virtual void OnRegister() override;
+	float SmoothedSpeed = 0.f;
+	UPROPERTY(EditAnywhere,Category = Settings)
+	float MaxPlayerSpeed = 1300.0f;
+	UPROPERTY(EditAnywhere,Category = Settings)
+	float LagInterpSpeed = 5.0f;
 	virtual void UpdateDesiredArmLocation(bool bDoTrace, bool bDoLocationLag, bool bDoRotationLag, float DeltaTime) override;
-
+	void DebugInfo(float SpringLength) const;
 private:
+	UPROPERTY()
+	TObjectPtr<ACharacter> OwnerPawn;
 	FVector SocketOffsetModifier = FVector::ZeroVector;
 	FVector FormerSocketOffset;
 	float TargetArmLengthModifier;

@@ -1,8 +1,6 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "CameraModifierACS.h"
-#include "Kismet/GameplayStatics.h"
-
 bool UCameraModifierACS::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot)
 {
 	Super::ProcessViewRotation(ViewTarget, DeltaTime, OutViewRotation, OutDeltaRot);

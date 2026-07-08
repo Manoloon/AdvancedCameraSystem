@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-ACamSys.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:/UnrealProjects/Cpp_projects/CustomGravity/Intermediate/Build/Win64/x64/CustomGravityEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.InclOrderUnreal5_4.h.obj"
+"F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Intermediate/Build/Win64/x64/UnrealEditor/Development/ACamSys/Module.ACamSys.cpp.obj"
+"F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Intermediate/Build/Win64/x64/UnrealEditor/Development/ACamSys/TriggerBoxACS.cpp.obj"
+"F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Intermediate/Build/Win64/x64/UnrealEditor/Development/ACamSys/KeepLineOfSight.cpp.obj"
+"F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Intermediate/Build/Win64/x64/UnrealEditor/Development/ACamSys/Default.rc2.res"
+/OUT:"F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Intermediate/Build/Win64/x64/UnrealEditor/Development/ACamSys/UnrealEditor-ACamSys.lib"

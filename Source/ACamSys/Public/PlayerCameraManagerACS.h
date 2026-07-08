@@ -7,13 +7,13 @@
  */
 #include "Camera/PlayerCameraManager.h"
 #include "CoreMinimal.h"
-#include "Structs/SettingsStructs.h"
 #include "PlayerCameraManagerACS.generated.h"
 
 class UCameraComponent;
 class USpringArmComponentACS;
 class UOneTimeCameraMode;
 class UPermanentCameraMode;
+struct FCameraConfig;
 
 DECLARE_DELEGATE_OneParam(FOnCameraDistanceToDitherFX, float /*DitherValue*/);
 
@@ -30,10 +30,6 @@ public:
 	void ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass);
 	UFUNCTION(BlueprintCallable)
 	void ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode);
-
-	UFUNCTION(BlueprintCallable)
-	bool IsOneTimeCameraModeClassApplied(
-		const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraMode) const;
 
 	UFUNCTION(BlueprintCallable)
 	void ToggleOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass);
@@ -59,20 +55,23 @@ public:
 	void SetSpringArmDistance(const float NewDistance) const;
 
 	void EnableSpringArmRotationLag(const float RotationLagSpeed) const;
+	void EnableSpringArmRotationLag(const TObjectPtr<class UCurveFloat>& RotationLagCurve) const;
 	void DisableSpringArmRotationLag() const;
 
-	void EnableSpringArmLocationLag(const float LocationLagSpeed,
-		const float LagMaxDistance) const;
+	void EnableSpringArmLocationLag(const float LocationLagSpeed,const float LagMaxDistance) const;
+	void EnableSpringArmLocationLag(const TObjectPtr<class UCurveFloat>& LocationLagCurve,const float LagMaxDistance)const;
 	void DisableSpringArmLocationLag() const;
 
 	float GetMaxCameraFOV() const;
 	float GetMinCameraFOV() const;
 
+	UFUNCTION(BlueprintCallable)
+	void EnableDitherFX(bool bInEnabledDitherFX);
+
+	virtual void InitializeFor(APlayerController* PC) override;
+
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float LineOfSightProbeSize = 12.0f;
-	// If the character have any Dither FX applying to avoid the camera clip with the mesh, turn this True.
-	UPROPERTY(EditAnywhere, Category = Settings)
-	bool bUseDitherFX = false;
 
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 
@@ -97,16 +96,23 @@ private:
 	float GetCameraToPawnDistSquared() const;
 
 	bool IsOwnerLocalController() const;
-
+	
+	UFUNCTION()
 	void CalculateDitherEffect();
 	UPROPERTY(EditAnywhere, Category = Settings)
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
+
+	// If the character have any Dither FX applying to avoid the camera clip with the mesh, turn this True.
+	UPROPERTY(EditAnywhere, Category = Settings)
+	bool bUseDitherFX = true;
+
+	bool bEnabledDitherFX = false;
 
 	UPROPERTY()
 	UPermanentCameraMode* CurrentCameraModeSettings;
 
 	UPROPERTY()
-	TSet<FString> OneTimeCameraModesApplied;
+	TMap<FString, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
 
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;

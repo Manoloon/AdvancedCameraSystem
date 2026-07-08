@@ -12,6 +12,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Structs/SettingsStructs.h"
 #include "PermanentCameraMode.generated.h"
 
 UCLASS(BlueprintType)

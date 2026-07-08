@@ -6,9 +6,6 @@
 #include "CameraModifierACS.h"
 #include "ActivePitchCurve.generated.h"
 
-/**
- * 
- */
 class UCurveFloat;
 
 UCLASS(Abstract, Blueprintable)
