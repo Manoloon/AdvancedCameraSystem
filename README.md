@@ -1,4 +1,4 @@
-### Version 0.4 - Unreal Engine 5.1.1
+### Version 1.0 - Unreal Engine 5.7
 # Advanced Camera System plugin
 ACS is a modular camera system that let the designers create custom cameras behavior based in custom DataAssets names MODES.
 
