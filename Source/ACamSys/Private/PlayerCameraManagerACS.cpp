@@ -25,6 +25,7 @@ namespace ACSCvars
 
 UPermanentCameraMode* APlayerCameraManagerACS::GetCurrentCameraModeSettings() const
 {
+#if !UE_BUILD_SHIPPING
 if (ACSCvars::ACSDebug)
 	{
 		if (GEngine)
@@ -32,6 +33,7 @@ if (ACSCvars::ACSDebug)
 			GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Orange,FString::Printf(TEXT("Current Camera mode : %s"),*CurrentCameraModeSettings->GetName()));
 		}
 	}
+#endif
 	return CurrentCameraModeSettings;
 }
 
@@ -306,6 +308,7 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 		UpdateCameraFOV(DeltaTime);
 	}
 	//TODO : arrange this into a function.
+#if !UE_BUILD_SHIPPING
 	if (ACSCvars::ACSDebug)
 	{
 		if (GEngine)
@@ -321,6 +324,7 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 			}
 		}
 	}
+#endif
 }
 
 void APlayerCameraManagerACS::EndPlay(const EEndPlayReason::Type EndPlayReason)
