@@ -1,4 +1,4 @@
-// The Occultist®, Copyright 2024, Pentakill Studios SL. All rights reserved.
+// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "TriggerBoxACS.h"
 

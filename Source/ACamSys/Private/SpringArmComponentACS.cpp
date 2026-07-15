@@ -3,7 +3,7 @@
 #include "SpringArmComponentACS.h"
 
 #include "GameFramework/Character.h"
-
+#if !UE_BUILD_SHIPPING
 namespace ACSCvars
 {
 	static bool ACSSpringDebug = false;
@@ -12,7 +12,7 @@ namespace ACSCvars
 		ACSSpringDebug,
 		TEXT("Enable ACS SpringArmComponent Debug"));
 }
-
+#endif
 float USpringArmComponentACS::GetSpringArmLengthMinLimit() const
 {
 	return MinLength;
@@ -117,7 +117,7 @@ void USpringArmComponentACS::UpdateDesiredArmLocation(bool bDoTrace, bool bDoLoc
 #endif
 	}
 }
-
+#if !UE_BUILD_SHIPPING
 void USpringArmComponentACS::DebugInfo(float SpringLength) const
 {
 	if (!ACSCvars::ACSSpringDebug)
@@ -156,3 +156,4 @@ void USpringArmComponentACS::DebugInfo(float SpringLength) const
 		}
 	}
 }
+#endif

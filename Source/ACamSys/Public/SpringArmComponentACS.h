@@ -31,18 +31,22 @@ public:
 	void SetTargetOffset(const FVector& NewOffset);
 	
 	UPROPERTY()
-	TObjectPtr<class UCurveFloat> RotationLagCurve;
+	TObjectPtr<UCurveFloat> RotationLagCurve;
 	UPROPERTY()
-	TObjectPtr<class UCurveFloat> LocationLagCurve;
-protected:
+	TObjectPtr<UCurveFloat> LocationLagCurve;
+	
 	virtual void OnRegister() override;
+protected:
 	float SmoothedSpeed = 0.f;
 	UPROPERTY(EditAnywhere,Category = Settings)
 	float MaxPlayerSpeed = 1300.0f;
 	UPROPERTY(EditAnywhere,Category = Settings)
 	float LagInterpSpeed = 5.0f;
 	virtual void UpdateDesiredArmLocation(bool bDoTrace, bool bDoLocationLag, bool bDoRotationLag, float DeltaTime) override;
+#if !UE_BUILD_SHIPPING
 	void DebugInfo(float SpringLength) const;
+#endif
+	
 private:
 	UPROPERTY()
 	TObjectPtr<ACharacter> OwnerPawn;

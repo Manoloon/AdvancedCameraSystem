@@ -16,7 +16,4 @@ class UBPI_Pawn : public UInterface
 class IBPI_Pawn
 {
 	GENERATED_BODY()
-
-	//public:
-	//virtual bool IsPlayerMoving() const = 0;
 };

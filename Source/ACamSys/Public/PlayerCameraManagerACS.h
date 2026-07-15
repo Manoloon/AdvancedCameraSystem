@@ -58,8 +58,9 @@ public:
 	void EnableSpringArmRotationLag(const TObjectPtr<class UCurveFloat>& RotationLagCurve) const;
 	void DisableSpringArmRotationLag() const;
 
-	void EnableSpringArmLocationLag(const float LocationLagSpeed,const float LagMaxDistance) const;
-	void EnableSpringArmLocationLag(const TObjectPtr<class UCurveFloat>& LocationLagCurve,const float LagMaxDistance)const;
+	void EnableSpringArmLocationLag(const float LocationLagSpeed, const float LagMaxDistance) const;
+	void EnableSpringArmLocationLag(const TObjectPtr<class UCurveFloat>& LocationLagCurve,
+	                                const float LagMaxDistance) const;
 	void DisableSpringArmLocationLag() const;
 
 	float GetMaxCameraFOV() const;
@@ -74,13 +75,12 @@ public:
 	float LineOfSightProbeSize = 12.0f;
 
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
-
-private:
-	virtual void
-	AssignViewTarget(AActor* NewTarget, FTViewTarget& VT, FViewTargetTransitionParams TransitionParams) override;
+	
+	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
+	                              FViewTargetTransitionParams TransitionParams) override;
 	virtual void UpdateCamera(float DeltaTime) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
+private:
 	void SetSpringArmRefFromOwner();
 	void SetCurrentCameraReference();
 
@@ -96,7 +96,7 @@ private:
 	float GetCameraToPawnDistSquared() const;
 
 	bool IsOwnerLocalController() const;
-	
+
 	UFUNCTION()
 	void CalculateDitherEffect();
 	UPROPERTY(EditAnywhere, Category = Settings)
