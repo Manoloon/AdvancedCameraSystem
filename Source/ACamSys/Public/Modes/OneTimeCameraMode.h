@@ -25,6 +25,8 @@ public:
 	// if True disable any camera mode running at that time.
 	// If true : the Arm length will apply changes using target length, otherwise will limit by min and max arm length.
 	UPROPERTY(EditAnywhere)
+	int Priority=1;
+	UPROPERTY(EditAnywhere)
 	bool bCameraModeDisable = true;
 	UPROPERTY(EditAnywhere , meta = (EditCondition = "bCameraModeDisable == false",EditConditionHides))
 	bool bCameraModifierDisable = false;

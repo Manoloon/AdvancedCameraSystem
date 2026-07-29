@@ -129,6 +129,10 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(const TSubclassOf<UO
 	const UOneTimeCameraMode* CurrentOneTimeCM = NewObject<UOneTimeCameraMode>(this, OneTimeCameraModeClass);
 	if (!IsOneTimeCameraModeApplied(CurrentOneTimeCM))
 	{
+		if (!OneTimeCameraModesApplied.IsEmpty() && CurrentOneTimeCM->Priority == 0)
+		{
+			return;
+		}
 		OneTimeCameraModesApplied.Add(CurrentOneTimeCM->GetName(), CurrentOneTimeCM);
 		InternalApplyOneTimeCameraMode(CurrentOneTimeCM);
 	}
@@ -143,6 +147,10 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 
 	if (!IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
+		if (!OneTimeCameraModesApplied.IsEmpty() && OneTimeCameraMode->Priority == 0)
+		{
+			return;
+		}
 		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
 #if !UE_BUILD_SHIPPING
 		if (ACSCvars::ACSDebug)
@@ -383,14 +391,10 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 					NewModifier->DisableModifier(true);
 				}
 			}
-			// CurrentSpringArm->ChangeSpringArmLength(CurrentConfig.SpringArmSettings.SpringArmLengthModifier,
-			// 		CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		}
 		CurrentSpringArm->AddSpringArmLengthLimits(CurrentConfig.MinLineOfSight,
 			CurrentConfig.MaxLineOfSight,
 			CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-		//AddFOV(CurrentConfig.FOVSettings.FOV);
-		//TargetFOV = CurrentConfig.FOVSettings.FOV;
 	}
 	TargetFOV = CurrentConfig.FOVSettings.FOV;
 	CurrentSpringArm->SetSocketOffset(CurrentConfig.SpringArmSettings.SocketOffsetModifier,
@@ -431,13 +435,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 			{
 				NewModifier->EnableModifier();
 			}
-			// CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-			// CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		}
-		// CurrentSpringArm->AddSpringArmLengthLimits(-CurrentOneTimeCMConfig.MinLineOfSight,
-		// 	-CurrentOneTimeCMConfig.MaxLineOfSight,
-		// 	CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-		//SubFOV(CurrentOneTimeCMConfig.FOVSettings.FOV);
 	}
 	TargetFOV = CurrentModeConfig.FOVSettings.FOV;
 	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
@@ -451,8 +449,8 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 	ViewPitchMin = NewCameraConfig.CamRotationSettings.MinPitch;
 	ViewPitchMax = NewCameraConfig.CamRotationSettings.MaxPitch;
 	
-	const APawn* Player = PCOwner->GetPawn();
-	if (IsValid(Player))
+	if (const APawn* Player = PCOwner->GetPawn();
+		IsValid(Player))
 	{
 		const float PlayerYaw = Player->GetActorRotation().Yaw;
 		ViewYawMin = PlayerYaw + NewCameraConfig.CamRotationSettings.YawRange.GetLowerBoundValue();
