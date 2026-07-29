@@ -71,7 +71,7 @@ void ATriggerBoxACS::ChangeCamera()
 
 void ATriggerBoxACS::SwapPermamentCameraMode()
 {
-	if(TObjectPtr<APlayerCameraManagerACS> ACSCameraManager = Cast<APlayerCameraManagerACS>(UGameplayStatics::GetPlayerCameraManager(GetWorld(),0)))
+	if(const TObjectPtr<APlayerCameraManagerACS> ACSCameraManager = Cast<APlayerCameraManagerACS>(UGameplayStatics::GetPlayerCameraManager(GetWorld(),0)))
 	{
 		if(ACSCameraManager->GetCurrentCameraModeSettings() != PermanentCameraMode)
 		{

@@ -3,8 +3,6 @@
 #include "PlayerCameraManagerACS.h"
 #include "SpringArmComponentACS.h"
 #include "Modes/OneTimeCameraMode.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraModifier.h"
 #include "Interfaces/BPI_Pawn.h"
@@ -577,11 +575,10 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 	if (!FMath::IsNearlyEqual(NewDistanceToOwner, CurrentDistCameraToOwnerPawn))
 	{
 		CurrentDistCameraToOwnerPawn = NewDistanceToOwner;
-		const float ResultFromDistance = UKismetMathLibrary::MapRangeClamped(CurrentDistCameraToOwnerPawn,
-			FMath::Square(MaxDitherCameraThreshold),
-			FMath::Square(MinDitherCameraThreshold),
-			1.0f,
-			0.f);
+		const float ResultFromDistance = FMath::GetMappedRangeValueClamped(
+			FVector2D{FMath::Square(MaxDitherCameraThreshold),FMath::Square(MinDitherCameraThreshold)},
+			FVector2D{1.0f,0.f},
+			CurrentDistCameraToOwnerPawn);
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);
 	}
 }

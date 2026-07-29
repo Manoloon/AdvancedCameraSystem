@@ -35,5 +35,5 @@ FCamInfoForModifiers UCameraModifierACS::GetCurrentModifiers() const
 
 bool UCameraModifierACS::OwnerHasChangedCamera() const
 {
-	return CooldownRemaining > 0;
+	return CooldownRemaining > 0.0f;
 }
