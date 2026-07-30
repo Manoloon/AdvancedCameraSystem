@@ -304,15 +304,8 @@ void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& 
 	}
 }
 
-void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
+void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const
 {
-	Super::UpdateCamera(DeltaTime);
-	if (!FMath::IsNearlyEqual(DefaultFOV, TargetFOV, 0.10f))
-	{
-		UpdateCameraFOV(DeltaTime);
-	}
-	//TODO : arrange this into a function.
-#if !UE_BUILD_SHIPPING
 	if (ACSCvars::ACSDebug)
 	{
 		if (GEngine)
@@ -337,6 +330,17 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 			}
 		}
 	}
+}
+
+void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
+{
+	Super::UpdateCamera(DeltaTime);
+	if (!FMath::IsNearlyEqual(DefaultFOV, TargetFOV, 0.10f))
+	{
+		UpdateCameraFOV(DeltaTime);
+	}
+#if !UE_BUILD_SHIPPING
+	DebugAndPrintCameraSettings();
 #endif
 }
 
@@ -392,13 +396,14 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	{
 		if (OneTimeCameraMode->bCameraModifierDisable)
 		{
-			if (ModifierList.IsEmpty()) return;
-
-			for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
+			if (!ModifierList.IsEmpty())
 			{
-				if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(NewModifier.GetClass()))
+				for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
 				{
-					NewModifier->DisableModifier(true);
+					if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(NewModifier.GetClass()))
+					{
+						NewModifier->DisableModifier(true);
+					}
 				}
 			}
 		}
@@ -424,26 +429,24 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 		                                           CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
 		                                        CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-		if (ModifierList.IsEmpty())
+		if (!ModifierList.IsEmpty())
 		{
-			return;
-		}
-		for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
-		{
-			NewModifier->EnableModifier();
+			for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
+			{
+				NewModifier->EnableModifier();
+			}
 		}
 	}
 	else // just remove the one time mode by subtracting data. 
 	{
 		if (OneTimeCameraMode->bCameraModifierDisable)
 		{
-			if (ModifierList.IsEmpty())
+			if (!ModifierList.IsEmpty())
 			{
-				return;
-			}
-			for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
-			{
-				NewModifier->EnableModifier();
+				for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
+				{
+					NewModifier->EnableModifier();
+				}
 			}
 		}
 	}
@@ -511,7 +514,6 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 	{
 		DisableSpringArmRotationLag();
 	}
-
 	// Camera postprocess
 	CurrentCamera->PostProcessSettings = NewCameraConfig.CamPostProcessSettings;
 }
@@ -532,26 +534,27 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 		}
 	}
 
-	if (!NewCameraSettings->CameraModifiersToApply.IsEmpty())
+	if (NewCameraSettings->CameraModifiersToApply.IsEmpty())
 	{
-		for (const TSubclassOf NewModifier : NewCameraSettings->CameraModifiersToApply)
+		return;
+	}
+	for (const TSubclassOf NewModifier : NewCameraSettings->CameraModifiersToApply)
+	{
+		if (NewModifier)
 		{
-			if (UKismetSystemLibrary::IsValidClass(NewModifier))
-			{
-				AddNewCameraModifier(NewModifier);
-			}
+			AddNewCameraModifier(NewModifier);
 		}
 	}
 }
 
 void APlayerCameraManagerACS::AddFOV(const float Value)
 {
-	TargetFOV = TargetFOV + Value;
+	TargetFOV += Value;
 }
 
 void APlayerCameraManagerACS::SubFOV(const float Value)
 {
-	TargetFOV = TargetFOV - Value;
+	TargetFOV -= Value;
 }
 
 void APlayerCameraManagerACS::UpdateCameraFOV(float DeltaTime)

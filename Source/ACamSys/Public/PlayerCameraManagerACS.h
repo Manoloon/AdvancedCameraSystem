@@ -82,10 +82,13 @@ public:
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 	
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
-	                              FViewTargetTransitionParams TransitionParams) override;
+	                              FViewTargetTransitionParams TransitionParams) override;	
 	virtual void UpdateCamera(float DeltaTime) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 private:
+#if !UE_BUILD_SHIPPING
+	void DebugAndPrintCameraSettings() const;
+#endif
 	void SetSpringArmRefFromOwner();
 	void SetCurrentCameraReference();
 
