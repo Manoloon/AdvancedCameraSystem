@@ -112,7 +112,7 @@ void USpringArmComponentACS::UpdateDesiredArmLocation(bool bDoTrace, bool bDoLoc
 		{
 			CameraRotationLagSpeed = RotationLagCurve->GetFloatValue(NormalizedSpeed);
 		}
-#if WITH_EDITOR
+#if !UE_BUILD_SHIPPING
 		DebugInfo(TempLength);
 #endif
 	}

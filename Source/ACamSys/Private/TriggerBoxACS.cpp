@@ -7,7 +7,6 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/BPI_Pawn.h"
-#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATriggerBoxACS::ATriggerBoxACS()
@@ -58,20 +57,22 @@ void ATriggerBoxACS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 
 void ATriggerBoxACS::ChangeCamera()
 {
-	TObjectPtr<APlayerController> PlayerController = UGameplayStatics::GetPlayerController(GetWorld(),0);
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	if (NewCameraActor && PlayerController->GetViewTarget() != NewCameraActor)
 	{
 		PlayerController->SetViewTargetWithBlend(NewCameraActor);
 	}
 	else
 	{
-		PlayerController->SetViewTargetWithBlend(UGameplayStatics::GetPlayerCharacter(GetWorld(),0));
+		PlayerController->SetViewTargetWithBlend(PlayerController->GetPawn());
 	}		
 }
 
 void ATriggerBoxACS::SwapPermamentCameraMode()
 {
-	if(const TObjectPtr<APlayerCameraManagerACS> ACSCameraManager = Cast<APlayerCameraManagerACS>(UGameplayStatics::GetPlayerCameraManager(GetWorld(),0)))
+	TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController();
+	
+	if(APlayerCameraManagerACS* ACSCameraManager = Cast<APlayerCameraManagerACS>(PlayerController->PlayerCameraManager))
 	{
 		if(ACSCameraManager->GetCurrentCameraModeSettings() != PermanentCameraMode)
 		{

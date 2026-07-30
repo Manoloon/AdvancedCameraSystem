@@ -41,7 +41,7 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Settings")
 	TObjectPtr<UPermanentCameraMode> PermanentCameraMode;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Settings")
-	TObjectPtr<AActor> NewCameraActor;
+	AActor* NewCameraActor;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Settings")
 	FText ActorHint;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))

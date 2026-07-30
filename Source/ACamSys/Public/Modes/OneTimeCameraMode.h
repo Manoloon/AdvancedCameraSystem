@@ -22,10 +22,12 @@ class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	float EffectDuration = 2.f;
-	// if True disable any camera mode running at that time.
-	// If true : the Arm length will apply changes using target length, otherwise will limit by min and max arm length.
+	// By default all OTCM are priority 1 , but if you need to not run a OTCM if another is ,
+	// you set priority of this one to 0 , and it will not run if others are running.
 	UPROPERTY(EditAnywhere)
 	int Priority=1;
+	// if True disable any camera mode running at that time.
+	// If true : the Arm length will apply changes using target length, otherwise will limit by min and max arm length.
 	UPROPERTY(EditAnywhere)
 	bool bCameraModeDisable = true;
 	UPROPERTY(EditAnywhere , meta = (EditCondition = "bCameraModeDisable == false",EditConditionHides))
