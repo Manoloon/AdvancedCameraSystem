@@ -16,7 +16,7 @@ namespace ACSCvars
 	static bool ACSDebug = false;
 	static FAutoConsoleVariableRef CVarACSDebug(
 		TEXT("ACS.Debug.Enable"),
-			ACSDebug,
+		ACSDebug,
 		TEXT("Enable ACS Camera manager Debug"));
 }
 #endif
@@ -24,18 +24,22 @@ namespace ACSCvars
 UPermanentCameraMode* APlayerCameraManagerACS::GetCurrentCameraModeSettings() const
 {
 #if !UE_BUILD_SHIPPING
-if (ACSCvars::ACSDebug)
+	if (ACSCvars::ACSDebug)
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Orange,FString::Printf(TEXT("Current Camera mode : %s"),*CurrentCameraModeSettings->GetName()));
+			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Orange,
+			                                 FString::Printf(
+				                                 TEXT("Current Camera mode : %s"),
+				                                 *CurrentCameraModeSettings->GetName()));
 		}
 	}
 #endif
 	return CurrentCameraModeSettings;
 }
 
-void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass)
+void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(
+	const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
@@ -50,16 +54,16 @@ void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(const TSubclassOf<U
 		return;
 	}
 	CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
-		CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+	                                           CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 	CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-		CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-	
+	                                        CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+
 	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
-		CurrentModeConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
+	                                  CurrentModeConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	CurrentSpringArm->SetTargetOffset(CurrentModeConfig.SpringArmSettings.TargetOffset);
 
 	TargetFOV = CurrentModeConfig.FOVSettings.FOV;
-		
+
 	UpdateCameraSettings(CurrentModeConfig);
 
 	ChangeCurrentModifiers(NewCameraSettings);
@@ -72,7 +76,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* Perm
 	{
 		return;
 	}
-	
+
 	const FCameraConfig& CurrentModeConfig = PermanentCameraMode->CameraConfig;
 	if (!IsValid(CurrentSpringArm))
 	{
@@ -80,17 +84,17 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* Perm
 		return;
 	}
 	CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
-		CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+	                                           CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 	CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-		CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+	                                        CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 
 	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
-		CurrentModeConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
+	                                  CurrentModeConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	CurrentSpringArm->SetTargetOffset(CurrentModeConfig.SpringArmSettings.TargetOffset);
 	if (OneTimeCameraModesApplied.IsEmpty())
 	{
 		TargetFOV = CurrentModeConfig.FOVSettings.FOV;
-	}		
+	}
 	UpdateCameraSettings(CurrentModeConfig);
 	ChangeCurrentModifiers(PermanentCameraMode);
 	CurrentCameraModeSettings = PermanentCameraMode;
@@ -101,7 +105,8 @@ bool APlayerCameraManagerACS::IsOneTimeCameraModeApplied(const UOneTimeCameraMod
 	return OneTimeCameraModesApplied.Contains(OneTimeCameraMode->GetName());
 }
 
-void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
+void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(
+	const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
@@ -120,7 +125,8 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraMode(const UOneTimeCameraMode* 
 	UpdateOneTimeCameraModesSet(OneTimeCameraMode);
 }
 
-void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
+void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
+	const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
 	if (!IsOwnerLocalController())
 	{
@@ -157,7 +163,10 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 		{
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1,15.0f,FColor::Cyan,FString::Printf(TEXT("OneTimeCameraMode to apply : %s"),*OneTimeCameraMode->GetName()));
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan,
+				                                 FString::Printf(
+					                                 TEXT("OneTimeCameraMode to apply : %s"),
+					                                 *OneTimeCameraMode->GetName()));
 			}
 		}
 #endif
@@ -178,7 +187,10 @@ void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* 
 		{
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1,15.0f,FColor::Orange,FString::Printf(TEXT("OneTimeCameraMode removed : %s"),*OneTimeCameraMode->GetName()));
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Orange,
+				                                 FString::Printf(
+					                                 TEXT("OneTimeCameraMode removed : %s"),
+					                                 *OneTimeCameraMode->GetName()));
 			}
 		}
 #endif
@@ -186,7 +198,6 @@ void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* 
 		InternalRemoveOneTimeCameraMode(OneTimeCameraMode);
 	}
 }
-
 
 USpringArmComponentACS* APlayerCameraManagerACS::GetSpringArmComponent() const
 {
@@ -204,7 +215,9 @@ void APlayerCameraManagerACS::SetSpringArmDistance(const float NewDistance) cons
 	{
 		return;
 	}
-	CurrentSpringArm->ChangeSpringArmLength(NewDistance, CurrentCameraModeSettings->CameraConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+	CurrentSpringArm->ChangeSpringArmLength(NewDistance,
+	                                        CurrentCameraModeSettings->CameraConfig.SpringArmSettings.
+	                                                                   SpringArmLengthTransitionSpeed);
 }
 
 void APlayerCameraManagerACS::EnableSpringArmRotationLag(const float RotationLagSpeed) const
@@ -232,10 +245,10 @@ void APlayerCameraManagerACS::EnableSpringArmLocationLag(const float LocationLag
 }
 
 void APlayerCameraManagerACS::EnableSpringArmLocationLag(const TObjectPtr<UCurveFloat>& LocationLagCurve,
-	const float LagMaxDistance) const
+                                                         const float LagMaxDistance) const
 {
 	CurrentSpringArm->bEnableCameraLag = true;
-	CurrentSpringArm->LocationLagCurve = LocationLagCurve; 
+	CurrentSpringArm->LocationLagCurve = LocationLagCurve;
 	CurrentSpringArm->CameraLagMaxDistance = LagMaxDistance;
 }
 
@@ -254,39 +267,24 @@ float APlayerCameraManagerACS::GetMinCameraFOV() const
 	return MinFOV;
 }
 
-void APlayerCameraManagerACS::EnableDitherFX(bool bInEnabledDitherFX)
+void APlayerCameraManagerACS::EnableDitherFX()
 {
-	if (bEnabledDitherFX == bInEnabledDitherFX)
+	if (bEnabledDitherFX)
 	{
 		return;
 	}
-
-	bEnabledDitherFX = bInEnabledDitherFX;
-	if (bEnabledDitherFX)
-	{
-		if (!GetWorldTimerManager().IsTimerActive(DitherTimerHandler))
-		{
-			GetWorldTimerManager().SetTimer(DitherTimerHandler, this, &APlayerCameraManagerACS::CalculateDitherEffect, 0.1f, true, 0.3f);
-		}
-	}
-	else
-	{
-		if (GetWorldTimerManager().IsTimerActive(DitherTimerHandler))
-		{
-			GetWorldTimerManager().ClearTimer(DitherTimerHandler);
-			OnCameraDistanceToDitherFX.Execute(1.f);
-		}
-	}
+	bEnabledDitherFX = true;
+	GetWorldTimerManager().SetTimer(DitherTimerHandler, this, &APlayerCameraManagerACS::CalculateDitherEffect, 0.1f,
+	                                true, 0.3f);
 }
 
-void APlayerCameraManagerACS::InitializeFor(APlayerController* PC)
+void APlayerCameraManagerACS::DisableDitherFX()
 {
-	Super::InitializeFor(PC);
-
-	EnableDitherFX(bUseDitherFX);
+	GetWorldTimerManager().ClearTimer(DitherTimerHandler);
 }
 
-void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT, FViewTargetTransitionParams TransitionParams)
+void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
+                                               FViewTargetTransitionParams TransitionParams)
 {
 	Super::AssignViewTarget(NewTarget, VT, TransitionParams);
 
@@ -319,14 +317,23 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1,0.0f,FColor::Green,FString::Printf(TEXT("Camera Settings :")));
-			GEngine->AddOnScreenDebugMessage(-1,0.0f,FColor::Orange,FString::Printf(TEXT("TargetFOV : %f"),TargetFOV));
-			GEngine->AddOnScreenDebugMessage(-1,0.0f,FColor::Orange,FString::Printf(TEXT("DefaultFOV : %f"),DefaultFOV));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow, FString::Printf(TEXT("Pitch : %f"),GetOwningPlayerController()->GetControlRotation().Pitch));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow, FString::Printf(TEXT("Yaw : %f"),GetOwningPlayerController()->GetControlRotation().Yaw));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, FString::Printf(TEXT("Camera Settings :")));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+			                                 FString::Printf(TEXT("TargetFOV : %f"), TargetFOV));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+			                                 FString::Printf(TEXT("DefaultFOV : %f"), DefaultFOV));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+			                                 FString::Printf(
+				                                 TEXT("Pitch : %f"),
+				                                 GetOwningPlayerController()->GetControlRotation().Pitch));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+			                                 FString::Printf(
+				                                 TEXT("Yaw : %f"),
+				                                 GetOwningPlayerController()->GetControlRotation().Yaw));
 			if (IsValid(CurrentCamera))
 			{
-				GEngine->AddOnScreenDebugMessage(-1,0.0f,FColor::Orange,FString::Printf(TEXT("CurrentFOV : %f"),CurrentCamera->FieldOfView));
+				GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+				                                 FString::Printf(TEXT("CurrentFOV : %f"), CurrentCamera->FieldOfView));
 			}
 		}
 	}
@@ -336,12 +343,13 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 void APlayerCameraManagerACS::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
-	GetWorldTimerManager().ClearTimer(DitherTimerHandler);
+	DisableDitherFX();
 }
 
 void APlayerCameraManagerACS::SetSpringArmRefFromOwner()
 {
-	CurrentSpringArm = CastChecked<USpringArmComponentACS>(GetViewTarget()->FindComponentByClass(USpringArmComponentACS::StaticClass()));
+	CurrentSpringArm = CastChecked<USpringArmComponentACS>(
+		GetViewTarget()->FindComponentByClass(USpringArmComponentACS::StaticClass()));
 }
 
 void APlayerCameraManagerACS::SetCurrentCameraReference()
@@ -351,7 +359,9 @@ void APlayerCameraManagerACS::SetCurrentCameraReference()
 
 void APlayerCameraManagerACS::UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode)
 {
-	IsOneTimeCameraModeApplied(OneTimeCameraMode) ? InternalRemoveOneTimeCameraMode(OneTimeCameraMode) : InternalApplyOneTimeCameraMode(OneTimeCameraMode);
+	IsOneTimeCameraModeApplied(OneTimeCameraMode)
+		? InternalRemoveOneTimeCameraMode(OneTimeCameraMode)
+		: InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 }
 
 void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
@@ -361,11 +371,11 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	if (OneTimeCameraMode->bCameraModeDisable)
 	{
 		CurrentSpringArm->SetSpringArmLengthLimits(CurrentConfig.MinLineOfSight,
-			CurrentConfig.MaxLineOfSight,
-			CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+		                                           CurrentConfig.MaxLineOfSight,
+		                                           CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		CurrentSpringArm->ChangeSpringArmLength(CurrentConfig.SpringArmSettings.SpringArmLengthModifier,
-			CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-		
+		                                        CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+
 		if (ModifierList.IsEmpty())
 		{
 			return;
@@ -393,12 +403,12 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 			}
 		}
 		CurrentSpringArm->AddSpringArmLengthLimits(CurrentConfig.MinLineOfSight,
-			CurrentConfig.MaxLineOfSight,
-			CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+		                                           CurrentConfig.MaxLineOfSight,
+		                                           CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 	}
 	TargetFOV = CurrentConfig.FOVSettings.FOV;
 	CurrentSpringArm->SetSocketOffset(CurrentConfig.SpringArmSettings.SocketOffsetModifier,
-			CurrentConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
+	                                  CurrentConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
 	UpdateCameraSettings(CurrentConfig);
 }
@@ -411,9 +421,9 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 	if (OneTimeCameraMode->bCameraModeDisable)
 	{
 		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
-			CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+		                                           CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-			CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+		                                        CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
 		if (ModifierList.IsEmpty())
 		{
 			return;
@@ -439,7 +449,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 	}
 	TargetFOV = CurrentModeConfig.FOVSettings.FOV;
 	CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
-			CurrentOneTimeCMConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
+	                                  CurrentOneTimeCMConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetName());
 	UpdateCameraSettings(CurrentModeConfig);
 }
@@ -448,7 +458,7 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 {
 	ViewPitchMin = NewCameraConfig.CamRotationSettings.MinPitch;
 	ViewPitchMax = NewCameraConfig.CamRotationSettings.MaxPitch;
-	
+
 	if (const APawn* Player = PCOwner->GetPawn();
 		IsValid(Player))
 	{
@@ -461,22 +471,24 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 		ViewYawMin = 0.0f;
 		ViewYawMax = 359.9f;
 	}
-	
+
 	MinFOV = NewCameraConfig.FOVSettings.MinFOV;
 	MaxFOV = NewCameraConfig.FOVSettings.MaxFOV;
 	FOVLerpSpeed = NewCameraConfig.FOVSettings.FOVLerpSpeed;
 	MinDitherCameraThreshold = NewCameraConfig.MinDistanceCamPlayer;
 	MaxDitherCameraThreshold = NewCameraConfig.MaxDistanceCamPlayer;
-	if(NewCameraConfig.SpringArmSettings.bCameraLocationLag)
+	if (NewCameraConfig.SpringArmSettings.bCameraLocationLag)
 	{
 		if (IsValid(NewCameraConfig.SpringArmSettings.CameraLocationLagCurve))
 		{
-			EnableSpringArmLocationLag(NewCameraConfig.SpringArmSettings.CameraLocationLagCurve,NewCameraConfig.SpringArmSettings.MaxLagDistance);
+			EnableSpringArmLocationLag(NewCameraConfig.SpringArmSettings.CameraLocationLagCurve,
+			                           NewCameraConfig.SpringArmSettings.MaxLagDistance);
 		}
 		else
 		{
 			CurrentSpringArm->LocationLagCurve = nullptr;
-			EnableSpringArmLocationLag(NewCameraConfig.SpringArmSettings.CameraLocationLagSpeed, NewCameraConfig.SpringArmSettings.MaxLagDistance);
+			EnableSpringArmLocationLag(NewCameraConfig.SpringArmSettings.CameraLocationLagSpeed,
+			                           NewCameraConfig.SpringArmSettings.MaxLagDistance);
 		}
 	}
 	else
@@ -574,8 +586,8 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 	{
 		CurrentDistCameraToOwnerPawn = NewDistanceToOwner;
 		const float ResultFromDistance = FMath::GetMappedRangeValueClamped(
-			FVector2D{FMath::Square(MaxDitherCameraThreshold),FMath::Square(MinDitherCameraThreshold)},
-			FVector2D{1.0f,0.f},
+			FVector2D{FMath::Square(MaxDitherCameraThreshold), FMath::Square(MinDitherCameraThreshold)},
+			FVector2D{1.0f, 0.f},
 			CurrentDistCameraToOwnerPawn);
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);
 	}

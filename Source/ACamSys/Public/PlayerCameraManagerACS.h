@@ -66,10 +66,15 @@ public:
 	float GetMaxCameraFOV() const;
 	float GetMinCameraFOV() const;
 
+	/* Enable DitherFX to avoid Character Mesh occlude Camera view
+	 * You need a shader to do the cool view in the player Pawn
+	*/
 	UFUNCTION(BlueprintCallable)
-	void EnableDitherFX(bool bInEnabledDitherFX);
-
-	virtual void InitializeFor(APlayerController* PC) override;
+	void EnableDitherFX();
+	/* Disable DitherFX 
+	*/
+	UFUNCTION(BlueprintCallable)
+	void DisableDitherFX();
 
 	UPROPERTY(EditAnywhere, Category = Settings)
 	float LineOfSightProbeSize = 12.0f;
@@ -101,11 +106,7 @@ private:
 	void CalculateDitherEffect();
 	UPROPERTY(EditAnywhere, Category = Settings)
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
-
-	// If the character have any Dither FX applying to avoid the camera clip with the mesh, turn this True.
-	UPROPERTY(EditAnywhere, Category = Settings)
-	bool bUseDitherFX = true;
-
+	
 	bool bEnabledDitherFX = false;
 
 	UPROPERTY()
