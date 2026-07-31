@@ -43,7 +43,7 @@ UPermanentCameraMode* APlayerCameraManagerACS::GetCurrentCameraModeSettings() co
 void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(
 	const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass)
 {
-	if (!IsOwnerLocalController())
+	if (!GetOwningPlayerController()->IsLocalController())
 	{
 		return;
 	}
@@ -74,7 +74,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(
 
 void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode)
 {
-	if (!IsOwnerLocalController() || !IsValid(PermanentCameraMode))
+	if (!GetOwningPlayerController()->IsLocalController() || !IsValid(PermanentCameraMode))
 	{
 		return;
 	}
@@ -110,7 +110,7 @@ bool APlayerCameraManagerACS::IsOneTimeCameraModeApplied(const UOneTimeCameraMod
 void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(
 	const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
-	if (!IsOwnerLocalController())
+	if (!GetOwningPlayerController()->IsLocalController())
 	{
 		return;
 	}
@@ -120,7 +120,7 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(
 
 void APlayerCameraManagerACS::ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
-	if (!IsOwnerLocalController())
+	if (!GetOwningPlayerController()->IsLocalController())
 	{
 		return;
 	}
@@ -130,7 +130,7 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraMode(const UOneTimeCameraMode* 
 void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
 	const TSubclassOf<UOneTimeCameraMode>& OneTimeCameraModeClass)
 {
-	if (!IsOwnerLocalController())
+	if (!GetOwningPlayerController()->IsLocalController())
 	{
 		return;
 	}
@@ -148,7 +148,7 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
 
 void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
-	if (!IsOwnerLocalController() || !IsValid(OneTimeCameraMode))
+	if (!GetOwningPlayerController()->IsLocalController() || !IsValid(OneTimeCameraMode))
 	{
 		return;
 	}
@@ -178,7 +178,7 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 
 void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
-	if (!IsOwnerLocalController() || !IsValid(OneTimeCameraMode))
+	if (!GetOwningPlayerController()->IsLocalController() || !IsValid(OneTimeCameraMode))
 	{
 		return;
 	}
@@ -573,11 +573,6 @@ float APlayerCameraManagerACS::GetCameraToPawnDistSquared() const
 		return 0.0f;
 	}
 	return FVector::DistSquared(GetCameraLocation(), GetViewTargetPawn()->GetActorLocation());
-}
-
-bool APlayerCameraManagerACS::IsOwnerLocalController() const
-{
-	return GetOwningPlayerController()->IsLocalController();
 }
 
 void APlayerCameraManagerACS::CalculateDitherEffect()

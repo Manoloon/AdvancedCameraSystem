@@ -100,8 +100,6 @@ private:
 
 	float GetCameraToPawnDistSquared() const;
 
-	bool IsOwnerLocalController() const;
-
 	UFUNCTION()
 	void CalculateDitherEffect();
 	UPROPERTY(EditAnywhere, Category = Settings)
