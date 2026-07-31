@@ -2,6 +2,7 @@
 
 #include "SpringArmComponentACS.h"
 
+#include "ACSLog.h"
 #include "GameFramework/Character.h"
 #if !UE_BUILD_SHIPPING
 namespace ACSCvars
@@ -73,7 +74,7 @@ void USpringArmComponentACS::OnRegister()
 	OwnerPawn = Cast<ACharacter>(GetOwner());
 	if (!OwnerPawn)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("ACS.UpdateDesiredArmLocation Error"));
+		UE_LOG(LogACS,Error,TEXT("[%s] Owner Pawn not available"),*GetNameSafe(this));
 	}
 }
 

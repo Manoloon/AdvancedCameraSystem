@@ -13,21 +13,18 @@ UCLASS(Abstract, Blueprintable)
 class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
 {
 	GENERATED_BODY()
-
+	float SmoothedDesiredAngleInRads = 0.0f;
 	bool IsInLineOfSight(const FVector& Origin, const FVector& Target) const;
 	void RotateAroundLocation(const FVector& TargetLocation, FVector& InOutViewLocation,
 		FRotator& InOutViewRotation, const float AngleInRadians) const;
-
 public:
 	virtual bool ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot) override;
-	virtual bool ModifyCamera(float DeltaTime, FMinimalViewInfo& InOutPOV) override;
-
 	// How far from the current camera should we check for obstacles (this would be PI/2)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings)
-	float MaxAngleInRads = 1.5f;
+	float MaxSearchInDegrees = 20.f;
 	//Precision for looking obstacles
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings)
-	float StepSizeInRadians = 0.3f;
+	float SearchStepDegrees = 2.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings)
 	float RotationSpeed = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings)

@@ -15,6 +15,7 @@ class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 	GENERATED_BODY()
 
 public:
+	virtual void AddedToCamera(APlayerCameraManager* Camera) override;
 	virtual bool ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot) override;
 
 	FCamInfoForModifiers GetCurrentModifiers() const;
@@ -24,7 +25,12 @@ public:
 
 protected:
 	bool OwnerHasChangedCamera() const;
-
+	UPROPERTY(EditAnywhere, Category = Settings)
+	float LineOfSightProbeSize = 12.0f;
+	UPROPERTY()
+	class APlayerCameraManagerACS* CameraManager;
+	UPROPERTY()
+	APlayerController* OwnerController;
 private:
 	FCamInfoForModifiers CurrentModifiers;
 	FCamInfoForModifiers TargetModifiers;

@@ -2,6 +2,7 @@
 
 #include "TriggerBoxACS.h"
 
+#include "ACSLog.h"
 #include "PlayerCameraManagerACS.h"
 #include "Components/BillboardComponent.h"
 #include "Components/BoxComponent.h"
@@ -58,6 +59,11 @@ void ATriggerBoxACS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AA
 void ATriggerBoxACS::ChangeCamera()
 {
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (!PlayerController)
+	{
+		UE_LOG(LogACS,Error,TEXT("[%s] Player Controller not available"),*GetNameSafe(this));
+		return;
+	}
 	if (NewCameraActor && PlayerController->GetViewTarget() != NewCameraActor)
 	{
 		PlayerController->SetViewTargetWithBlend(NewCameraActor);
@@ -70,8 +76,12 @@ void ATriggerBoxACS::ChangeCamera()
 
 void ATriggerBoxACS::SwapPermamentCameraMode()
 {
-	TObjectPtr<APlayerController> PlayerController = GetWorld()->GetFirstPlayerController();
-	
+	const APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (!PlayerController)
+	{
+		UE_LOG(LogACS,Error,TEXT("[%s] Player Controller not available"),*GetNameSafe(this));
+		return;
+	}
 	if(APlayerCameraManagerACS* ACSCameraManager = Cast<APlayerCameraManagerACS>(PlayerController->PlayerCameraManager))
 	{
 		if(ACSCameraManager->GetCurrentCameraModeSettings() != PermanentCameraMode)
@@ -85,4 +95,3 @@ void ATriggerBoxACS::SwapPermamentCameraMode()
 		}
 	}
 }
-

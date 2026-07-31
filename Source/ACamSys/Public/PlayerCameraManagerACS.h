@@ -76,9 +76,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DisableDitherFX();
 
-	UPROPERTY(EditAnywhere, Category = Settings)
-	float LineOfSightProbeSize = 12.0f;
-
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 	
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,

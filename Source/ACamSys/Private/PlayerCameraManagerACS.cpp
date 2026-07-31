@@ -1,6 +1,8 @@
 // // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "PlayerCameraManagerACS.h"
+
+#include "ACSLog.h"
 #include "SpringArmComponentACS.h"
 #include "Modes/OneTimeCameraMode.h"
 #include "Camera/CameraComponent.h"
@@ -50,7 +52,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(
 	const FCameraConfig& CurrentModeConfig = NewCameraSettings->CameraConfig;
 	if (!IsValid(CurrentSpringArm))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Current Spring arm is not Valid"));
+		UE_LOG(LogACS, Error, TEXT("[%s] Current Spring arm is not Valid"),*GetNameSafe(this));
 		return;
 	}
 	CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
