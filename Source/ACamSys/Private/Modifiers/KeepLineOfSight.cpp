@@ -24,11 +24,8 @@ void UKeepLineOfSight::RotateAroundLocation(const FVector& TargetLocation, FVect
                                             FRotator& InOutViewRotation, const float AngleInRadians) const
 {
 	const FQuat Rotation(FVector::UpVector, AngleInRadians);
-
 	const FVector Offset = InOutViewLocation - TargetLocation;
-
 	InOutViewLocation = TargetLocation + Rotation.RotateVector(Offset);
-
 	InOutViewRotation.Yaw += FMath::RadiansToDegrees(AngleInRadians);
 }
 
