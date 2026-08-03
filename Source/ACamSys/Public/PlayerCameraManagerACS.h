@@ -115,6 +115,7 @@ public:
 	 * @brief Enable the use of a Shader material to dither the player mesh if 
 	 * its occlude the camera view. It could also be used to dither other objects,
 	 * but it needs more implementation on those actors.
+	 * It apply the effect accordingly to the squared distance between the camera and the ViewTarget
 	 */
 	UFUNCTION(BlueprintCallable)
 	void EnableDitherFX();
@@ -133,6 +134,7 @@ public:
 
 	virtual void UpdateCamera(float DeltaTime) override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	
 private:
 	void EnableSpringArmRotationLag(const float RotationLagSpeed) const;
 	void EnableSpringArmRotationLag(const TObjectPtr<class UCurveFloat>& RotationLagCurve) const;
@@ -145,7 +147,7 @@ private:
 #if !UE_BUILD_SHIPPING
 	void DebugAndPrintCameraSettings() const;
 #endif
-	void UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode);
+	void Internal_ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
 	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
@@ -154,28 +156,23 @@ private:
 	void AddFOV(const float Value);
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
-
 	float GetCameraToPawnDistSquared() const;
 
 	UFUNCTION()
 	void CalculateDitherEffect();
+	
 	UPROPERTY(EditAnywhere, Category = Settings)
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
-
-	bool bEnabledDitherFX = false;
-
 	UPROPERTY()
 	UPermanentCameraMode* CurrentCameraModeSettings;
-
 	UPROPERTY()
 	TMap<FString, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
-
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;
 
 	UPROPERTY()
 	UCameraComponent* CurrentCamera;
-
+	bool bEnabledDitherFX = false;
 	float FOVLerpSpeed = 20.0f;
 	float MaxFOV = 90.0f;
 	float MinFOV = 40.0f;
@@ -183,6 +180,7 @@ private:
 	float CurrentDistCameraToOwnerPawn = 0.0f;
 	float MinDitherCameraThreshold = 30.0f;
 	float MaxDitherCameraThreshold = 120.0f;
+	FVector2D DitherCameraThresholdSquared ={MaxDitherCameraThreshold * MaxDitherCameraThreshold,
+											MinDitherCameraThreshold * MinDitherCameraThreshold};
 	FTimerHandle DitherTimerHandler;
-	FTimerHandle OneTimeModeHandler;
 };

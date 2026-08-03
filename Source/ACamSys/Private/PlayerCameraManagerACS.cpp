@@ -72,7 +72,7 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(
 		return;
 	}
 	const UOneTimeCameraMode* CurrentOneTimeCM = NewObject<UOneTimeCameraMode>(this, OneTimeCameraModeClass);
-	UpdateOneTimeCameraModesSet(CurrentOneTimeCM);
+	Internal_ToggleOneTimeCameraMode(CurrentOneTimeCM);
 }
 
 void APlayerCameraManagerACS::ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
@@ -81,7 +81,7 @@ void APlayerCameraManagerACS::ToggleOneTimeCameraMode(const UOneTimeCameraMode* 
 	{
 		return;
 	}
-	UpdateOneTimeCameraModesSet(OneTimeCameraMode);
+	Internal_ToggleOneTimeCameraMode(OneTimeCameraMode);
 }
 
 void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
@@ -233,7 +233,9 @@ void APlayerCameraManagerACS::EnableDitherFX()
 		return;
 	}
 	bEnabledDitherFX = true;
-	GetWorldTimerManager().SetTimer(DitherTimerHandler, this, &APlayerCameraManagerACS::CalculateDitherEffect, 0.1f,
+	GetWorldTimerManager().SetTimer(DitherTimerHandler, this, 
+									&APlayerCameraManagerACS::CalculateDitherEffect,
+									0.1f,
 	                                true, 0.3f);
 }
 
@@ -312,7 +314,7 @@ void APlayerCameraManagerACS::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	DisableDitherFX();
 }
 
-void APlayerCameraManagerACS::UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode)
+void APlayerCameraManagerACS::Internal_ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	IsOneTimeCameraModeApplied(OneTimeCameraMode)
 		? InternalRemoveOneTimeCameraMode(OneTimeCameraMode)
@@ -467,7 +469,8 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 	FOVLerpSpeed = NewCameraConfig.FOVSettings.FOVLerpSpeed;
 	MinDitherCameraThreshold = NewCameraConfig.MinDistanceCamPlayer;
 	MaxDitherCameraThreshold = NewCameraConfig.MaxDistanceCamPlayer;
-	
+	DitherCameraThresholdSquared = FVector2D{MaxDitherCameraThreshold * MaxDitherCameraThreshold,
+											MinDitherCameraThreshold * MinDitherCameraThreshold};
 	if (CurrentSpringArm)
 	{
 		if (NewCameraConfig.SpringArmSettings.bCameraLocationLag)
@@ -558,11 +561,11 @@ void APlayerCameraManagerACS::UpdateCameraFOV(float DeltaTime)
 
 float APlayerCameraManagerACS::GetCameraToPawnDistSquared() const
 {
-	if (!IsValid(GetViewTargetPawn()))
+	if (!IsValid(GetViewTarget()))
 	{
 		return 0.0f;
 	}
-	return FVector::DistSquared(GetCameraLocation(), GetViewTargetPawn()->GetActorLocation());
+	return FVector::DistSquared(GetCameraLocation(), GetViewTarget()->GetActorLocation());
 }
 
 void APlayerCameraManagerACS::CalculateDitherEffect()
@@ -576,7 +579,7 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 	{
 		CurrentDistCameraToOwnerPawn = NewDistanceToOwner;
 		const float ResultFromDistance = FMath::GetMappedRangeValueClamped(
-			FVector2D{FMath::Square(MaxDitherCameraThreshold), FMath::Square(MinDitherCameraThreshold)},
+			DitherCameraThresholdSquared,
 			FVector2D{1.0f, 0.f},
 			CurrentDistCameraToOwnerPawn);
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);

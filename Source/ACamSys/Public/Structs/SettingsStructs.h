@@ -65,7 +65,7 @@ struct FCameraFOVConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float FOV = 85.0f;
 
-	// represents the rate or speed at which the FOV value changes over time (units per second)
+	/// represents the rate or speed at which the FOV value changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 0.001f, ClampMax = 100.0f))
 	float FOVLerpSpeed = 100.0f;
 };
@@ -89,10 +89,11 @@ USTRUCT(BlueprintType)
 struct FCameraConfig
 {
 	GENERATED_BODY()
-
+	
+	 /// this is used to set the spring arm Min Length
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MinLineOfSight = 75.0f;
-
+	/// this is used to set the spring arm Max Length
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxLineOfSight = 900.0f;
 
@@ -103,7 +104,7 @@ struct FCameraConfig
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 100.0f, ClampMax = 200.0f))
 	float MaxDistanceCamPlayer = 120.0f;
-	// Min distance from the player for Activate DitherFX
+	/// Min distance from the player for Activate DitherFX
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (ClampMin = 20.0f, ClampMax = 120.0f))
 	float MinDistanceCamPlayer = 40.0f;
 

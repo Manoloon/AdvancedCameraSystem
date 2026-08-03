@@ -4,6 +4,7 @@
 
 #include "ACSLog.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #if !UE_BUILD_SHIPPING
 namespace ACSCvars
 {
@@ -24,16 +25,16 @@ float USpringArmComponentACS::GetSpringArmLengthMaxLimit() const
 	return MaxLength;
 }
 
-void USpringArmComponentACS::ChangeSpringArmLength(const float NewLengthToAdd, const float TransitionTime)
+void USpringArmComponentACS::ChangeSpringArmLength(const float NewLength, const float TransitionTime)
 {
-	TargetArmLengthModifier = FMath::Clamp(NewLengthToAdd, MinLength, MaxLength);
+	TargetArmLengthModifier = FMath::Clamp(NewLength, MinLength, MaxLength);
 	SpringArmLengthTransitionSpeed = TransitionTime;
 }
 
-void USpringArmComponentACS::AddSpringArmLengthLimits(const float Min, const float Max, const float NewTransitionTime)
+void USpringArmComponentACS::AddSpringArmLengthLimits(const float MinOffset, const float MaxOffset, const float NewTransitionTime)
 {
-	MinLength += Min;
-	MaxLength += Max;
+	MinLength += MinOffset;
+	MaxLength += MaxOffset;
 	SpringArmLengthTransitionSpeed = NewTransitionTime;
 }
 
@@ -50,19 +51,6 @@ void USpringArmComponentACS::SetSocketOffset(const FVector& NewOffset, const flo
 	SocketOffsetTransitionSpeed = TransitionTime;
 }
 
-void USpringArmComponentACS::AddSocketOffset(const FVector& NewVector, const float TransitionTime)
-{
-	SocketOffsetModifier = SocketOffset + NewVector;
-	FormerSocketOffset = SocketOffsetModifier;
-	SocketOffsetTransitionSpeed = TransitionTime;
-}
-
-void USpringArmComponentACS::SubSocketOffset(const FVector& NewVector, const float TransitionTime)
-{
-	SocketOffsetModifier = FormerSocketOffset - NewVector;
-	SocketOffsetTransitionSpeed = TransitionTime;
-}
-
 void USpringArmComponentACS::SetTargetOffset(const FVector& NewOffset)
 {
 	TargetOffset = NewOffset;
@@ -76,6 +64,12 @@ void USpringArmComponentACS::OnRegister()
 	{
 		UE_LOG(LogACS,Error,TEXT("[%s] Owner Pawn not available"),*GetNameSafe(this));
 	}
+}
+
+void USpringArmComponentACS::BeginPlay()
+{
+	Super::BeginPlay();
+	MaxPlayerSpeed = OwnerPawn->GetCharacterMovement()->GetMaxSpeed();
 }
 
 void USpringArmComponentACS::UpdateDesiredArmLocation(bool bDoTrace, bool bDoLocationLag, bool bDoRotationLag,
@@ -104,7 +98,8 @@ void USpringArmComponentACS::UpdateDesiredArmLocation(bool bDoTrace, bool bDoLoc
 		SmoothedSpeed = FMath::FInterpTo(SmoothedSpeed, CurrentSpeed, DeltaTime, LagInterpSpeed); // InterpSpeed ~ 5–10
 
 		// Normalize and clamp for curve lookup
-		const float NormalizedSpeed = FMath::Clamp(SmoothedSpeed / MaxPlayerSpeed, 0.0f, 1.0f);
+		const float CurrentCalculateSpeed = MaxPlayerSpeed != 0.0f ? SmoothedSpeed / MaxPlayerSpeed : 0.0f;
+		const float NormalizedSpeed = FMath::Clamp(CurrentCalculateSpeed, 0.0f, 1.0f);
 		if (LocationLagCurve)
 		{
 			CameraLagSpeed = LocationLagCurve->GetFloatValue(NormalizedSpeed);
