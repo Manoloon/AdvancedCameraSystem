@@ -1,13 +1,14 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
-/*
- * Custom SpringArm Component to works in tandem with the system.
- */
+
 #include "CoreMinimal.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "SpringArmComponentACS.generated.h"
 
+/**
+ * Custom SpringArm Component to works in tandem with the system.
+ */
 UCLASS(ClassGroup=Camera, meta=(BlueprintSpawnableComponent), hideCategories=(Mobility))
 class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
 {
@@ -63,7 +64,9 @@ public:
 	UPROPERTY()
 	TObjectPtr<UCurveFloat> LocationLagCurve;
 	
+	/** @internal */
 	virtual void OnRegister() override;
+	/** @internal */
 	virtual void BeginPlay() override;
 	
 protected:
