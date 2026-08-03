@@ -175,8 +175,7 @@ void APlayerCameraManagerACS::SetSpringArmLength(const float NewLength) const
 		return;
 	}
 	CurrentSpringArm->ChangeSpringArmLength(NewLength,
-	                                        CurrentCameraModeSettings->CameraConfig.SpringArmSettings.
-	                                                                   SpringArmLengthTransitionSpeed);
+	                            CurrentCameraModeSettings->CameraConfig.SpringArmSettings.LengthTransitionSpeed);
 }
 
 void APlayerCameraManagerACS::EnableSpringArmRotationLag(const float RotationLagSpeed) const
@@ -326,10 +325,12 @@ void APlayerCameraManagerACS::InternalApplyPermanentCameraMode(UPermanentCameraM
 	const FCameraConfig& CurrentModeConfig = NewPermanentMode->CameraConfig;
 	if (IsValid(CurrentSpringArm))
 	{
-		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
-													   CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-												CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.SpringArmSettings.MinLength, 
+													CurrentModeConfig.SpringArmSettings.MaxLength,
+													CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
+		
+		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.NewLength,
+												CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
 
 		CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
 										  CurrentModeConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
@@ -350,11 +351,11 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	{
 		if (CurrentSpringArm)
 		{
-			CurrentSpringArm->SetSpringArmLengthLimits(CurrentConfig.MinLineOfSight,
-										   CurrentConfig.MaxLineOfSight,
-										   CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-			CurrentSpringArm->ChangeSpringArmLength(CurrentConfig.SpringArmSettings.SpringArmLengthModifier,
-													CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+			CurrentSpringArm->SetSpringArmLengthLimits(CurrentConfig.SpringArmSettings.MinLength,
+										   CurrentConfig.SpringArmSettings.MaxLength,
+										   CurrentConfig.SpringArmSettings.LengthTransitionSpeed);
+			CurrentSpringArm->ChangeSpringArmLength(CurrentConfig.SpringArmSettings.NewLength,
+													CurrentConfig.SpringArmSettings.LengthTransitionSpeed);
 		}
 		
 		if (ModifierList.IsEmpty())
@@ -386,9 +387,9 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 		}
 		if (CurrentSpringArm)
 		{
-			CurrentSpringArm->AddSpringArmLengthLimits(CurrentConfig.MinLineOfSight,
-													   CurrentConfig.MaxLineOfSight,
-													   CurrentConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+			CurrentSpringArm->AddSpringArmLengthLimits(CurrentConfig.SpringArmSettings.MinLength,
+													   CurrentConfig.SpringArmSettings.MaxLength,
+													   CurrentConfig.SpringArmSettings.LengthTransitionSpeed);
 		}
 	}
 	TargetFOV = CurrentConfig.FOVSettings.FOV;
@@ -410,10 +411,11 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 	{
 		if (CurrentSpringArm)
 		{
-			CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.MinLineOfSight, CurrentModeConfig.MaxLineOfSight,
-													   CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
-			CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.SpringArmLengthModifier,
-													CurrentModeConfig.SpringArmSettings.SpringArmLengthTransitionSpeed);
+			CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.SpringArmSettings.MinLength, 
+														CurrentModeConfig.SpringArmSettings.MaxLength,
+													   CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
+			CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.NewLength,
+													CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
 		}
 		if (!ModifierList.IsEmpty())
 		{

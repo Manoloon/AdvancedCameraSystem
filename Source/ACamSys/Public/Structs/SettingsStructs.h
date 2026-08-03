@@ -9,14 +9,19 @@ USTRUCT(BlueprintType)
 struct FCameraSpringArmConfig
 {
 	GENERATED_BODY()
-
-	// TODO : See this how its apply
+	/// Cap the Min Length of the Spring Arm
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float SpringArmLengthModifier = 600.0f;
+	float MinLength = 75.0f;
+	/// Cap the Max Length of the Spring Arm
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float MaxLength = 900.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float NewLength = 600.0f;
 
 	// represents the rate or speed at which the Spring Arm Length changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float SpringArmLengthTransitionSpeed = 400.0f;
+	float LengthTransitionSpeed = 400.0f;
 
 	// represents the rate or speed at which the SocketOffset value changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -89,13 +94,6 @@ USTRUCT(BlueprintType)
 struct FCameraConfig
 {
 	GENERATED_BODY()
-	
-	 /// this is used to set the spring arm Min Length
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float MinLineOfSight = 75.0f;
-	/// this is used to set the spring arm Max Length
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float MaxLineOfSight = 900.0f;
 
 	/*	This values could be use to handle dither FX on the character
 	 *	to avoid clipping with the camera.
