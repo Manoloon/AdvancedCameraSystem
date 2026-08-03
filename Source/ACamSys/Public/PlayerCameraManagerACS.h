@@ -23,11 +23,21 @@ class ACAMSYS_API APlayerCameraManagerACS : public APlayerCameraManager
 	GENERATED_BODY()
 
 public:
+	/**
+	 * 
+	 * @return 
+	 */
 	UFUNCTION(BlueprintCallable)
 	UPermanentCameraMode* GetCurrentCameraModeSettings() const;
 
+	/// Apply a Camera mode by class, make it easy for designers.
+	/// @param PermanentCameraModeClass 
 	UFUNCTION(BlueprintCallable)
 	void ApplyCameraModeSettingsByClass(const TSubclassOf<UPermanentCameraMode>& PermanentCameraModeClass);
+	/**
+	 * Apply a Camera mode by pointer.
+	 * @param PermanentCameraMode 
+	 */
 	UFUNCTION(BlueprintCallable)
 	void ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode);
 
@@ -88,8 +98,8 @@ private:
 #endif
 	void SetSpringArmRefFromOwner();
 	void SetCurrentCameraReference();
-
 	void UpdateOneTimeCameraModesSet(const UOneTimeCameraMode* OneTimeCameraMode);
+	void InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
 	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
