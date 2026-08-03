@@ -30,7 +30,7 @@ bool UActivePitchCurve::ModifyCamera(float DeltaTime, struct FMinimalViewInfo& I
 		                              ? PitchToDistanceCurve->GetFloatValue(CamRotation.Pitch)
 		                              : 0.0f;
 	const float PitchToFOV = IsValid(PitchToFOVCurve) ? PitchToFOVCurve->GetFloatValue(CamRotation.Pitch) : 0.0f;
-	CameraManager->SetSpringArmDistance(PitchToDistance);
+	CameraManager->SetSpringArmLength(PitchToDistance);
 	InOutPOV.FOV = FMath::Clamp(InOutPOV.FOV + PitchToFOV,
 	                            CameraManager->GetMinCameraFOV(),
 	                            CameraManager->GetMaxCameraFOV());

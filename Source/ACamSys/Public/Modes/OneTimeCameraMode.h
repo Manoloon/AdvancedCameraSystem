@@ -1,7 +1,13 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
-/*
+
+#include "CoreMinimal.h"
+#include "Engine/DataAsset.h"
+#include "Structs/SettingsStructs.h"
+#include "OneTimeCameraMode.generated.h"
+
+/**
  * Modes : OneTimeCameraMode is the mode that applies only one time
  * Camera modes are the main concept in the camera system.
  * They contain and define all the variables that give camera their basic behavior.
@@ -9,11 +15,6 @@
  * one camera mode can be active at any time.
  * Example of modes: Outdoor camera mode, 3x3 spaceship module mode, ADS mode
  */
-#include "CoreMinimal.h"
-#include "Engine/DataAsset.h"
-#include "Structs/SettingsStructs.h"
-#include "OneTimeCameraMode.generated.h"
-
 UCLASS(BlueprintType)
 class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
 {
