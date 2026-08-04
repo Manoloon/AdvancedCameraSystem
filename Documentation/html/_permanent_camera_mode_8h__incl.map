@@ -1,0 +1,14 @@
+<map id="Public/Modes/PermanentCameraMode.h" name="Public/Modes/PermanentCameraMode.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="87,5,301,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,171,111,197"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,51,54,70,27,97,22,112,24,127,39,158,34,159,18,128,17,111,22,95,51,66,90,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="37,96,175,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="173,47,133,87,129,83,169,50"/>
+<area shape="rect" id="Node000004" href="$_settings_structs_8h.html" title=" " alt="" coords="199,96,368,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="218,46,261,85,255,85,216,51"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="392,96,626,123"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="275,46,447,91,442,93,275,51"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="245,126,113,168,111,163,243,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="192,171,375,197"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="285,121,286,157,281,154,281,125"/>
+</map>

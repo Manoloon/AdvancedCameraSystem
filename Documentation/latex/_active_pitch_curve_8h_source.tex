@@ -1,0 +1,31 @@
+\doxysection{Active\+Pitch\+Curve.\+h}
+\hypertarget{_active_pitch_curve_8h_source}{}\label{_active_pitch_curve_8h_source}\index{Public/Modifiers/ActivePitchCurve.h@{Public/Modifiers/ActivePitchCurve.h}}
+\doxymbox{\hyperlink{_active_pitch_curve_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00001}00001\ \textcolor{comment}{//\ //\ Copyright\ Pablo\ Rodrigo\ Sanchez,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}CoreMinimal.h"{}}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_modifier_a_c_s_8h}{CameraModifierACS.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}ActivePitchCurve.generated.h"{}}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00009}00009\ \textcolor{keyword}{class\ }UCurveFloat;}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00011}00011\ UCLASS(Abstract,\ Blueprintable)}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00012}\doxymbox{\hyperlink{class_u_active_pitch_curve}{00012}}\ class\ ACAMSYS\_API\ \doxymbox{\hyperlink{class_u_active_pitch_curve}{UActivePitchCurve}}\ :\ public\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s}{UCameraModifierACS}}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00014}00014\ \ \ \ \ GENERATED\_BODY()}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00016}00016\ \ \ \ \ UPROPERTY(EditDefaultsOnly,\ Category\ =\ \textcolor{stringliteral}{"{}Settings"{}},\ meta\ =\ (AllowPrivateAccess\ =\ \textcolor{stringliteral}{"{}true"{}}))}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{float}\ TransitionTime\ =\ 4.0f;}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00018}00018\ \ \ \ \ UPROPERTY(EditDefaultsOnly,\ Category\ =\ \textcolor{stringliteral}{"{}Settings"{}},\ meta\ =\ (AllowPrivateAccess\ =\ \textcolor{stringliteral}{"{}true"{}}))}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00019}00019\ \ \ \ \ UCurveFloat*\ PitchToDistanceCurve\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ FOV\ Values\ are\ additive\ to\ the\ current\ FOV\ (The\ curve\ Float\ should\ have\ values\ that\ add\ or\ sub\ to\ the\ current\ value}}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00021}00021\ \ \ \ \ UPROPERTY(EditDefaultsOnly,\ Category\ =\ \textcolor{stringliteral}{"{}Settings"{}},\ meta\ =\ (AllowPrivateAccess\ =\ \textcolor{stringliteral}{"{}true"{}}))}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00022}00022\ \ \ \ \ UCurveFloat*\ PitchToFOVCurve\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00023}00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00024}\doxymbox{\hyperlink{class_u_active_pitch_curve_a3889399f849373a0f352e0b1e5e3a1e4}{00024}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_active_pitch_curve_a3889399f849373a0f352e0b1e5e3a1e4}{ModifyCamera}}(\textcolor{keywordtype}{float}\ DeltaTime,\ \textcolor{keyword}{struct}\ FMinimalViewInfo\&\ InOutPOV)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{_active_pitch_curve_8h_source_l00025}00025\ \};}
+
+\end{DoxyCode}

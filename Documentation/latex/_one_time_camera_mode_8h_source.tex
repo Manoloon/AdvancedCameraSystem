@@ -1,0 +1,37 @@
+\doxysection{One\+Time\+Camera\+Mode.\+h}
+\hypertarget{_one_time_camera_mode_8h_source}{}\label{_one_time_camera_mode_8h_source}\index{Public/Modes/OneTimeCameraMode.h@{Public/Modes/OneTimeCameraMode.h}}
+\doxymbox{\hyperlink{_one_time_camera_mode_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00001}00001\ \textcolor{comment}{//\ //\ Copyright\ Pablo\ Rodrigo\ Sanchez,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}CoreMinimal.h"{}}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}Engine/DataAsset.h"{}}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_settings_structs_8h}{Structs/SettingsStructs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}OneTimeCameraMode.generated.h"{}}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00018}00018\ UCLASS(BlueprintType)}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00019}\doxymbox{\hyperlink{class_u_one_time_camera_mode}{00019}}\ class\ ACAMSYS\_API\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}\ :\ public\ UDataAsset}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00021}00021\ \ \ \ \ GENERATED\_BODY()}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00023}00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00024}00024\ \ \ \ \ UPROPERTY(EditAnywhere,BlueprintReadOnly)}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00025}\doxymbox{\hyperlink{class_u_one_time_camera_mode_afd19b27b4f52c9dd6822be801e9b1c67}{00025}}\ \ \ \ \ float\ \doxymbox{\hyperlink{class_u_one_time_camera_mode_afd19b27b4f52c9dd6822be801e9b1c67}{EffectDuration}}\ =\ 2.f;}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ By\ default\ all\ OTCM\ are\ priority\ 1\ ,\ but\ if\ you\ need\ to\ not\ run\ a\ OTCM\ if\ another\ is\ ,}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ you\ set\ priority\ of\ this\ one\ to\ 0\ ,\ and\ it\ will\ not\ run\ if\ others\ are\ running.}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00028}00028\ \ \ \ \ UPROPERTY(EditAnywhere)}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00029}\doxymbox{\hyperlink{class_u_one_time_camera_mode_af0a9fd71b5d2ceb68a5a69c15a7eeef3}{00029}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode_af0a9fd71b5d2ceb68a5a69c15a7eeef3}{Priority}}=1;}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00030}00030\ \ \ \ \ \textcolor{comment}{//\ if\ True\ disable\ any\ camera\ mode\ running\ at\ that\ time.}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ If\ true\ :\ the\ Arm\ length\ will\ apply\ changes\ using\ target\ length,\ otherwise\ will\ limit\ by\ min\ and\ max\ arm\ length.}}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00032}00032\ \ \ \ \ UPROPERTY(EditAnywhere)}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00033}\doxymbox{\hyperlink{class_u_one_time_camera_mode_ae95598e1099f0f0011c6f866f63b77c4}{00033}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode_ae95598e1099f0f0011c6f866f63b77c4}{bCameraModeDisable}}\ =\ true;}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00034}00034\ \ \ \ \ UPROPERTY(EditAnywhere\ ,\ meta\ =\ (EditCondition\ =\ \textcolor{stringliteral}{"{}bCameraModeDisable\ ==\ false"{}},EditConditionHides))}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00035}\doxymbox{\hyperlink{class_u_one_time_camera_mode_a57f0f60f0d7d3335118072a125e3ea99}{00035}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode_a57f0f60f0d7d3335118072a125e3ea99}{bCameraModifierDisable}}\ =\ false;}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00036}00036\ \ \ \ \ UPROPERTY(EditAnywhere,\ BlueprintReadOnly)}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00037}\doxymbox{\hyperlink{class_u_one_time_camera_mode_a6ad6c649888142c74f30639c805270b0}{00037}}\ \ \ \ \ \doxymbox{\hyperlink{struct_f_camera_config}{FCameraConfig}}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode_a6ad6c649888142c74f30639c805270b0}{CameraConfig}};}
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_one_time_camera_mode_8h_source_l00039}00039\ \};}
+
+\end{DoxyCode}

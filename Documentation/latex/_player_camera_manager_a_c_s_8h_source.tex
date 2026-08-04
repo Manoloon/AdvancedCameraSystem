@@ -1,0 +1,126 @@
+\doxysection{Player\+Camera\+Manager\+ACS.\+h}
+\hypertarget{_player_camera_manager_a_c_s_8h_source}{}\label{_player_camera_manager_a_c_s_8h_source}\index{Public/PlayerCameraManagerACS.h@{Public/PlayerCameraManagerACS.h}}
+\doxymbox{\hyperlink{_player_camera_manager_a_c_s_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00001}00001\ \textcolor{comment}{//\ //\ Copyright\ Pablo\ Rodrigo\ Sanchez,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}Camera/PlayerCameraManager.h"{}}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}CoreMinimal.h"{}}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}PlayerCameraManagerACS.generated.h"{}}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00012}00012\ \textcolor{keyword}{class\ }UCameraComponent;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00013}00013\ \textcolor{keyword}{class\ }USpringArmComponentACS;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00014}00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00015}00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00016}00016\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_f_camera_config}{FCameraConfig}};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00018}\doxymbox{\hyperlink{_player_camera_manager_a_c_s_8h_abfe0c35f3069cdac29bc2ae970b8188a}{00018}}\ \doxymbox{\hyperlink{_player_camera_manager_a_c_s_8h_abfe0c35f3069cdac29bc2ae970b8188a}{DECLARE\_DELEGATE\_OneParam}}(FOnCameraDistanceToDitherFX,\ \textcolor{keywordtype}{float}\ \textcolor{comment}{/*DitherValue*/});}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00020}00020\ UCLASS(Blueprintable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00021}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s}{00021}}\ class\ ACAMSYS\_API\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s}{APlayerCameraManagerACS}}\ :\ public\ APlayerCameraManager}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00023}00023\ \ \ \ \ GENERATED\_BODY()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00025}00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00027}00027\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00028}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a94f3264c05d8063a07842ed0ff864422}{00028}}\ \ \ \ \ \doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}*\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a94f3264c05d8063a07842ed0ff864422}{GetCurrentCameraModeSettings}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00032}00032\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00033}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a781375a24a14115d71eceb842f8aa42a}{00033}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a781375a24a14115d71eceb842f8aa42a}{ApplyCameraModeSettingsByClass}}(const\ TSubclassOf<\doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}>\&\ PermanentCameraModeClass);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00037}00037\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00038}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a04e4934b806a1ed6712749d7d8a69c0f}{00038}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a04e4934b806a1ed6712749d7d8a69c0f}{ApplyCameraModeSettings}}(\doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}*\ PermanentCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00045}00045\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00046}00046\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00047}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a47e4d9912d3caa986dabf73ffe001d19}{00047}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a47e4d9912d3caa986dabf73ffe001d19}{ToggleOneTimeCameraModeByClass}}(const\ TSubclassOf<\doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}>\&\ OneTimeCameraModeClass);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00053}00053\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00054}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5e337afc10362007633977511dc0dcf6}{00054}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5e337afc10362007633977511dc0dcf6}{ToggleOneTimeCameraMode}}(const\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00055}00055\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00058}00058\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00059}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5f0cbfcc36cfb8b5dccd3d755159428c}{00059}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5f0cbfcc36cfb8b5dccd3d755159428c}{IsOneTimeCameraModeApplied}}(const\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00065}00065\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00066}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5eef40a48e21a7d077bc9fd35934525d}{00066}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a5eef40a48e21a7d077bc9fd35934525d}{RemoveOneTimeCameraMode}}(const\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00075}00075\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00076}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a8ea860a353d56c0537cd75076a42a595}{00076}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a8ea860a353d56c0537cd75076a42a595}{ApplyOneTimeCameraModeByClass}}(const\ TSubclassOf<\doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}>\&\ OneTimeCameraModeClass);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00077}00077\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00085}00085\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00086}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a114eb0c843754e1eb73d100b07e24e5c}{00086}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a114eb0c843754e1eb73d100b07e24e5c}{ApplyOneTimeCameraMode}}(const\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00089}00089\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00090}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_af2efe32d238dda147c7f0b5bc76c7d21}{00090}}\ \ \ \ \ USpringArmComponentACS*\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_af2efe32d238dda147c7f0b5bc76c7d21}{GetSpringArmComponent}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00093}00093\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00094}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_acb3f3dcc4df3e328f12cf7a2698aa5f4}{00094}}\ \ \ \ \ UCameraComponent*\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_acb3f3dcc4df3e328f12cf7a2698aa5f4}{GetCameraComponent}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00100}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ada5aa96571c03658cfdeee122f09c6e8}{00100}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ada5aa96571c03658cfdeee122f09c6e8}{SetSpringArmLength}}(const\ \textcolor{keywordtype}{float}\ NewLength)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00106}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a20c157ca262937c1e1bf874c9f2e24d6}{00106}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a20c157ca262937c1e1bf874c9f2e24d6}{GetMaxCameraFOV}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00112}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ab0d19c555f3525ed9e75b8171be320fb}{00112}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ab0d19c555f3525ed9e75b8171be320fb}{GetMinCameraFOV}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00120}00120\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00121}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ae9cc25a41b90fa3be63a13acc7cdac15}{00121}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_ae9cc25a41b90fa3be63a13acc7cdac15}{EnableDitherFX}}();}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00122}00122\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00124}00124\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00125}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a0a6d8c777f13cbd3be98d161430648e4}{00125}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a0a6d8c777f13cbd3be98d161430648e4}{DisableDitherFX}}();}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00130}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a147fb97c66c09f8ff7c49993a384ba10}{00130}}\ \ \ \ \ FOnCameraDistanceToDitherFX\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a147fb97c66c09f8ff7c49993a384ba10}{OnCameraDistanceToDitherFX}};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00132}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a2406bb56d3a36b2309a5cf740e9c6ba3}{00132}}\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a2406bb56d3a36b2309a5cf740e9c6ba3}{AssignViewTarget}}(AActor*\ NewTarget,\ FTViewTarget\&\ VT,}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FViewTargetTransitionParams\ TransitionParams)\ override;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00135}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a622d1bcb5e65cba63a4dc3580d41aeb0}{00135}}\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a622d1bcb5e65cba63a4dc3580d41aeb0}{UpdateCamera}}(\textcolor{keywordtype}{float}\ DeltaTime)\ override;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00136}\doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a71315293f5e5077d662e41440d021ba7}{00136}}\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s_a71315293f5e5077d662e41440d021ba7}{EndPlay}}(const\ EEndPlayReason::Type\ EndPlayReason)\ override;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00137}00137\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00138}00138\ private:}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00139}00139\ \ \ \ \ \textcolor{keywordtype}{void}\ EnableSpringArmRotationLag(const\ \textcolor{keywordtype}{float}\ RotationLagSpeed)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00140}00140\ \ \ \ \ \textcolor{keywordtype}{void}\ EnableSpringArmRotationLag(const\ TObjectPtr<class\ UCurveFloat>\&\ RotationLagCurve)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00141}00141\ \ \ \ \ \textcolor{keywordtype}{void}\ DisableSpringArmRotationLag()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00143}00143\ \ \ \ \ \textcolor{keywordtype}{void}\ EnableSpringArmLocationLag(const\ \textcolor{keywordtype}{float}\ LocationLagSpeed,\ const\ \textcolor{keywordtype}{float}\ LagMaxDistance)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00144}00144\ \ \ \ \ \textcolor{keywordtype}{void}\ EnableSpringArmLocationLag(const\ TObjectPtr<class\ UCurveFloat>\&\ LocationLagCurve,}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ \textcolor{keywordtype}{float}\ LagMaxDistance)\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00146}00146\ \ \ \ \ \textcolor{keywordtype}{void}\ DisableSpringArmLocationLag()\ const;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00147}00147\ \textcolor{preprocessor}{\#if\ !UE\_BUILD\_SHIPPING}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00148}00148\ \ \ \ \ \textcolor{keywordtype}{void}\ DebugAndPrintCameraSettings()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00149}00149\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00150}00150\ \ \ \ \ \textcolor{keywordtype}{void}\ Internal\_ToggleOneTimeCameraMode(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00151}00151\ \ \ \ \ \textcolor{keywordtype}{void}\ InternalApplyPermanentCameraMode(\doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}*\ NewPermanentMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00152}00152\ \ \ \ \ \textcolor{keywordtype}{void}\ InternalApplyOneTimeCameraMode(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00153}00153\ \ \ \ \ \textcolor{keywordtype}{void}\ InternalRemoveOneTimeCameraMode(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*\ OneTimeCameraMode);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00154}00154\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCameraSettings(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_f_camera_config}{FCameraConfig}}\&\ NewCameraConfig);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00155}00155\ \ \ \ \ \textcolor{keywordtype}{void}\ ChangeCurrentModifiers(\doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}*\ NewCameraSettings);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{void}\ AddFOV(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ Value);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00157}00157\ \ \ \ \ \textcolor{keywordtype}{void}\ SubFOV(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ Value);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00158}00158\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCameraFOV(\textcolor{keywordtype}{float}\ DeltaTime);}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00159}00159\ \ \ \ \ \textcolor{keywordtype}{float}\ GetCameraToPawnDistSquared()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00161}00161\ \ \ \ \ UFUNCTION()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00162}00162\ \ \ \ \ void\ CalculateDitherEffect();}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00163}00163\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00164}00164\ \ \ \ \ UPROPERTY(EditAnywhere,\ Category\ =\ Settings)}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00165}00165\ \ \ \ \ TEnumAsByte<ECollisionChannel>\ LostOfSightProbeChannel\ =\ ECC\_Camera;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00166}00166\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00167}00167\ \ \ \ \ \doxymbox{\hyperlink{class_u_permanent_camera_mode}{UPermanentCameraMode}}*\ CurrentCameraModeSettings;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00168}00168\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00169}00169\ \ \ \ \ TMap<FString,\ const\ \doxymbox{\hyperlink{class_u_one_time_camera_mode}{UOneTimeCameraMode}}*>\ OneTimeCameraModesApplied;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00170}00170\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00171}00171\ \ \ \ \ USpringArmComponentACS*\ CurrentSpringArm;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00173}00173\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00174}00174\ \ \ \ \ UCameraComponent*\ CurrentCamera;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00175}00175\ \ \ \ \ \textcolor{keywordtype}{bool}\ bEnabledDitherFX\ =\ false;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00176}00176\ \ \ \ \ \textcolor{keywordtype}{float}\ FOVLerpSpeed\ =\ 20.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00177}00177\ \ \ \ \ \textcolor{keywordtype}{float}\ MaxFOV\ =\ 90.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00178}00178\ \ \ \ \ \textcolor{keywordtype}{float}\ MinFOV\ =\ 40.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00179}00179\ \ \ \ \ \textcolor{keywordtype}{float}\ TargetFOV\ =\ DefaultFOV;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00180}00180\ \ \ \ \ \textcolor{keywordtype}{float}\ CurrentDistCameraToOwnerPawn\ =\ 0.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00181}00181\ \ \ \ \ \textcolor{keywordtype}{float}\ MinDitherCameraThreshold\ =\ 30.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00182}00182\ \ \ \ \ \textcolor{keywordtype}{float}\ MaxDitherCameraThreshold\ =\ 120.0f;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00183}00183\ \ \ \ \ FVector2D\ DitherCameraThresholdSquared\ =\{MaxDitherCameraThreshold\ *\ MaxDitherCameraThreshold,}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MinDitherCameraThreshold\ *\ MinDitherCameraThreshold\};}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00185}00185\ \ \ \ \ FTimerHandle\ DitherTimerHandler;}
+\DoxyCodeLine{\Hypertarget{_player_camera_manager_a_c_s_8h_source_l00186}00186\ \};}
+
+\end{DoxyCode}

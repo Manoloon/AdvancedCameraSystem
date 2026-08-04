@@ -1,0 +1,46 @@
+\doxysection{Camera\+Modifier\+ACS.\+h}
+\hypertarget{_camera_modifier_a_c_s_8h_source}{}\label{_camera_modifier_a_c_s_8h_source}\index{Public/CameraModifierACS.h@{Public/CameraModifierACS.h}}
+\doxymbox{\hyperlink{_camera_modifier_a_c_s_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00001}00001\ \textcolor{comment}{//\ //\ Copyright\ Pablo\ Rodrigo\ Sanchez,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00004}00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00005}00005\ \textcolor{comment}{\ *\ CameraModifierACS\ is\ the\ abstract\ class\ to\ create\ the\ camera\ modifiers\ for\ the\ system.}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00006}00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}CoreMinimal.h"{}}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_settings_structs_8h}{Structs/SettingsStructs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}Camera/CameraModifier.h"{}}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}CameraModifierACS.generated.h"{}}}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00012}00012\ UCLASS(Abstract,\ BlueprintType)}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00013}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s}{00013}}\ class\ ACAMSYS\_API\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s}{UCameraModifierACS}}\ :\ public\ UCameraModifier}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00015}00015\ \ \ \ \ GENERATED\_BODY()}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00017}00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00018}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a681f9e1eac3ce68331a9b0f6111d0c8e}{00018}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a681f9e1eac3ce68331a9b0f6111d0c8e}{AddedToCamera}}(APlayerCameraManager*\ Camera)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00019}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a31af4a537eeffb4b07a5a074d5be5ad4}{00019}}\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a31af4a537eeffb4b07a5a074d5be5ad4}{ProcessViewRotation}}(AActor*\ ViewTarget,\ \textcolor{keywordtype}{float}\ DeltaTime,\ FRotator\&\ OutViewRotation,\ FRotator\&\ OutDeltaRot)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00021}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_aaed7b3e5184603230f2fba430c707a58}{00021}}\ \ \ \ \ \doxymbox{\hyperlink{struct_f_cam_info_for_modifiers}{FCamInfoForModifiers}}\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_aaed7b3e5184603230f2fba430c707a58}{GetCurrentModifiers}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00023}00023\ \ \ \ \ UPROPERTY(EditAnywhere,\ Category\ =\ Settings)}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00024}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a4d90a78724533d6d797fc34c7e998fc7}{00024}}\ \ \ \ \ float\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a4d90a78724533d6d797fc34c7e998fc7}{PlayerInputCooldown}}\ =\ 1.0f;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00026}00026\ protected:}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00027}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}{00027}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}{OwnerHasChangedCamera}}()\ const;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00028}00028\ \ \ \ \ UPROPERTY(EditAnywhere,\ Category\ =\ Settings)}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00029}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_abd963c7b3a99ec9cefeb6f1aab1cfd80}{00029}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_abd963c7b3a99ec9cefeb6f1aab1cfd80}{LineOfSightProbeSize}}\ =\ 12.0f;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00030}00030\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00031}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a8c6d7b2fcf9e807185d5f6421b0da7f8}{00031}}\ \ \ \ \ class\ \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s}{APlayerCameraManagerACS}}*\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a8c6d7b2fcf9e807185d5f6421b0da7f8}{CameraManager}};}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00032}00032\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00033}\doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a157d321971593d9f3970bec7bfbd1069}{00033}}\ \ \ \ \ APlayerController*\ \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a157d321971593d9f3970bec7bfbd1069}{OwnerController}};}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00034}00034\ private:}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00035}00035\ \ \ \ \ \doxymbox{\hyperlink{struct_f_cam_info_for_modifiers}{FCamInfoForModifiers}}\ CurrentModifiers;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00036}00036\ \ \ \ \ \doxymbox{\hyperlink{struct_f_cam_info_for_modifiers}{FCamInfoForModifiers}}\ TargetModifiers;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{float}\ TotalTransitionTime;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{float}\ RemainingTransitionTime;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{float}\ CooldownRemaining;}
+\DoxyCodeLine{\Hypertarget{_camera_modifier_a_c_s_8h_source_l00040}00040\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,9 @@
+<map id="UCameraModifierACS" name="UCameraModifierACS">
+<area shape="rect" id="Node000001" title="Base abstract class for Camera modifiers for the system." alt="" coords="74,80,225,107"/>
+<area shape="rect" id="Node000003" href="$class_u_active_pitch_curve.html" title="Camera Modifier that adjusts the Spring Arm length and Field of View based on the camera pitch." alt="" coords="5,155,139,181"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="127,117,87,156,84,152,122,118"/>
+<area shape="rect" id="Node000004" href="$class_u_keep_line_of_sight.html" title="Camera Modifier that keep line of sight with the target (could it be the player or another object)." alt="" coords="163,155,293,181"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,115,217,154,212,154,173,120"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="88,5,211,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,46,152,81,147,79,148,50"/>
+</map>

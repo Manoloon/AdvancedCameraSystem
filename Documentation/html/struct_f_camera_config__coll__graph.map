@@ -1,0 +1,9 @@
+<map id="FCameraConfig" name="FCameraConfig">
+<area shape="rect" id="Node000001" title="Settings structs : Packet Struct Settings." alt="" coords="217,104,330,131"/>
+<area shape="rect" id="Node000002" href="$struct_f_camera_spring_arm_config.html" title="Settings structs : for the Camera and Spring Arm." alt="" coords="5,5,180,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,42,131,61,153,78,184,93,219,106,214,106,182,98,150,82,128,65,111,47"/>
+<area shape="rect" id="Node000003" href="$struct_f_camera_f_o_v_config.html" title="Settings structs : for Camera FOV." alt="" coords="204,5,344,32"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="276,46,276,105,272,102,272,50"/>
+<area shape="rect" id="Node000004" href="$struct_f_camera_rotation_config.html" title="Settings structs : for the Camera Rotation." alt="" coords="369,5,531,32"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="424,41,363,82,310,106,309,101,361,78,419,42"/>
+</map>

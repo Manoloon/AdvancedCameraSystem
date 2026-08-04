@@ -1,0 +1,13 @@
+<map id="UOneTimeCameraMode" name="UOneTimeCameraMode">
+<area shape="rect" id="Node000001" title="OneTimeCameraMode is the mode that applies only one time Camera modes are the main concept in the cam..." alt="" coords="86,203,248,229"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="99,104,192,131"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,144,167,203,162,202,150,148"/>
+<area shape="rect" id="Node000003" href="$struct_f_camera_config.html" title="Settings structs : Packet Struct Settings." alt="" coords="217,104,330,131"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="251,141,183,204,180,200,246,142"/>
+<area shape="rect" id="Node000004" href="$struct_f_camera_spring_arm_config.html" title="Settings structs : for the Camera and Spring Arm." alt="" coords="5,5,180,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,42,131,61,153,78,184,93,219,105,214,106,182,98,150,82,128,65,111,47"/>
+<area shape="rect" id="Node000005" href="$struct_f_camera_f_o_v_config.html" title="Settings structs : for Camera FOV." alt="" coords="204,5,344,32"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="275,46,276,105,271,103,272,50"/>
+<area shape="rect" id="Node000006" href="$struct_f_camera_rotation_config.html" title="Settings structs : for the Camera Rotation." alt="" coords="369,5,531,32"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="424,40,363,82,310,106,308,101,361,78,419,43"/>
+</map>

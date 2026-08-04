@@ -1,0 +1,138 @@
+\doxysection{UCamera\+Modifier\+ACS Class Reference}
+\hypertarget{class_u_camera_modifier_a_c_s}{}\label{class_u_camera_modifier_a_c_s}\index{UCameraModifierACS@{UCameraModifierACS}}
+
+
+{\ttfamily \+\#include $<$Camera\+Modifier\+ACS.\+h$>$}
+
+Inheritance diagram for UCamera\+Modifier\+ACS:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_u_camera_modifier_a_c_s}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a681f9e1eac3ce68331a9b0f6111d0c8e}{Added\+To\+Camera}} (APlayer\+Camera\+Manager \texorpdfstring{$\ast$}{*}Camera) override
+\item 
+virtual bool \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a31af4a537eeffb4b07a5a074d5be5ad4}{Process\+View\+Rotation}} (AActor \texorpdfstring{$\ast$}{*}View\+Target, float Delta\+Time, FRotator \&Out\+View\+Rotation, FRotator \&Out\+Delta\+Rot) override
+\item 
+\doxymbox{\hyperlink{struct_f_cam_info_for_modifiers}{FCam\+Info\+For\+Modifiers}} \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_aaed7b3e5184603230f2fba430c707a58}{Get\+Current\+Modifiers}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a4d90a78724533d6d797fc34c7e998fc7}{Player\+Input\+Cooldown}} = 1.\+0f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}{Owner\+Has\+Changed\+Camera}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_abd963c7b3a99ec9cefeb6f1aab1cfd80}{Line\+Of\+Sight\+Probe\+Size}} = 12.\+0f
+\item 
+class \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s}{APlayer\+Camera\+Manager\+ACS}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a8c6d7b2fcf9e807185d5f6421b0da7f8}{Camera\+Manager}}
+\item 
+APlayer\+Controller \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_a157d321971593d9f3970bec7bfbd1069}{Owner\+Controller}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source_l00013}{13}} of file \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source}{Camera\+Modifier\+ACS.\+h}}.
+
+
+
+\label{class_u_camera_modifier_a_c_s_doc-func-members}
+\Hypertarget{class_u_camera_modifier_a_c_s_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_camera_modifier_a_c_s_a681f9e1eac3ce68331a9b0f6111d0c8e}\index{UCameraModifierACS@{UCameraModifierACS}!AddedToCamera@{AddedToCamera}}
+\index{AddedToCamera@{AddedToCamera}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{AddedToCamera()}{AddedToCamera()}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_a681f9e1eac3ce68331a9b0f6111d0c8e} 
+virtual void UCamera\+Modifier\+ACS::\+\+Added\+To\+Camera (\begin{DoxyParamCaption}\item[{APlayer\+Camera\+Manager \texorpdfstring{$\ast$}{*}}]{Camera}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_u_camera_modifier_a_c_s_aaed7b3e5184603230f2fba430c707a58}\index{UCameraModifierACS@{UCameraModifierACS}!GetCurrentModifiers@{GetCurrentModifiers}}
+\index{GetCurrentModifiers@{GetCurrentModifiers}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{GetCurrentModifiers()}{GetCurrentModifiers()}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_aaed7b3e5184603230f2fba430c707a58} 
+\doxymbox{\hyperlink{struct_f_cam_info_for_modifiers}{FCam\+Info\+For\+Modifiers}} UCamera\+Modifier\+ACS::\+\+Get\+Current\+Modifiers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}\index{UCameraModifierACS@{UCameraModifierACS}!OwnerHasChangedCamera@{OwnerHasChangedCamera}}
+\index{OwnerHasChangedCamera@{OwnerHasChangedCamera}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{OwnerHasChangedCamera()}{OwnerHasChangedCamera()}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4} 
+bool UCamera\+Modifier\+ACS::\+\+Owner\+Has\+Changed\+Camera (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+References \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}{Owner\+Has\+Changed\+Camera()}}.
+
+
+
+Referenced by \doxymbox{\hyperlink{class_u_camera_modifier_a_c_s_ac4ee5a70f120f3951849034f336216f4}{Owner\+Has\+Changed\+Camera()}}.
+
+\Hypertarget{class_u_camera_modifier_a_c_s_a31af4a537eeffb4b07a5a074d5be5ad4}\index{UCameraModifierACS@{UCameraModifierACS}!ProcessViewRotation@{ProcessViewRotation}}
+\index{ProcessViewRotation@{ProcessViewRotation}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{ProcessViewRotation()}{ProcessViewRotation()}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_a31af4a537eeffb4b07a5a074d5be5ad4} 
+virtual bool UCamera\+Modifier\+ACS::\+\+Process\+View\+Rotation (\begin{DoxyParamCaption}\item[{AActor \texorpdfstring{$\ast$}{*}}]{View\+Target}{, }\item[{float}]{Delta\+Time}{, }\item[{FRotator \&}]{Out\+View\+Rotation}{, }\item[{FRotator \&}]{Out\+Delta\+Rot}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \doxymbox{\hyperlink{class_u_keep_line_of_sight_a0510baca1829f3c67a33f541df4c753f}{UKeep\+Line\+Of\+Sight}}.
+
+
+
+\label{class_u_camera_modifier_a_c_s_doc-variable-members}
+\Hypertarget{class_u_camera_modifier_a_c_s_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_u_camera_modifier_a_c_s_a8c6d7b2fcf9e807185d5f6421b0da7f8}\index{UCameraModifierACS@{UCameraModifierACS}!CameraManager@{CameraManager}}
+\index{CameraManager@{CameraManager}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{CameraManager}{CameraManager}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_a8c6d7b2fcf9e807185d5f6421b0da7f8} 
+class \doxymbox{\hyperlink{class_a_player_camera_manager_a_c_s}{APlayer\+Camera\+Manager\+ACS}}\texorpdfstring{$\ast$}{*} UCamera\+Modifier\+ACS::\+\+Camera\+Manager\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source_l00031}{31}} of file \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source}{Camera\+Modifier\+ACS.\+h}}.
+
+\Hypertarget{class_u_camera_modifier_a_c_s_abd963c7b3a99ec9cefeb6f1aab1cfd80}\index{UCameraModifierACS@{UCameraModifierACS}!LineOfSightProbeSize@{LineOfSightProbeSize}}
+\index{LineOfSightProbeSize@{LineOfSightProbeSize}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{LineOfSightProbeSize}{LineOfSightProbeSize}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_abd963c7b3a99ec9cefeb6f1aab1cfd80} 
+float UCamera\+Modifier\+ACS::\+\+Line\+Of\+Sight\+Probe\+Size = 12.\+0f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source_l00029}{29}} of file \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source}{Camera\+Modifier\+ACS.\+h}}.
+
+\Hypertarget{class_u_camera_modifier_a_c_s_a157d321971593d9f3970bec7bfbd1069}\index{UCameraModifierACS@{UCameraModifierACS}!OwnerController@{OwnerController}}
+\index{OwnerController@{OwnerController}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{OwnerController}{OwnerController}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_a157d321971593d9f3970bec7bfbd1069} 
+APlayer\+Controller\texorpdfstring{$\ast$}{*} UCamera\+Modifier\+ACS::\+\+Owner\+Controller\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source_l00033}{33}} of file \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source}{Camera\+Modifier\+ACS.\+h}}.
+
+\Hypertarget{class_u_camera_modifier_a_c_s_a4d90a78724533d6d797fc34c7e998fc7}\index{UCameraModifierACS@{UCameraModifierACS}!PlayerInputCooldown@{PlayerInputCooldown}}
+\index{PlayerInputCooldown@{PlayerInputCooldown}!UCameraModifierACS@{UCameraModifierACS}}
+\doxysubsubsection{\texorpdfstring{PlayerInputCooldown}{PlayerInputCooldown}}
+{\footnotesize\ttfamily \label{class_u_camera_modifier_a_c_s_a4d90a78724533d6d797fc34c7e998fc7} 
+float UCamera\+Modifier\+ACS::\+\+Player\+Input\+Cooldown = 1.\+0f}
+
+
+
+Definition at line \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source_l00024}{24}} of file \doxymbox{\hyperlink{_camera_modifier_a_c_s_8h_source}{Camera\+Modifier\+ACS.\+h}}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Public/\+\doxymbox{\hyperlink{_camera_modifier_a_c_s_8h}{Camera\+Modifier\+ACS.\+h}}\end{DoxyCompactItemize}

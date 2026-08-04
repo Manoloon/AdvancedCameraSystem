@@ -1,0 +1,64 @@
+\doxysection{Spring\+Arm\+Component\+ACS.\+h}
+\hypertarget{_spring_arm_component_a_c_s_8h_source}{}\label{_spring_arm_component_a_c_s_8h_source}\index{Public/SpringArmComponentACS.h@{Public/SpringArmComponentACS.h}}
+\doxymbox{\hyperlink{_spring_arm_component_a_c_s_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00001}00001\ \textcolor{comment}{//\ //\ Copyright\ Pablo\ Rodrigo\ Sanchez,\ Inc.\ All\ Rights\ Reserved.}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}CoreMinimal.h"{}}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}GameFramework/SpringArmComponent.h"{}}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}SpringArmComponentACS.generated.h"{}}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00011}00011\ UCLASS(ClassGroup=Camera,\ meta=(BlueprintSpawnableComponent),\ hideCategories=(Mobility))}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00012}00012\ \textcolor{keyword}{class\ }ACAMSYS\_API\ USpringArmComponentACS\ :\ \textcolor{keyword}{public}\ USpringArmComponent}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00014}00014\ \ \ \ \ GENERATED\_BODY()}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00016}00016\ public:}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00017}00017\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{float}\ GetSpringArmLengthMinLimit()\ const;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00020}00020\ \ \ \ \ UFUNCTION(BlueprintCallable)}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{float}\ GetSpringArmLengthMaxLimit()\ const;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{void}\ ChangeSpringArmLength(const\ \textcolor{keywordtype}{float}\ NewLength,\ const\ \textcolor{keywordtype}{float}\ TransitionTime);}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00030}00030\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{void}\ AddSpringArmLengthLimits(const\ \textcolor{keywordtype}{float}\ MinOffset,\ const\ \textcolor{keywordtype}{float}\ MaxOffset,\ const\ \textcolor{keywordtype}{float}\ NewTransitionTime);}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00039}00039\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSpringArmLengthLimits(const\ \textcolor{keywordtype}{float}\ Min,\ const\ \textcolor{keywordtype}{float}\ Max,\ const\ \textcolor{keywordtype}{float}\ NewTransitionTime);}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSocketOffset(const\ FVector\&\ NewOffset,\ const\ \textcolor{keywordtype}{float}\ TransitionTime);}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTargetOffset(const\ FVector\&\ NewOffset);}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00060}00060\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00061}00061\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00062}00062\ \ \ \ \ TObjectPtr<UCurveFloat>\ RotationLagCurve;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00063}00063\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00064}00064\ \ \ \ \ TObjectPtr<UCurveFloat>\ LocationLagCurve;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00065}00065\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00067}00067\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ OnRegister()\ override;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00069}00069\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ BeginPlay()\ override;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00070}00070\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00071}00071\ protected:}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00072}00072\ \ \ \ \ UPROPERTY(EditAnywhere,Category\ =\ Settings)}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00073}00073\ \ \ \ \ \textcolor{keywordtype}{float}\ LagInterpSpeed\ =\ 5.0f;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00074}00074\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ UpdateDesiredArmLocation(\textcolor{keywordtype}{bool}\ bDoTrace,\ \textcolor{keywordtype}{bool}\ bDoLocationLag,\ \textcolor{keywordtype}{bool}\ bDoRotationLag,\ \textcolor{keywordtype}{float}\ DeltaTime)\ override;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00075}00075\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00076}00076\ private:}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{float}\ MaxPlayerSpeed\ =\ 1300.0f;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00080}00080\ \ \ \ \ UPROPERTY()}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00081}00081\ \ \ \ \ TObjectPtr<ACharacter>\ OwnerPawn;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00082}00082\ \ \ \ \ FVector\ SocketOffsetModifier\ =\ FVector::ZeroVector;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00083}00083\ \ \ \ \ FVector\ FormerSocketOffset;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{float}\ TargetArmLengthModifier;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{float}\ SpringArmLengthTransitionSpeed;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00086}00086\ \ \ \ \ \textcolor{keywordtype}{float}\ SocketOffsetTransitionSpeed;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{float}\ MinLength;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{float}\ MaxLength;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{float}\ SmoothedSpeed\ =\ 0.f;}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00090}00090\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00091}00091\ \textcolor{preprocessor}{\#if\ !UE\_BUILD\_SHIPPING}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{void}\ DebugInfo(\textcolor{keywordtype}{float}\ SpringLength)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00093}00093\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_spring_arm_component_a_c_s_8h_source_l00094}00094\ \};}
+
+\end{DoxyCode}
