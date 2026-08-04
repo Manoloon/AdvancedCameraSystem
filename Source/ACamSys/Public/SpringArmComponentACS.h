@@ -7,7 +7,7 @@
 #include "SpringArmComponentACS.generated.h"
 
 /**
- * Custom SpringArm Component to works in tandem with the system.
+ * @brief Custom SpringArm Component to works in tandem with the system.
  */
 UCLASS(ClassGroup=Camera, meta=(BlueprintSpawnableComponent), hideCategories=(Mobility))
 class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
@@ -65,10 +65,10 @@ public:
 	UPROPERTY()
 	TObjectPtr<UCurveFloat> LocationLagCurve;
 	
-	/** @internal */
+	/// @cond INTERNAL
 	virtual void OnRegister() override;
-	/** @internal */
 	virtual void BeginPlay() override;
+	/// @endcond 
 	
 protected:
 	UPROPERTY(EditAnywhere,Category = Settings)

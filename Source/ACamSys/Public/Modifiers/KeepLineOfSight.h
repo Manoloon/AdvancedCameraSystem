@@ -7,7 +7,7 @@
 #include "KeepLineOfSight.generated.h"
 
 /**
- * Keep line of sight with the target (could it be the player or another object)
+ * @brief Camera Modifier that keep line of sight with the target (could it be the player or another object)
  */
 UCLASS(Abstract, Blueprintable)
 class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
@@ -15,9 +15,10 @@ class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
 	GENERATED_BODY()
 
 public:
-	/** @internal */
+	/// @cond INTERNAL
 	virtual bool ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot) override;
-	
+	/// @endcond 
+	/// 
 	/// How far from the current camera should we check for obstacles (this would be PI/2)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Settings)
 	float MaxSearchInDegrees = 20.f;

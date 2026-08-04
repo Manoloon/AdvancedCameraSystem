@@ -8,8 +8,9 @@
 #include "OneTimeCameraMode.generated.h"
 
 /**
- * Modes : OneTimeCameraMode is the mode that applies only one time
+ * @brief OneTimeCameraMode is the mode that applies only one time
  * Camera modes are the main concept in the camera system.
+ * 
  * They contain and define all the variables that give camera their basic behavior.
  * They store a default set of camera modifiers that should be active with the mode at any time Only
  * one camera mode can be active at any time.

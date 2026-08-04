@@ -1,10 +1,7 @@
 // // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #pragma once
-/**
- * @brief PlayerCameraManagerACS is the custom PlayerCameraManager required for the system to work.
- * Its need to be set in the PlayerController as default.
- */
+
 #include "Camera/PlayerCameraManager.h"
 #include "CoreMinimal.h"
 #include "PlayerCameraManagerACS.generated.h"
@@ -16,7 +13,11 @@ class UPermanentCameraMode;
 struct FCameraConfig;
 
 DECLARE_DELEGATE_OneParam(FOnCameraDistanceToDitherFX, float /*DitherValue*/);
-
+/**
+ * @brief This is the custom PlayerCameraManager required for the system to work.
+ * 
+ * Its need to be set in the PlayerController as the default PlayerCameraManager.
+ */
 UCLASS(Blueprintable)
 class ACAMSYS_API APlayerCameraManagerACS : public APlayerCameraManager
 {
@@ -129,14 +130,12 @@ public:
 	/// CameraManager->OnCameraDistanceToDitherFX.BindUObject(this, &APlayer::UpdateDitherFXOpacity);
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 	
-	/** @internal */
+	/// @cond INTERNAL
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
 	                              FViewTargetTransitionParams TransitionParams) override;
-	/** @internal */
 	virtual void UpdateCamera(float DeltaTime) override;
-	/** @internal */
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	
+	/// @endcond 
 private:
 	void EnableSpringArmRotationLag(const float RotationLagSpeed) const;
 	void EnableSpringArmRotationLag(const TObjectPtr<class UCurveFloat>& RotationLagCurve) const;

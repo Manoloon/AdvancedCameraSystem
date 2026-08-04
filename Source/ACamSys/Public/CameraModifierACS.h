@@ -5,20 +5,22 @@
  * This is the abstract class to create the camera modifiers for the system.
  */
 #include "CoreMinimal.h"
-#include "Structs/SettingsStructs.h"
 #include "Camera/CameraModifier.h"
 #include "CameraModifierACS.generated.h"
 
+/**
+ * @brief Base abstract class for Camera modifiers for the system.
+ */
 UCLASS(Abstract, BlueprintType)
 class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 {
 	GENERATED_BODY()
 
 public:
-	/** @internal */
+	/// @cond INTERNAL
 	virtual void AddedToCamera(APlayerCameraManager* Camera) override;
-	/** @internal */
 	virtual bool ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation, FRotator& OutDeltaRot) override;
+	/// @endcond 
 	
 	/// @return if the Owner have move the camera , or the cooldown its over.
 	bool OwnerHasChangedCamera() const;

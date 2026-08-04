@@ -1,26 +1,26 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
-
 #pragma once
-/*
- * Modes : PermanentCameraMode is the mode that applies permanently until another permanent is applied.
- * Camera modes are the main concept in the camera system.
- * They contain and define all the variables that give camera their basic behavior.
- * They store a default set of camera modifiers that should be active with the mode at any time Only
- * one camera mode can be active at any time.
- * Example of modes: Outdoor camera mode, 3x3 spaceship module mode.
- */
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "Structs/SettingsStructs.h"
 #include "PermanentCameraMode.generated.h"
-
+/**
+ * @brief PermanentCameraMode is the mode that applies permanently until another permanent is applied.
+ * Camera modes are the main concept in the camera system.
+ * 
+ * They contain and define all the variables that give camera their basic behavior.
+ * They store a default set of camera modifiers that should be active with the mode at any time Only
+ * one camera mode can be active at any time.
+ * Example of modes: Outdoor camera mode, 3x3 spaceship module mode.
+ */
 UCLASS(BlueprintType)
 class ACAMSYS_API UPermanentCameraMode : public UDataAsset
 {
 	GENERATED_BODY()
 
 public:
+	/// Add the camera modifiers that will be use on this Camera Mode.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<TSubclassOf<UCameraModifier>> CameraModifiersToApply;
 

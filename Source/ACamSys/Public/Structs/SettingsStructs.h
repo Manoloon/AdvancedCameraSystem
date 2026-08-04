@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "SettingsStructs.generated.h"
 
+/**
+ * @brief Settings structs for the Camera and Spring Arm
+ */
 USTRUCT(BlueprintType)
 struct FCameraSpringArmConfig
 {
@@ -16,42 +19,51 @@ struct FCameraSpringArmConfig
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxLength = 900.0f;
 
+	/// Spring Arm Length to apply
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float NewLength = 600.0f;
 
-	// represents the rate or speed at which the Spring Arm Length changes over time (units per second)
+	/// represents the rate or speed at which the Spring Arm Length changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float LengthTransitionSpeed = 400.0f;
 
-	// represents the rate or speed at which the SocketOffset value changes over time (units per second)
+	/// represents the rate or speed at which the SocketOffset value changes over time (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float SocketOffsetTransitionSpeed = 200.0f;
 
-	// TODO : See this how its apply
+	/// set a new value for the Socket Offset and then it would be apply during a preset time.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector SocketOffsetModifier = { FVector::ZeroVector };
 
+	/// set the new value for the Target Offset during this camera mode.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector TargetOffset = { FVector::ZeroVector };
-
+	/// Toggle the Camera Location log
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bCameraLocationLag = false;
 
-	// represents the rate or speed at which the CameraLocation reach target location (units per second)
+	/// represents the rate or speed at which the CameraLocation reach target location (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	float CameraLocationLagSpeed = 10.0f;
+	
+	/// A curve that map the Camera location lag value with the speed of the Player.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	TObjectPtr<class UCurveFloat> CameraLocationLagCurve;
 	
+	/// The Maximum distance the camera target may lag behind the current location.
+	/// If set to zero, no max distance is enforced.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraLocationLag"))
 	float MaxLagDistance = 200.0f;
 
+	/// Toggle the Camera Rotation log
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bCameraRotationLag = true;
 
-	// represents the rate or speed at which the cameraRotation reach target rotation (units per second)
+	/// represents the rate or speed at which the cameraRotation reach target rotation (units per second)
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraRotationLag"))
 	float CameraRotationLagSpeed = 10.0f;
+	
+	/// A curve that map the Camera Rotation lag value with the speed of the Player.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bCameraRotationLag"))
 	TObjectPtr<class UCurveFloat> CameraRotationLagCurve;
 };
@@ -95,7 +107,7 @@ struct FCameraConfig
 {
 	GENERATED_BODY()
 
-	/*	This values could be use to handle dither FX on the character
+	/**	This values could be use to handle dither FX on the character
 	 *	to avoid clipping with the camera.
 	 *	To use this values you need to turn true the var bUseDitherFX in the CameraManagerACS
 	 *	Max distance from the player for DitherFX
@@ -114,25 +126,4 @@ struct FCameraConfig
 	FCameraRotationConfig CamRotationSettings;
 	UPROPERTY(EditAnywhere)
 	FPostProcessSettings CamPostProcessSettings;
-};
-
-USTRUCT(BlueprintType)
-struct FCamInfoForModifiers
-{
-	GENERATED_BODY()
-
-	bool IsEqualTo(const FCamInfoForModifiers& Other) const;
-	bool IsZero() const;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-	float FOV = 90.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-	float SpringArmLength = 400.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-	float DOF_FocalDistance = 0.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
-	FVector SpringArmSocketOffset = { FVector::ZeroVector };
 };

@@ -25,8 +25,10 @@ class ACAMSYS_API UActivePitchCurve : public UCameraModifierACS
 {
 	GENERATED_BODY()
 public:
-	/** @internal */
+	/// @cond INTERNAL
 	virtual bool ModifyCamera(float DeltaTime, struct FMinimalViewInfo& InOutPOV) override;
+	/// @endcond 
+	
 	///  Maps the camera pitch (X-axis, in degrees) to the desired Spring Arm length (Y-axis).
 	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	UCurveFloat* PitchToDistanceCurve = nullptr;

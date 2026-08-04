@@ -9,13 +9,16 @@ class UPermanentCameraMode;
 class UBillboardComponent;
 class UBoxComponent;
 
+/**
+ * @brief A custom Trigger Actor that could trigger change of permanent camera modes.
+ * 
+ */
 UCLASS(Abstract)
 class ACAMSYS_API ATriggerBoxACS : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ATriggerBoxACS();
 	UFUNCTION(BlueprintCallable)
 	UBoxComponent* GetCollisionComponent() const {return CollisionComponent;}
