@@ -6,7 +6,7 @@
 #include "SettingsStructs.generated.h"
 
 /**
- * @brief Settings structs for the Camera and Spring Arm
+ * @brief Settings structs :  for the Camera and Spring Arm
  */
 USTRUCT(BlueprintType)
 struct FCameraSpringArmConfig
@@ -68,6 +68,9 @@ struct FCameraSpringArmConfig
 	TObjectPtr<class UCurveFloat> CameraRotationLagCurve;
 };
 
+/**
+ * @brief Settings structs :  for Camera FOV
+ */
 USTRUCT(BlueprintType)
 struct FCameraFOVConfig
 {
@@ -87,6 +90,9 @@ struct FCameraFOVConfig
 	float FOVLerpSpeed = 100.0f;
 };
 
+/**
+ * @brief Settings structs :  for the Camera Rotation
+ */
 USTRUCT(BlueprintType)
 struct FCameraRotationConfig
 {
@@ -102,6 +108,9 @@ struct FCameraRotationConfig
 	FFloatRange YawRange = FFloatRange(-179.9999f, 179.9999f);
 };
 
+/**
+ * @brief Settings structs :  Packet Struct Settings 
+ */
 USTRUCT(BlueprintType)
 struct FCameraConfig
 {
