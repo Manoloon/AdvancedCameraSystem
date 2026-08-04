@@ -21,19 +21,22 @@ class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	/// Set the duration for the camera mode
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	float EffectDuration = 2.f;
-	// By default all OTCM are priority 1 , but if you need to not run a OTCM if another is ,
-	// you set priority of this one to 0 , and it will not run if others are running.
+	/// By default, all One Time Camera Mode(OTCM) have priority 1 , but if you need to not run a OTCM if another is ,
+	/// you set priority of this one to 0 , and it will not run if others are running.
 	UPROPERTY(EditAnywhere)
 	int Priority=1;
-	// if True disable any camera mode running at that time.
-	// If true : the Arm length will apply changes using target length, otherwise will limit by min and max arm length.
+	/// if true disable the Permanent camera mode set at that time.
+	/// If true  the Arm length will apply changes using target length, otherwise, it only will limit the spring arm 
+	/// length by new minimum and maximum.
 	UPROPERTY(EditAnywhere)
 	bool bCameraModeDisable = true;
+	/// If true, disables all active Camera Modifiers to prevent them from interfering with this camera effect.
 	UPROPERTY(EditAnywhere , meta = (EditCondition = "bCameraModeDisable == false",EditConditionHides))
 	bool bCameraModifierDisable = false;
+	/// Settings
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;
-
 };

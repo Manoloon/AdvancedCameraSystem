@@ -15,11 +15,12 @@ class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
 	GENERATED_BODY()
 
 public:
+	/// Return the Minimum limit of the Length
 	UFUNCTION(BlueprintCallable)
-	float GetSpringArmLengthMinLimit() const;
-
+	float GetMinSpringArmLength() const;
+	/// Return the Maximum limit of the Length
 	UFUNCTION(BlueprintCallable)
-	float GetSpringArmLengthMaxLimit() const;
+	float GetMaxSpringArmLength() const;
 
 	/**
 	 * @brief Interface used in PlayerCameraManager to actively set the length of the Spring Arm.
@@ -39,7 +40,7 @@ public:
 	void AddSpringArmLengthLimits(const float MinOffset, const float MaxOffset, const float NewTransitionTime);
 	
 	/**
-	 * brief This method is being used to set the Min and Max length limits for the Spring arm, and
+	 * @brief This method is being used to set the Min and Max length limits for the Spring arm, and
 	 * its being set using the Min Line Of Sight and Max Line Of Sight.
 	 * @param Min 
 	 * @param Max 

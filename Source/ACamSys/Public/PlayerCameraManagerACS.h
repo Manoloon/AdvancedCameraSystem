@@ -128,11 +128,13 @@ public:
 	/// @brief Example : PlayerCharacter : 
 	/// CameraManager->OnCameraDistanceToDitherFX.BindUObject(this, &APlayer::UpdateDitherFXOpacity);
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
-
+	
+	/** @internal */
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
 	                              FViewTargetTransitionParams TransitionParams) override;
-
+	/** @internal */
 	virtual void UpdateCamera(float DeltaTime) override;
+	/** @internal */
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 private:

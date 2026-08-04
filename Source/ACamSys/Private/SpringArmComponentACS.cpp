@@ -15,12 +15,12 @@ namespace ACSCvars
 		TEXT("Enable ACS SpringArmComponent Debug"));
 }
 #endif
-float USpringArmComponentACS::GetSpringArmLengthMinLimit() const
+float USpringArmComponentACS::GetMinSpringArmLength() const
 {
 	return MinLength;
 }
 
-float USpringArmComponentACS::GetSpringArmLengthMaxLimit() const
+float USpringArmComponentACS::GetMaxSpringArmLength() const
 {
 	return MaxLength;
 }

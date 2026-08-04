@@ -1,7 +1,6 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "CameraModifierACS.h"
-
 #include "PlayerCameraManagerACS.h"
 
 void UCameraModifierACS::AddedToCamera(APlayerCameraManager* Camera)
@@ -35,11 +34,6 @@ bool UCameraModifierACS::ProcessViewRotation(AActor* ViewTarget, float DeltaTime
 			return false;
 		}
 	return false;
-}
-
-FCamInfoForModifiers UCameraModifierACS::GetCurrentModifiers() const
-{
-	return CurrentModifiers;
 }
 
 bool UCameraModifierACS::OwnerHasChangedCamera() const
