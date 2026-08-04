@@ -267,34 +267,6 @@ void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& 
 	}
 }
 
-void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const
-{
-	if (ACSCvars::ACSDebug)
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, FString::Printf(TEXT("Camera Settings :")));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-			                                 FString::Printf(TEXT("TargetFOV : %f"), TargetFOV));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-			                                 FString::Printf(TEXT("DefaultFOV : %f"), DefaultFOV));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
-			                                 FString::Printf(
-				                                 TEXT("Pitch : %f"),
-				                                 GetOwningPlayerController()->GetControlRotation().Pitch));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
-			                                 FString::Printf(
-				                                 TEXT("Yaw : %f"),
-				                                 GetOwningPlayerController()->GetControlRotation().Yaw));
-			if (IsValid(CurrentCamera))
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-				                                 FString::Printf(TEXT("CurrentFOV : %f"), CurrentCamera->FieldOfView));
-			}
-		}
-	}
-}
-
 void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 {
 	Super::UpdateCamera(DeltaTime);
@@ -587,3 +559,33 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);
 	}
 }
+
+#if !UE_BUILD_SHIPPING
+void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const
+{
+	if (ACSCvars::ACSDebug)
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, FString::Printf(TEXT("Camera Settings :")));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+			                                 FString::Printf(TEXT("TargetFOV : %f"), TargetFOV));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+			                                 FString::Printf(TEXT("DefaultFOV : %f"), DefaultFOV));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+			                                 FString::Printf(
+				                                 TEXT("Pitch : %f"),
+				                                 GetOwningPlayerController()->GetControlRotation().Pitch));
+			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+			                                 FString::Printf(
+				                                 TEXT("Yaw : %f"),
+				                                 GetOwningPlayerController()->GetControlRotation().Yaw));
+			if (IsValid(CurrentCamera))
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+				                                 FString::Printf(TEXT("CurrentFOV : %f"), CurrentCamera->FieldOfView));
+			}
+		}
+	}
+}
+#endif

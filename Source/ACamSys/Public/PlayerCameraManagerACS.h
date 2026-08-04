@@ -145,9 +145,6 @@ private:
 	void EnableSpringArmLocationLag(const TObjectPtr<class UCurveFloat>& LocationLagCurve,
 									const float LagMaxDistance) const;
 	void DisableSpringArmLocationLag() const;
-#if !UE_BUILD_SHIPPING
-	void DebugAndPrintCameraSettings() const;
-#endif
 	void Internal_ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
 	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
@@ -184,4 +181,8 @@ private:
 	FVector2D DitherCameraThresholdSquared ={MaxDitherCameraThreshold * MaxDitherCameraThreshold,
 											MinDitherCameraThreshold * MinDitherCameraThreshold};
 	FTimerHandle DitherTimerHandler;
+	
+	#if !UE_BUILD_SHIPPING
+    	void DebugAndPrintCameraSettings() const;
+    #endif
 };
