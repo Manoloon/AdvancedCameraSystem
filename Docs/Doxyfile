@@ -56,6 +56,9 @@ PROJECT_NUMBER         = 1.0.1
 
 PROJECT_BRIEF          = "ACS is a modular camera system that let the designers create custom cameras behavior based in custom DataAssets names MODES."
 
+INPUT = README.md
+USE_MDFILE_AS_MAINPAGE = README.md
+
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
@@ -74,7 +77,7 @@ PROJECT_ICON           =
 # entered, it will be relative to the location where Doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = ../../Docs
+OUTPUT_DIRECTORY       = F:/UnrealProjects/Cpp_projects/CustomGravity/Plugins/AdvancedCameraSystem/Documentation
 
 # If the CREATE_SUBDIRS tag is set to YES then Doxygen will create up to 4096
 # sub-directories (in 2 levels) under the output directory of each output format
@@ -1464,7 +1467,7 @@ HTML_FOOTER            =
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET        =
+HTML_STYLESHEET        = #Documentation/doxygen-awesome.css
 
 # The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
 # cascading style sheets that are included after the standard style sheets
@@ -2576,28 +2579,28 @@ INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = ACAMSYS_API= \
                          UCLASS(...)= \
                          USTRUCT(...)= \
-                         UENUM(...)= \
-                         UINTERFACE(...)= \
-                         UFUNCTION(...)= \
-                         UPROPERTY(...)= \
-                         UPARAM(...)= \
-                         GENERATED_BODY()= \
-                         GENERATED_UCLASS_BODY()= \
-                         GENERATED_USTRUCT_BODY()= \
-                         GENERATED_INTERFACE_BODY()= \
-                         GENERATED_IINTERFACE_BODY()= \
-                         BlueprintType= \
-                         Blueprintable= \
-                         BlueprintCallable= \
-                         BlueprintPure= \
-                         BlueprintReadOnly= \
-                         BlueprintReadWrite= \
-                         EditAnywhere= \
-                         EditDefaultsOnly= \
-                         VisibleAnywhere= \
-                         VisibleDefaultsOnly= \
-                         Category(...)= \
-                         meta(...)=
+						 UENUM(...)= \
+							UINTERFACE(...)= \
+							UFUNCTION(...)= \
+							UPROPERTY(...)= \
+							UPARAM(...)= \
+							GENERATED_BODY()= \
+							GENERATED_UCLASS_BODY()= \
+							GENERATED_USTRUCT_BODY()= \
+							GENERATED_INTERFACE_BODY()= \
+							GENERATED_IINTERFACE_BODY()= \
+							BlueprintType= \
+							Blueprintable= \
+							BlueprintCallable= \
+							BlueprintPure= \
+							BlueprintReadOnly= \
+							BlueprintReadWrite= \
+							EditAnywhere= \
+							EditDefaultsOnly= \
+							VisibleAnywhere= \
+							VisibleDefaultsOnly= \
+							Category(...)= \
+							meta(...)=
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

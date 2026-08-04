@@ -1,7 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,31,99,57"/>
-<area shape="rect" id="Node000001" href="$class_u_one_time_camera_mode.html" title="OneTimeCameraMode is the mode that applies only one time Camera modes are the main concept in the cam..." alt="" coords="152,5,314,32"/>
-<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="114,33,154,29,149,31,115,38"/>
-<area shape="rect" id="Node000002" href="$class_u_permanent_camera_mode.html" title="PermanentCameraMode is the mode that applies permanently until another permanent is applied...." alt="" coords="147,56,319,83"/>
-<area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="114,50,149,57,144,58,114,55"/>
-</map>

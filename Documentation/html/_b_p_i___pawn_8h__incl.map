@@ -1,9 +1,0 @@
-<map id="Public/Interfaces/BPI_Pawn.h" name="Public/Interfaces/BPI_Pawn.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="129,5,275,48"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,111,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="168,48,95,90,93,86,162,49"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="134,96,270,123"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,47,204,82,200,79,200,51"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="294,96,449,123"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,46,334,89,328,89,245,51"/>
-</map>

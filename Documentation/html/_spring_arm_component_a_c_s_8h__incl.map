@@ -1,9 +1,0 @@
-<map id="Public/SpringArmComponentACS.h" name="Public/SpringArmComponentACS.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="173,5,362,48"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,111,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,51,106,93,104,88,212,46"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="135,96,400,123"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="269,47,270,82,265,79,265,51"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="424,96,673,123"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="340,46,492,91,487,92,339,51"/>
-</map>
