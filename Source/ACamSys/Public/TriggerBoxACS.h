@@ -36,9 +36,9 @@ private:
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	void ChangeCamera();
+	bool ChangeCamera(APlayerController* PlayerController);
 	UFUNCTION(BlueprintCallable)
-	void SwapPermamentCameraMode();
+	void SwapPermamentCameraMode(APlayerController* PlayerController);
 	UPROPERTY()
 	TObjectPtr<UPermanentCameraMode> PrevPermCameraMode;
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Settings")
