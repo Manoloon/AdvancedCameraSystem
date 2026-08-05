@@ -23,23 +23,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Find README and Source
-        run: |
-          find . -maxdepth 3 -name README.md
-          find . -maxdepth 3 -type d -name Source
-        
       - name: Install Doxygen and Graphviz
         run: |
           sudo apt-get update
           sudo apt-get install -y doxygen graphviz
-      
-      - name: Show repository tree
-        run: |
-            pwd
-            echo "===== ROOT ====="
-            ls -la
-            echo "===== Documentation ====="
-            ls -la Documentation || true
 
       - name: Generate documentation
         run: doxygen Documentation/Doxyfile
