@@ -18,8 +18,7 @@
  ## Basic Setup
  
  1. Set **APlayerCameraManagerACS** as the default Camera Manager in your Player Controller.
- 2. Implement the **BPI_Pawn** interface in your Character.
- 3. Add **SpringArmComponentACS** as the default Spring Arm component.
+ 2. Add **SpringArmComponentACS** as the default Spring Arm component.
  
  ## Camera Modes
  
