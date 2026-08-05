@@ -29,7 +29,6 @@ jobs:
           sudo apt-get install -y doxygen graphviz
 
       - name: Generate documentation
-		working-directory: Documentation
         run: |
           doxygen Documentation/Doxyfile
 
