@@ -28,6 +28,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y doxygen graphviz
 
+      - name: Search for old paths
+        run: |
+          grep -n "\.\./Source" Documentation/Doxyfile || true
+          grep -n "\.\./README" Documentation/Doxyfile || true
+    
       - name: Generate documentation
         run: doxygen Documentation/Doxyfile
 
