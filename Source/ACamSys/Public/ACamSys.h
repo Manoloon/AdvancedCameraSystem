@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
-
+/// @cond INTERNAL
 class FACamSysModule : public IModuleInterface
 {
 public:
@@ -12,3 +12,4 @@ public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 };
+/// @endcond 
