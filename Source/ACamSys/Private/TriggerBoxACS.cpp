@@ -7,7 +7,7 @@
 #include "Components/BillboardComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
-#include "Interfaces/BPI_Pawn.h"
+#include "Particles/ParticleEventManager.h"
 
 // Sets default values
 ATriggerBoxACS::ATriggerBoxACS()
@@ -49,20 +49,26 @@ ATriggerBoxACS::ATriggerBoxACS()
 
 void ATriggerBoxACS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(OtherActor->GetClass()->ImplementsInterface(UBPI_Pawn::StaticClass()))
+	
+	if(OtherActor->IsA(APawn::StaticClass()))
 	{
-		ChangeCamera();
-		SwapPermamentCameraMode();
+		const APawn* Other = Cast<APawn>(OtherActor);
+		if (!Other->IsLocallyControlled()) return;
+
+		if (APlayerController* PlayerController = Cast<APlayerController>(Other->GetController()); 
+			ChangeCamera(PlayerController))
+		{
+			SwapPermamentCameraMode(PlayerController);
+		}
 	}
 }
 
-void ATriggerBoxACS::ChangeCamera()
+bool ATriggerBoxACS::ChangeCamera(APlayerController* PlayerController)
 {
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	if (!PlayerController)
 	{
 		UE_LOG(LogACS,Error,TEXT("[%s] Player Controller not available"),*GetNameSafe(this));
-		return;
+		return false;
 	}
 	if (NewCameraActor && PlayerController->GetViewTarget() != NewCameraActor)
 	{
@@ -71,12 +77,12 @@ void ATriggerBoxACS::ChangeCamera()
 	else
 	{
 		PlayerController->SetViewTargetWithBlend(PlayerController->GetPawn());
-	}		
+	}
+	return  true;
 }
 
-void ATriggerBoxACS::SwapPermamentCameraMode()
+void ATriggerBoxACS::SwapPermamentCameraMode(APlayerController* PlayerController)
 {
-	const APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	if (!PlayerController)
 	{
 		UE_LOG(LogACS,Error,TEXT("[%s] Player Controller not available"),*GetNameSafe(this));
