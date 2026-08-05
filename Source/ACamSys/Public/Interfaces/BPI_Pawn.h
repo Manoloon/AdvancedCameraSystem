@@ -6,13 +6,20 @@
 #include "UObject/Interface.h"
 #include "BPI_Pawn.generated.h"
 
-// Interface for the actors that interact with the Player Camera System.
+/**
+ * @brief Interface to point to the player pawn
+ * @deprecated 
+ */
 UINTERFACE(MinimalAPI)
 class UBPI_Pawn : public UInterface
 {
 	GENERATED_BODY()
 };
 
+/**
+ * @brief Interface to point to the player pawn
+ * @deprecated 
+ */
 class IBPI_Pawn
 {
 	GENERATED_BODY()
