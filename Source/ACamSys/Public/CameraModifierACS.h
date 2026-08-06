@@ -11,6 +11,7 @@
 /**
  * @brief Base abstract class for Camera modifiers for the system.
  */
+/// @addtogroup Camera Modifier @{
 UCLASS(Abstract, BlueprintType)
 class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 {
@@ -40,3 +41,4 @@ protected:
 private:
 	float CooldownRemaining;
 };
+/// @}

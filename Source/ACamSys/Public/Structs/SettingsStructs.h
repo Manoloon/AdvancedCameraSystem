@@ -111,6 +111,7 @@ struct FCameraRotationConfig
 /**
  * @brief Settings structs :  Packet Struct Settings 
  */
+/// @addtogroup Structs @{
 USTRUCT(BlueprintType)
 struct FCameraConfig
 {
@@ -136,3 +137,4 @@ struct FCameraConfig
 	UPROPERTY(EditAnywhere)
 	FPostProcessSettings CamPostProcessSettings;
 };
+/// @}

@@ -19,7 +19,7 @@ class UCurveFloat;
  * This modifier can be used to create dynamic zoom and framing effects as the
  * player looks up or down.
  */
-
+/// @addtogroup Camera Modifier @{
 UCLASS(Abstract, Blueprintable)
 class ACAMSYS_API UActivePitchCurve : public UCameraModifierACS
 {
@@ -37,3 +37,4 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	UCurveFloat* PitchToFOVCurve = nullptr;
 };
+/// @}

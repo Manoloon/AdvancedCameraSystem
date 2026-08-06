@@ -13,6 +13,7 @@ class UBoxComponent;
  * @brief A custom Trigger Actor that could trigger change of permanent camera modes.
  * 
  */
+/// @addtogroup Core @{
 UCLASS(Abstract)
 class ACAMSYS_API ATriggerBoxACS : public AActor
 {
@@ -50,3 +51,4 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UBoxComponent> CollisionComponent;
 };
+/// @}

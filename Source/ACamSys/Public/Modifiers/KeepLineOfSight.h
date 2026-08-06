@@ -9,6 +9,7 @@
 /**
  * @brief Camera Modifier that keep line of sight with the target (could it be the player or another object)
  */
+/// @addtogroup Camera Modifier @{
 UCLASS(Abstract, Blueprintable)
 class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
 {
@@ -40,3 +41,4 @@ private:
 	void RotateAroundLocation(const FVector& TargetLocation, FVector& InOutViewLocation,
 		FRotator& InOutViewRotation, const float AngleInRadians) const;
 };
+/// @}
