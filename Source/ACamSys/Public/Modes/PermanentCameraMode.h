@@ -14,7 +14,8 @@
  * one camera mode can be active at any time.
  * Example of modes: Outdoor camera mode, 3x3 spaceship module mode.
  */
-/// @addtogroup Camera Modes @{
+/// @addtogroup CameraModes 
+/// @{
 UCLASS(BlueprintType)
 class ACAMSYS_API UPermanentCameraMode : public UDataAsset
 {

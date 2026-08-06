@@ -9,7 +9,8 @@
 /**
  * @brief Camera Modifier that keep line of sight with the target (could it be the player or another object)
  */
-/// @addtogroup Camera Modifier @{
+/// @ingroup CameraModifier 
+/// @{
 UCLASS(Abstract, Blueprintable)
 class ACAMSYS_API UKeepLineOfSight : public UCameraModifierACS
 {

@@ -18,7 +18,8 @@ DECLARE_DELEGATE_OneParam(FOnCameraDistanceToDitherFX, float /*DitherValue*/);
  * 
  * Its need to be set in the PlayerController as the default PlayerCameraManager.
  */
-/// @addtogroup Core @{
+/// @addtogroup Core 
+/// @{
 UCLASS(Blueprintable)
 class ACAMSYS_API APlayerCameraManagerACS : public APlayerCameraManager
 {

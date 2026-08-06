@@ -9,7 +9,8 @@
 /**
  * @brief Custom SpringArm Component to works in tandem with the system.
  */
-/// @addtogroup Core @{
+/// @ingroup Core 
+/// @{
 UCLASS(ClassGroup=Camera, meta=(BlueprintSpawnableComponent), hideCategories=(Mobility))
 class ACAMSYS_API USpringArmComponentACS : public USpringArmComponent
 {

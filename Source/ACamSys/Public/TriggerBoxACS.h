@@ -13,7 +13,8 @@ class UBoxComponent;
  * @brief A custom Trigger Actor that could trigger change of permanent camera modes.
  * 
  */
-/// @addtogroup Core @{
+/// @ingroup Core 
+/// @{
 UCLASS(Abstract)
 class ACAMSYS_API ATriggerBoxACS : public AActor
 {
@@ -34,7 +35,7 @@ private:
 	#endif
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
-
+// TODO : make this trigger work for both camera modes, and remove the blueprint prototype 
 protected:
 	UFUNCTION(BlueprintCallable)
 	bool ChangeCamera(APlayerController* PlayerController);

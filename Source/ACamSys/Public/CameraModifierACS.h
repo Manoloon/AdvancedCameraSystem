@@ -11,7 +11,8 @@
 /**
  * @brief Base abstract class for Camera modifiers for the system.
  */
-/// @addtogroup Camera Modifier @{
+/// @addtogroup CameraModifier 
+/// @{
 UCLASS(Abstract, BlueprintType)
 class ACAMSYS_API UCameraModifierACS : public UCameraModifier
 {

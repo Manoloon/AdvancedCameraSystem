@@ -8,6 +8,8 @@
 /**
  * @brief Settings structs :  for the Camera and Spring Arm
  */
+/// @addtogroup Structs 
+/// @{
 USTRUCT(BlueprintType)
 struct FCameraSpringArmConfig
 {
@@ -111,7 +113,6 @@ struct FCameraRotationConfig
 /**
  * @brief Settings structs :  Packet Struct Settings 
  */
-/// @addtogroup Structs @{
 USTRUCT(BlueprintType)
 struct FCameraConfig
 {
