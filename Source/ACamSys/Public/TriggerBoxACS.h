@@ -11,7 +11,6 @@ class UBoxComponent;
 
 /**
  * @brief A custom Trigger Actor that could trigger change of permanent camera modes.
- * 
  */
 /// @ingroup Core 
 /// @{

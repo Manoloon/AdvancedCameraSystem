@@ -5,11 +5,11 @@
 #include "CoreMinimal.h"
 #include "SettingsStructs.generated.h"
 
+/// @addtogroup Structs 
+/// @{
 /**
  * @brief Settings structs :  for the Camera and Spring Arm
  */
-/// @addtogroup Structs 
-/// @{
 USTRUCT(BlueprintType)
 struct FCameraSpringArmConfig
 {
