@@ -371,6 +371,13 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 										  CurrentConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	}
 	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
+	if (OneTimeCameraMode->EffectDuration > 0.0f)
+	{
+		FTimerDelegate RemoveDelegate;
+		FTimerHandle OneTimeModeHandler;
+		RemoveDelegate.BindUObject(this,&ThisClass::RemoveOneTimeCameraMode,OneTimeCameraMode);
+		GetWorldTimerManager().SetTimer(OneTimeModeHandler,RemoveDelegate,OneTimeCameraMode->EffectDuration,false);
+	}
 	UpdateCameraSettings(CurrentConfig);
 }
 
