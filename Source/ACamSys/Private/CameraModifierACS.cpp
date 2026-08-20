@@ -13,6 +13,7 @@ void UCameraModifierACS::AddedToCamera(APlayerCameraManager* Camera)
 			OwnerController = Cast<APlayerController>(OwnerPawn->Controller);
 		}
 	}
+	CameraManager = Cast<APlayerCameraManagerACS>(CameraOwner);
 }
 
 bool UCameraModifierACS::ProcessViewRotation(AActor* ViewTarget, float DeltaTime, FRotator& OutViewRotation,

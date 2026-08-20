@@ -133,6 +133,7 @@ public:
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 	
 	/// @cond INTERNAL
+	virtual void PostInitializeComponents() override;
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
 	                              FViewTargetTransitionParams TransitionParams) override;
 	virtual void UpdateCamera(float DeltaTime) override;

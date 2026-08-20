@@ -7,6 +7,7 @@
 #include "Modes/OneTimeCameraMode.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraModifier.h"
+#include "GameFramework/SpectatorPawn.h"
 #include "Kismet/GameplayStatics.h"
 #include "Structs/SettingsStructs.h"
 #include "Modes/PermanentCameraMode.h"
@@ -243,11 +244,20 @@ void APlayerCameraManagerACS::DisableDitherFX()
 	GetWorldTimerManager().ClearTimer(DitherTimerHandler);
 }
 
+void APlayerCameraManagerACS::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	
+}
+
 void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
                                                FViewTargetTransitionParams TransitionParams)
 {
 	Super::AssignViewTarget(NewTarget, VT, TransitionParams);
-
+	if (NewTarget->IsA(ASpectatorPawn::StaticClass()))
+	{
+		return;
+	}
 	for (auto It = OneTimeCameraModesApplied.CreateConstIterator(); It; ++It)
 	{
 		if (const UOneTimeCameraMode* OneTimeCameraMode = It->Value)

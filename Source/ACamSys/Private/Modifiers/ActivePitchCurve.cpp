@@ -1,8 +1,6 @@
 ﻿// // Copyright Pablo Rodrigo Sanchez, Inc. All Rights Reserved.
 
 #include "Modifiers/ActivePitchCurve.h"
-
-#include "ACSLog.h"
 #include "PlayerCameraManagerACS.h"
 
 #if !UE_BUILD_SHIPPING
@@ -19,12 +17,6 @@ namespace ACSCvars
 bool UActivePitchCurve::ModifyCamera(float DeltaTime, struct FMinimalViewInfo& InOutPOV)
 {
 	Super::ModifyCamera(DeltaTime, InOutPOV);
-	if (!CameraManager)
-	{
-		UE_LOG(LogACS, Error, TEXT("[%s] : Camera Manager is not Valid"), *GetNameSafe(this));
-		CameraManager = Cast<APlayerCameraManagerACS>(CameraOwner);
-		return false;
-	}
 	const FRotator CamRotation = InOutPOV.Rotation;
 	const float PitchToDistance = IsValid(PitchToDistanceCurve)
 		                              ? PitchToDistanceCurve->GetFloatValue(CamRotation.Pitch)
