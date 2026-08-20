@@ -28,12 +28,12 @@ class ACAMSYS_API ATriggerBoxACS : public AActor
 public:	
 	ATriggerBoxACS();
 	UFUNCTION(BlueprintCallable)
-	UBoxComponent* GetCollisionComponent() const {return CollisionComponent;}
+	UBoxComponent* GetCollisionComponent() const;
 
-	#if WITH_EDITORONLY_DATA
-	UFUNCTION(BlueprintCallable)
-	UBillboardComponent* GetSpriteComponent() const {return SpriteComponent;}
-	#endif
+#if WITH_EDITOR
+	UFUNCTION(CallInEditor)
+	UBillboardComponent* GetSpriteComponent() const;
+#endif
 private:
 	#if WITH_EDITORONLY_DATA
 	UPROPERTY(BlueprintReadOnly,meta = (AllowPrivateAccess = "true"))

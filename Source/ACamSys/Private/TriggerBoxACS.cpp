@@ -50,6 +50,16 @@ ATriggerBoxACS::ATriggerBoxACS()
 #endif
 }
 
+UBoxComponent* ATriggerBoxACS::GetCollisionComponent() const
+{
+	return CollisionComponent;
+}
+#if WITH_EDITOR
+UBillboardComponent* ATriggerBoxACS::GetSpriteComponent() const
+{
+	return SpriteComponent;
+}
+#endif
 void ATriggerBoxACS::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                     const FHitResult& SweepResult)
