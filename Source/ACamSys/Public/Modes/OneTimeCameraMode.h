@@ -24,6 +24,8 @@ class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<TSubclassOf<UCameraModifier>> CameraModifiersToApply;
 	/// Set the duration for the camera mode
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	float EffectDuration = 2.f;
