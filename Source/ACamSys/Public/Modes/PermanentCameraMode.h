@@ -24,7 +24,7 @@ class ACAMSYS_API UPermanentCameraMode : public UDataAsset
 public:
 	/// Add the camera modifiers that will be use on this Camera Mode.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TSubclassOf<UCameraModifier>> CameraModifiersToApply;
+	TSet<TSubclassOf<UCameraModifier>> CameraModifiersToApply;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;

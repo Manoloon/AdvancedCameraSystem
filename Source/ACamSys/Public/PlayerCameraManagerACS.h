@@ -154,7 +154,7 @@ private:
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
 	void ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings);
-	void OT_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings);
+	void OTCM_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings);
 	void AddFOV(const float Value);
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);

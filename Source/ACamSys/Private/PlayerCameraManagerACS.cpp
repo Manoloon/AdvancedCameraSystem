@@ -351,19 +351,6 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	}
 	else
 	{
-		// if (OneTimeCameraMode->bCameraModifierDisable)
-		// {
-		// 	if (!ModifierList.IsEmpty())
-		// 	{
-		// 		for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
-		// 		{
-		// 			if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(NewModifier.GetClass()))
-		// 			{
-		// 				NewModifier->DisableModifier(true);
-		// 			}
-		// 		}
-		// 	}
-		// }
 		if (CurrentSpringArm)
 		{
 			CurrentSpringArm->SetSpringArmLengthLimits(CurrentConfig.SpringArmSettings.MinLength,
@@ -385,7 +372,7 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 		RemoveDelegate.BindUObject(this, &ThisClass::RemoveOneTimeCameraMode, OneTimeCameraMode);
 		GetWorldTimerManager().SetTimer(OneTimeModeHandler, RemoveDelegate, OneTimeCameraMode->EffectDuration, false);
 	}
-	OT_ChangeCurrentModifiers(OneTimeCameraMode);
+	OTCM_ChangeCurrentModifiers(OneTimeCameraMode);
 	UpdateCameraSettings(CurrentConfig);
 }
 
@@ -393,19 +380,6 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 {
 	const FCameraConfig& CurrentModeConfig = CurrentCameraModeSettings->CameraConfig;
 	const FCameraConfig& CurrentOneTimeCMConfig = OneTimeCameraMode->CameraConfig;
-	// it will put on active the permanent mode that was active before and remove the one time mode.
-	// if (OneTimeCameraMode->bCameraModeDisable)
-	// {
-	// 	if (CurrentSpringArm)
-	// 	{
-	// 		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.SpringArmSettings.MinLength,
-	// 		                                           CurrentModeConfig.SpringArmSettings.MaxLength,
-	// 		                                           CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
-	// 		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.NewLength,
-	// 		                                        CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
-	// 	}
-	// }
-	// Handle CameraModifiers on OneTime Camera mode
 	if (!ModifierList.IsEmpty())
 	{
 		TSet<UCameraModifier*> ToBeRemove;
@@ -514,34 +488,42 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 {
 	// need to know that the currentCameraModeSettings has been used before.
 	// this is invalid when play begins.
-	if (CurrentCameraModeSettings == nullptr || CurrentCameraModeSettings->CameraModifiersToApply.IsEmpty())
+	if (CurrentCameraModeSettings != nullptr && CurrentCameraModeSettings->CameraModifiersToApply.IsEmpty())
 	{
-		return;
-	}
-	//TODO why the copy ?
-	//TArray<TObjectPtr<UCameraModifier>> TempModifierList = ModifierList;
-	for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
-	{
-		if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(NewModifier.GetClass()))
+		// Remove ald Camera Modifiers
+		TSet<UCameraModifier*> ToBeRemove;
+		for (const TObjectPtr<UCameraModifier>& Modifier : ModifierList)
 		{
-			RemoveCameraModifier(NewModifier);
+			if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(Modifier.GetClass()))
+			{
+				ToBeRemove.Add(Modifier);
+			}
+		}
+		for (auto Modifier : ToBeRemove)
+		{
+			RemoveCameraModifier(Modifier);
 		}
 	}
-
-	if (NewCameraSettings->CameraModifiersToApply.IsEmpty())
+	// Add new camera modifiers
+	for (const auto& NewModifier : NewCameraSettings->CameraModifiersToApply)
 	{
-		return;
-	}
-	for (const TSubclassOf NewModifier : NewCameraSettings->CameraModifiersToApply)
-	{
-		if (NewModifier)
+#if !UE_BUILD_SHIPPING
+		if (ACSCvars::ACSDebug)
 		{
-			AddNewCameraModifier(NewModifier);
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green,
+												 FString::Printf(
+													 TEXT("Permanent CM Camera Modifier : %s"),
+													 *NewModifier->GetName()));
+			}
 		}
+#endif
+		AddNewCameraModifier(NewModifier);
 	}
 }
 
-void APlayerCameraManagerACS::OT_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings)
+void APlayerCameraManagerACS::OTCM_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings)
 {
 	// need to know that the currentCameraModeSettings has been used before.
 	// this is invalid when play begins.
@@ -549,25 +531,21 @@ void APlayerCameraManagerACS::OT_ChangeCurrentModifiers(const UOneTimeCameraMode
 	{
 		return;
 	}
-	// if (CurrentCameraModeSettings == nullptr || CurrentCameraModeSettings->CameraModifiersToApply.IsEmpty())
-	// {
-	// 	return;
-	// }
-	//TODO why the copy ?
-	//TArray<TObjectPtr<UCameraModifier>> TempModifierList = ModifierList;
-	// for (const TObjectPtr<UCameraModifier>& NewModifier : ModifierList)
-	// {
-	// 	if (CurrentCameraModeSettings->CameraModifiersToApply.Contains(NewModifier.GetClass()))
-	// 	{
-	// 		RemoveCameraModifier(NewModifier);
-	// 	}
-	// }
 	for (const TSubclassOf NewModifier : NewCameraSettings->CameraModifiersToApply)
 	{
-		if (NewModifier)
+#if !UE_BUILD_SHIPPING
+		if (ACSCvars::ACSDebug)
 		{
-			AddNewCameraModifier(NewModifier);
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green,
+												 FString::Printf(
+													 TEXT("OneTime CM Camera Modifier : %s"),
+													 *NewModifier->GetName()));
+			}
 		}
+#endif
+		AddNewCameraModifier(NewModifier);
 	}
 }
 
