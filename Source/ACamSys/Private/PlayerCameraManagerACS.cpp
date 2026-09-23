@@ -369,7 +369,7 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 		}
 		if (CurrentSpringArm)
 		{
-			CurrentSpringArm->AddSpringArmLengthLimits(CurrentConfig.SpringArmSettings.MinLength,
+			CurrentSpringArm->SetSpringArmLengthLimits(CurrentConfig.SpringArmSettings.MinLength,
 													   CurrentConfig.SpringArmSettings.MaxLength,
 													   CurrentConfig.SpringArmSettings.LengthTransitionSpeed);
 		}
@@ -414,7 +414,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 			}
 		}
 	}
-	else // just remove the one time mode by subtracting data. 
+	else // just remove the one time mode by applying Camera mode data. 
 	{
 		if (OneTimeCameraMode->bCameraModifierDisable)
 		{
@@ -430,6 +430,9 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 	TargetFOV = CurrentModeConfig.FOVSettings.FOV;
 	if (CurrentSpringArm)
 	{
+		CurrentSpringArm->SetSpringArmLengthLimits(CurrentModeConfig.SpringArmSettings.MinLength,
+													CurrentModeConfig.SpringArmSettings.MaxLength,
+													CurrentOneTimeCMConfig.SpringArmSettings.LengthTransitionSpeed);			
 		CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
 										  CurrentOneTimeCMConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	}
