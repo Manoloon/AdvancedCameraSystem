@@ -190,6 +190,7 @@ private:
 	#if !UE_BUILD_SHIPPING
 	void DebugAndPrintCameraSettings() const;
 	void DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved = false);
+	void DebugCameraModeType(const UDataAsset* CameraMode, bool ToBeRemoved = false);
     #endif
 };
 /// @}

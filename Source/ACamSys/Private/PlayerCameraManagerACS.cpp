@@ -119,16 +119,7 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 		}
 		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
 #if !UE_BUILD_SHIPPING
-		if (ACSCvars::ACSDebug)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan,
-				                                 FString::Printf(
-					                                 TEXT("OneTimeCameraMode to apply : %s"),
-					                                 *OneTimeCameraMode->GetName()));
-			}
-		}
+		DebugCameraModeType(OneTimeCameraMode);
 #endif
 		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 	}
@@ -142,17 +133,9 @@ void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* 
 	}
 	if (IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
+		
 #if !UE_BUILD_SHIPPING
-		if (ACSCvars::ACSDebug)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Orange,
-				                                 FString::Printf(
-					                                 TEXT("OneTimeCameraMode removed : %s"),
-					                                 *OneTimeCameraMode->GetName()));
-			}
-		}
+		DebugCameraModeType(OneTimeCameraMode,true);
 #endif
 		InternalRemoveOneTimeCameraMode(OneTimeCameraMode);
 	}
@@ -593,6 +576,24 @@ void APlayerCameraManagerACS::DebugCameraModifiers(const UCameraModifier* Modifi
 											 FString::Printf(
 												 TEXT("OneTimeCM Camera Modifier to be %s: %s"),*Action,
 												 *Modifier->GetName()));
+		}
+	}
+}
+#endif
+
+#if !UE_BUILD_SHIPPING
+void APlayerCameraManagerACS::DebugCameraModeType(const UDataAsset* CameraMode, bool ToBeRemoved)
+{
+	if (ACSCvars::ACSDebug)
+	{
+		if (GEngine)
+		{
+			const FString Action =  ToBeRemoved ? TEXT("Removed") : TEXT("Added");
+			const FColor Color = ToBeRemoved ? FColor::Orange : FColor::Cyan ;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
+											 FString::Printf(
+												 TEXT("OneTimeCameraMode %s : %s"),*Action,
+												 *CameraMode->GetName()));
 		}
 	}
 }
