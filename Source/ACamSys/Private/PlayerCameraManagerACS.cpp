@@ -372,7 +372,7 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 		RemoveDelegate.BindUObject(this, &ThisClass::RemoveOneTimeCameraMode, OneTimeCameraMode);
 		GetWorldTimerManager().SetTimer(OneTimeModeHandler, RemoveDelegate, OneTimeCameraMode->EffectDuration, false);
 	}
-	OTCM_ChangeCurrentModifiers(OneTimeCameraMode);
+	ApplyCurrentModifiersOneTimeCM(OneTimeCameraMode);
 	UpdateCameraSettings(CurrentConfig);
 }
 
@@ -394,8 +394,11 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 				NewModifier->EnableModifier();
 			}
 		}
-		for (auto Modifier : ToBeRemove)
+		for (const auto& Modifier : ToBeRemove)
 		{
+#if !UE_BUILD_SHIPPING
+			DebugCameraModifiers(Modifier,true);
+#endif
 			RemoveCameraModifier(Modifier);
 		}
 	}
@@ -483,12 +486,11 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 	CurrentCamera->PostProcessSettings = NewCameraConfig.CamPostProcessSettings;
 }
 
-// TODO change to use with Permanent And OneTime too
 void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings)
 {
 	// need to know that the currentCameraModeSettings has been used before.
 	// this is invalid when play begins.
-	if (CurrentCameraModeSettings != nullptr && CurrentCameraModeSettings->CameraModifiersToApply.IsEmpty())
+	if (CurrentCameraModeSettings != nullptr && !CurrentCameraModeSettings->CameraModifiersToApply.IsEmpty())
 	{
 		// Remove ald Camera Modifiers
 		TSet<UCameraModifier*> ToBeRemove;
@@ -501,6 +503,9 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 		}
 		for (auto Modifier : ToBeRemove)
 		{
+#if !UE_BUILD_SHIPPING 
+			DebugCameraModifiers(Modifier,true);
+#endif
 			RemoveCameraModifier(Modifier);
 		}
 	}
@@ -508,22 +513,13 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 	for (const auto& NewModifier : NewCameraSettings->CameraModifiersToApply)
 	{
 #if !UE_BUILD_SHIPPING
-		if (ACSCvars::ACSDebug)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green,
-												 FString::Printf(
-													 TEXT("Permanent CM Camera Modifier : %s"),
-													 *NewModifier->GetName()));
-			}
-		}
+		DebugCameraModifiers(NewModifier.GetDefaultObject());
 #endif
 		AddNewCameraModifier(NewModifier);
 	}
 }
 
-void APlayerCameraManagerACS::OTCM_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings)
+void APlayerCameraManagerACS::ApplyCurrentModifiersOneTimeCM(const UOneTimeCameraMode* NewCameraSettings)
 {
 	// need to know that the currentCameraModeSettings has been used before.
 	// this is invalid when play begins.
@@ -531,19 +527,10 @@ void APlayerCameraManagerACS::OTCM_ChangeCurrentModifiers(const UOneTimeCameraMo
 	{
 		return;
 	}
-	for (const TSubclassOf NewModifier : NewCameraSettings->CameraModifiersToApply)
+	for (const auto& NewModifier : NewCameraSettings->CameraModifiersToApply)
 	{
 #if !UE_BUILD_SHIPPING
-		if (ACSCvars::ACSDebug)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green,
-												 FString::Printf(
-													 TEXT("OneTime CM Camera Modifier : %s"),
-													 *NewModifier->GetName()));
-			}
-		}
+		DebugCameraModifiers(NewModifier.GetDefaultObject());
 #endif
 		AddNewCameraModifier(NewModifier);
 	}
@@ -592,6 +579,24 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);
 	}
 }
+
+#if !UE_BUILD_SHIPPING
+void APlayerCameraManagerACS::DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved)
+{
+	if (ACSCvars::ACSDebug)
+	{
+		if (GEngine)
+		{
+			const FString Action =  ToBeRemoved ? TEXT("Removed") : TEXT("Added");
+			const FColor Color = ToBeRemoved ? FColor::Red : FColor::Green ;
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
+											 FString::Printf(
+												 TEXT("OneTimeCM Camera Modifier to be %s: %s"),*Action,
+												 *Modifier->GetName()));
+		}
+	}
+}
+#endif
 
 #if !UE_BUILD_SHIPPING
 void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const

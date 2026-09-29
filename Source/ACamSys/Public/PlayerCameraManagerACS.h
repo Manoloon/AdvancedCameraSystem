@@ -151,10 +151,11 @@ private:
 	void Internal_ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
 	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
+
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
 	void ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings);
-	void OTCM_ChangeCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings);
+	void ApplyCurrentModifiersOneTimeCM(const UOneTimeCameraMode* NewCameraSettings);
 	void AddFOV(const float Value);
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
@@ -187,7 +188,8 @@ private:
 	FTimerHandle DitherTimerHandler;
 	
 	#if !UE_BUILD_SHIPPING
-    	void DebugAndPrintCameraSettings() const;
+	void DebugAndPrintCameraSettings() const;
+	void DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved = false);
     #endif
 };
 /// @}
