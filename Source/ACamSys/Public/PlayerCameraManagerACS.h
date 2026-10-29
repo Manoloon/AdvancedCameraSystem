@@ -160,7 +160,7 @@ private:
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
 	float GetCameraToPawnDistSquared() const;
-
+	void ApplyOneTimeCameraModeFromTheList();
 	UFUNCTION()
 	void CalculateDitherEffect();
 	
@@ -170,6 +170,8 @@ private:
 	UPermanentCameraMode* CurrentCameraModeSettings;
 	UPROPERTY()
 	TMap<FString, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
+	UPROPERTY()
+	TArray<const UOneTimeCameraMode*> SortedOneTimeCameraModesApplied;
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;
 
@@ -188,6 +190,7 @@ private:
 	FTimerHandle DitherTimerHandler;
 	
 	#if !UE_BUILD_SHIPPING
+	void PrintAllOneTimeCamera() const;
 	void DebugAndPrintCameraSettings() const;
 	void DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved = false);
 	void DebugCameraModeType(const UDataAsset* CameraMode, bool ToBeRemoved = false);

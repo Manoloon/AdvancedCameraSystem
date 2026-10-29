@@ -95,7 +95,12 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
 	const UOneTimeCameraMode* CurrentOneTimeCM = NewObject<UOneTimeCameraMode>(this, OneTimeCameraModeClass);
 	if (!IsOneTimeCameraModeApplied(CurrentOneTimeCM))
 	{
-		if (!OneTimeCameraModesApplied.IsEmpty() && CurrentOneTimeCM->Priority == 0)
+		SortedOneTimeCameraModesApplied.Add(CurrentOneTimeCM);
+		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A,const UOneTimeCameraMode& B)
+		{
+			return A.Priority < B.Priority;
+		});
+		if (!OneTimeCameraModesApplied.IsEmpty() && CurrentOneTimeCM->Priority < SortedOneTimeCameraModesApplied[0]->Priority)
 		{
 			return;
 		}
@@ -113,7 +118,12 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 
 	if (!IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
-		if (!OneTimeCameraModesApplied.IsEmpty() && OneTimeCameraMode->Priority == 0)
+		SortedOneTimeCameraModesApplied.Add(OneTimeCameraMode);
+		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A,const UOneTimeCameraMode& B)
+		{
+			return A.Priority > B.Priority;
+		});
+		if (!OneTimeCameraModesApplied.IsEmpty() && OneTimeCameraMode->Priority < SortedOneTimeCameraModesApplied[0]->Priority)
 		{
 			return;
 		}
@@ -267,13 +277,19 @@ void APlayerCameraManagerACS::UpdateCamera(float DeltaTime)
 		UpdateCameraFOV(DeltaTime);
 	}
 #if !UE_BUILD_SHIPPING
-	DebugAndPrintCameraSettings();
+	if (ACSCvars::ACSDebug)
+	{
+		PrintAllOneTimeCamera();
+		DebugAndPrintCameraSettings();
+	}
 #endif
 }
 
 void APlayerCameraManagerACS::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
+	SortedOneTimeCameraModesApplied.Empty();
+	OneTimeCameraModesApplied.Empty();
 	DisableDitherFX();
 }
 
@@ -397,6 +413,10 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 		                                  CurrentOneTimeCMConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	}
 	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetName());
+	if (!SortedOneTimeCameraModesApplied.IsEmpty())
+	{
+		ApplyOneTimeCameraModeFromTheList();
+	}
 	UpdateCameraSettings(CurrentModeConfig);
 }
 
@@ -545,6 +565,18 @@ float APlayerCameraManagerACS::GetCameraToPawnDistSquared() const
 	return FVector::DistSquared(GetCameraLocation(), GetViewTarget()->GetActorLocation());
 }
 
+void APlayerCameraManagerACS::ApplyOneTimeCameraModeFromTheList()
+{
+	auto NewOneTimeToApply = SortedOneTimeCameraModesApplied[0];
+	SortedOneTimeCameraModesApplied.RemoveSingleSwap(SortedOneTimeCameraModesApplied[0],EAllowShrinking::Yes);
+	UE_LOG(LogTemp,Warning,TEXT("TO APPly next OTCM %s, with priority : %d"),*NewOneTimeToApply->GetName(),NewOneTimeToApply->Priority);
+	OneTimeCameraModesApplied.Add(NewOneTimeToApply->GetName(), NewOneTimeToApply);
+#if !UE_BUILD_SHIPPING
+	DebugCameraModeType(NewOneTimeToApply);
+#endif
+	InternalApplyOneTimeCameraMode(NewOneTimeToApply);
+}
+
 void APlayerCameraManagerACS::CalculateDitherEffect()
 {
 	if (!OnCameraDistanceToDitherFX.IsBound())
@@ -600,6 +632,18 @@ void APlayerCameraManagerACS::DebugCameraModeType(const UDataAsset* CameraMode, 
 #endif
 
 #if !UE_BUILD_SHIPPING
+void APlayerCameraManagerACS::PrintAllOneTimeCamera() const
+{
+	if (SortedOneTimeCameraModesApplied.IsEmpty()) return;
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, 
+			FString::Printf(TEXT("One Time CM List :")));
+	for (const auto& Otcm : SortedOneTimeCameraModesApplied)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, 
+			FString::Printf(TEXT("One time: %s"),*Otcm->GetName()));
+	}
+}
+
 void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const
 {
 	if (ACSCvars::ACSDebug)
