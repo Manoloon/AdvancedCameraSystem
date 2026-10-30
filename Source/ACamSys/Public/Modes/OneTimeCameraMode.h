@@ -22,15 +22,14 @@ UCLASS(BlueprintType)
 class ACAMSYS_API UOneTimeCameraMode : public UDataAsset
 {
 	GENERATED_BODY()
-
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSet<TSubclassOf<UCameraModifier>> CameraModifiersToApply;
 	/// Set the duration for the camera mode
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
-	float EffectDuration = 2.f;
-	/// By default, all One Time Camera Mode(OTCM) have priority 1 , but if you need to not run a OTCM if another is ,
-	/// you set priority of this one to 0 , and it will not run if others are running.
+	float EffectDuration = 1.f;
+	/// By default, all One Time Camera Mode(OTCM) have priority 1, any camera mode with higher priority will be applied
+	/// and any with lower priority will be save on a sorted array to be apply when the higher priority have finished.
 	UPROPERTY(EditAnywhere)
 	int Priority=1;
 	/// if true disable the Permanent camera mode set at that time.

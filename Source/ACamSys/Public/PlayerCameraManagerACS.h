@@ -169,7 +169,7 @@ private:
 	UPROPERTY()
 	UPermanentCameraMode* CurrentCameraModeSettings;
 	UPROPERTY()
-	TMap<FString, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
+	TMap<uint32, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
 	UPROPERTY()
 	TArray<const UOneTimeCameraMode*> SortedOneTimeCameraModesApplied;
 	UPROPERTY()

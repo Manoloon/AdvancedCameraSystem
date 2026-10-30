@@ -62,7 +62,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* Perm
 
 bool APlayerCameraManagerACS::IsOneTimeCameraModeApplied(const UOneTimeCameraMode* OneTimeCameraMode) const
 {
-	return OneTimeCameraModesApplied.Contains(OneTimeCameraMode->GetName());
+	return OneTimeCameraModesApplied.Contains(OneTimeCameraMode->GetUniqueID());
 }
 
 void APlayerCameraManagerACS::ToggleOneTimeCameraModeByClass(
@@ -96,15 +96,16 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraModeByClass(
 	if (!IsOneTimeCameraModeApplied(CurrentOneTimeCM))
 	{
 		SortedOneTimeCameraModesApplied.Add(CurrentOneTimeCM);
-		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A,const UOneTimeCameraMode& B)
+		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A, const UOneTimeCameraMode& B)
 		{
 			return A.Priority < B.Priority;
 		});
-		if (!OneTimeCameraModesApplied.IsEmpty() && CurrentOneTimeCM->Priority < SortedOneTimeCameraModesApplied[0]->Priority)
+		if (!OneTimeCameraModesApplied.IsEmpty() && CurrentOneTimeCM->Priority < SortedOneTimeCameraModesApplied[0]->
+			Priority)
 		{
 			return;
 		}
-		OneTimeCameraModesApplied.Add(CurrentOneTimeCM->GetName(), CurrentOneTimeCM);
+		OneTimeCameraModesApplied.Add(CurrentOneTimeCM->GetUniqueID(), CurrentOneTimeCM);
 		InternalApplyOneTimeCameraMode(CurrentOneTimeCM);
 	}
 }
@@ -115,24 +116,28 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 	{
 		return;
 	}
-
-	if (!IsOneTimeCameraModeApplied(OneTimeCameraMode))
+	if (IsOneTimeCameraModeApplied(OneTimeCameraMode))
+	{
+		return;
+	}
+	// If the current OTCM have less priority than the next in the sorted list to be apply.
+	// with added to the list sorted out and return. 
+	if (!OneTimeCameraModesApplied.IsEmpty() && !SortedOneTimeCameraModesApplied.IsEmpty() 
+		&& OneTimeCameraMode->Priority < SortedOneTimeCameraModesApplied[0]->Priority)
 	{
 		SortedOneTimeCameraModesApplied.Add(OneTimeCameraMode);
-		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A,const UOneTimeCameraMode& B)
+		SortedOneTimeCameraModesApplied.Sort([&](const UOneTimeCameraMode& A, const UOneTimeCameraMode& B)
 		{
 			return A.Priority > B.Priority;
 		});
-		if (!OneTimeCameraModesApplied.IsEmpty() && OneTimeCameraMode->Priority < SortedOneTimeCameraModesApplied[0]->Priority)
-		{
-			return;
-		}
-		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
-#if !UE_BUILD_SHIPPING
-		DebugCameraModeType(OneTimeCameraMode);
-#endif
-		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
+		return;
 	}
+	// else we apply the OTCM
+	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetUniqueID(), OneTimeCameraMode);
+#if !UE_BUILD_SHIPPING
+	DebugCameraModeType(OneTimeCameraMode);
+#endif
+	InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 }
 
 void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
@@ -143,9 +148,8 @@ void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* 
 	}
 	if (IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
-		
 #if !UE_BUILD_SHIPPING
-		DebugCameraModeType(OneTimeCameraMode,true);
+		DebugCameraModeType(OneTimeCameraMode, true);
 #endif
 		InternalRemoveOneTimeCameraMode(OneTimeCameraMode);
 	}
@@ -363,7 +367,7 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 		CurrentSpringArm->SetSocketOffset(CurrentConfig.SpringArmSettings.SocketOffsetModifier,
 		                                  CurrentConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	}
-	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetName(), OneTimeCameraMode);
+	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetUniqueID(), OneTimeCameraMode);
 	if (OneTimeCameraMode->EffectDuration > 0.0f)
 	{
 		FTimerDelegate RemoveDelegate;
@@ -379,6 +383,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 {
 	const FCameraConfig& CurrentModeConfig = CurrentCameraModeSettings->CameraConfig;
 	const FCameraConfig& CurrentOneTimeCMConfig = OneTimeCameraMode->CameraConfig;
+	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetUniqueID());
 	if (!ModifierList.IsEmpty())
 	{
 		TSet<UCameraModifier*> ToBeRemove;
@@ -396,7 +401,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 		for (const auto& Modifier : ToBeRemove)
 		{
 #if !UE_BUILD_SHIPPING
-			DebugCameraModifiers(Modifier,true);
+			DebugCameraModifiers(Modifier, true);
 #endif
 			RemoveCameraModifier(Modifier);
 		}
@@ -408,11 +413,10 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 		                                           CurrentModeConfig.SpringArmSettings.MaxLength,
 		                                           CurrentOneTimeCMConfig.SpringArmSettings.LengthTransitionSpeed);
 		CurrentSpringArm->ChangeSpringArmLength(CurrentModeConfig.SpringArmSettings.NewLength,
-												CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
+		                                        CurrentModeConfig.SpringArmSettings.LengthTransitionSpeed);
 		CurrentSpringArm->SetSocketOffset(CurrentModeConfig.SpringArmSettings.SocketOffsetModifier,
 		                                  CurrentOneTimeCMConfig.SpringArmSettings.SocketOffsetTransitionSpeed);
 	}
-	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetName());
 	if (!SortedOneTimeCameraModesApplied.IsEmpty())
 	{
 		ApplyOneTimeCameraModeFromTheList();
@@ -506,8 +510,8 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 		}
 		for (auto Modifier : ToBeRemove)
 		{
-#if !UE_BUILD_SHIPPING 
-			DebugCameraModifiers(Modifier,true);
+#if !UE_BUILD_SHIPPING
+			DebugCameraModifiers(Modifier, true);
 #endif
 			RemoveCameraModifier(Modifier);
 		}
@@ -568,9 +572,10 @@ float APlayerCameraManagerACS::GetCameraToPawnDistSquared() const
 void APlayerCameraManagerACS::ApplyOneTimeCameraModeFromTheList()
 {
 	auto NewOneTimeToApply = SortedOneTimeCameraModesApplied[0];
-	SortedOneTimeCameraModesApplied.RemoveSingleSwap(SortedOneTimeCameraModesApplied[0],EAllowShrinking::Yes);
-	UE_LOG(LogTemp,Warning,TEXT("TO APPly next OTCM %s, with priority : %d"),*NewOneTimeToApply->GetName(),NewOneTimeToApply->Priority);
-	OneTimeCameraModesApplied.Add(NewOneTimeToApply->GetName(), NewOneTimeToApply);
+	SortedOneTimeCameraModesApplied.RemoveSingleSwap(SortedOneTimeCameraModesApplied[0], EAllowShrinking::Yes);
+	UE_LOG(LogTemp, Warning, TEXT("TO APPly next OTCM %s, with priority : %d"), *NewOneTimeToApply->GetName(),
+	       NewOneTimeToApply->Priority);
+	OneTimeCameraModesApplied.Add(NewOneTimeToApply->GetUniqueID(), NewOneTimeToApply);
 #if !UE_BUILD_SHIPPING
 	DebugCameraModeType(NewOneTimeToApply);
 #endif
@@ -598,17 +603,18 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 #if !UE_BUILD_SHIPPING
 void APlayerCameraManagerACS::DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved)
 {
-	if (ACSCvars::ACSDebug)
+	if (!ACSCvars::ACSDebug)
 	{
-		if (GEngine)
-		{
-			const FString Action =  ToBeRemoved ? TEXT("Removed") : TEXT("Added");
-			const FColor Color = ToBeRemoved ? FColor::Red : FColor::Green ;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
-											 FString::Printf(
-												 TEXT("OneTimeCM Camera Modifier to be %s: %s"),*Action,
-												 *Modifier->GetName()));
-		}
+		return;
+	}
+	if (GEngine)
+	{
+		const FString Action = ToBeRemoved ? TEXT("Removed") : TEXT("Added");
+		const FColor Color = ToBeRemoved ? FColor::Red : FColor::Green;
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
+		                                 FString::Printf(
+			                                 TEXT("OneTimeCM Camera Modifier to be %s: %s"), *Action,
+			                                 *Modifier->GetName()));
 	}
 }
 #endif
@@ -616,17 +622,18 @@ void APlayerCameraManagerACS::DebugCameraModifiers(const UCameraModifier* Modifi
 #if !UE_BUILD_SHIPPING
 void APlayerCameraManagerACS::DebugCameraModeType(const UDataAsset* CameraMode, bool ToBeRemoved)
 {
-	if (ACSCvars::ACSDebug)
+	if (!ACSCvars::ACSDebug)
 	{
-		if (GEngine)
-		{
-			const FString Action =  ToBeRemoved ? TEXT("Removed") : TEXT("Added");
-			const FColor Color = ToBeRemoved ? FColor::Orange : FColor::Cyan ;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
-											 FString::Printf(
-												 TEXT("OneTimeCameraMode %s : %s"),*Action,
-												 *CameraMode->GetName()));
-		}
+		return;
+	}
+	if (GEngine)
+	{
+		const FString Action = ToBeRemoved ? TEXT("Removed") : TEXT("Added");
+		const FColor Color = ToBeRemoved ? FColor::Orange : FColor::Cyan;
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, Color,
+		                                 FString::Printf(
+			                                 TEXT("OneTimeCameraMode %s : %s | id: %d"), *Action,
+			                                 *CameraMode->GetName(), CameraMode->GetUniqueID()));
 	}
 }
 #endif
@@ -635,39 +642,40 @@ void APlayerCameraManagerACS::DebugCameraModeType(const UDataAsset* CameraMode, 
 void APlayerCameraManagerACS::PrintAllOneTimeCamera() const
 {
 	if (SortedOneTimeCameraModesApplied.IsEmpty()) return;
-	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, 
-			FString::Printf(TEXT("One Time CM List :")));
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green,
+	                                 FString::Printf(TEXT("One Time CM Waiting List :")));
 	for (const auto& Otcm : SortedOneTimeCameraModesApplied)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, 
-			FString::Printf(TEXT("One time: %s"),*Otcm->GetName()));
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green,
+		                                 FString::Printf(TEXT("%s | id: %d"), *Otcm->GetName(), Otcm->GetUniqueID()));
 	}
 }
 
 void APlayerCameraManagerACS::DebugAndPrintCameraSettings() const
 {
-	if (ACSCvars::ACSDebug)
+	if (!ACSCvars::ACSDebug)
 	{
-		if (GEngine)
+		return;
+	}
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, FString::Printf(TEXT("Camera Settings :")));
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+		                                 FString::Printf(TEXT("TargetFOV : %f"), TargetFOV));
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
+		                                 FString::Printf(TEXT("DefaultFOV : %f"), DefaultFOV));
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+		                                 FString::Printf(
+			                                 TEXT("Pitch : %f"),
+			                                 GetOwningPlayerController()->GetControlRotation().Pitch));
+		GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
+		                                 FString::Printf(
+			                                 TEXT("Yaw : %f"),
+			                                 GetOwningPlayerController()->GetControlRotation().Yaw));
+		if (IsValid(CurrentCamera))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Green, FString::Printf(TEXT("Camera Settings :")));
 			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-			                                 FString::Printf(TEXT("TargetFOV : %f"), TargetFOV));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-			                                 FString::Printf(TEXT("DefaultFOV : %f"), DefaultFOV));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
-			                                 FString::Printf(
-				                                 TEXT("Pitch : %f"),
-				                                 GetOwningPlayerController()->GetControlRotation().Pitch));
-			GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Yellow,
-			                                 FString::Printf(
-				                                 TEXT("Yaw : %f"),
-				                                 GetOwningPlayerController()->GetControlRotation().Yaw));
-			if (IsValid(CurrentCamera))
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::Orange,
-				                                 FString::Printf(TEXT("CurrentFOV : %f"), CurrentCamera->FieldOfView));
-			}
+			                                 FString::Printf(TEXT("CurrentFOV : %f"), CurrentCamera->FieldOfView));
 		}
 	}
 }
