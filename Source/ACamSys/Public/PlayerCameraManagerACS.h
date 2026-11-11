@@ -132,8 +132,11 @@ public:
 	/// CameraManager->OnCameraDistanceToDitherFX.BindUObject(this, &APlayer::UpdateDitherFXOpacity);
 	FOnCameraDistanceToDitherFX OnCameraDistanceToDitherFX;
 	
+	/// Update pawn Rotation data to handle rotation axis
+	UFUNCTION(BlueprintCallable)
+	void UpdateMinAndMaxYaw(const float NewYaw);
+	
 	/// @cond INTERNAL
-	virtual void PostInitializeComponents() override;
 	virtual void AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
 	                              FViewTargetTransitionParams TransitionParams) override;
 	virtual void UpdateCamera(float DeltaTime) override;
@@ -185,6 +188,10 @@ private:
 	float CurrentDistCameraToOwnerPawn = 0.0f;
 	float MinDitherCameraThreshold = 30.0f;
 	float MaxDitherCameraThreshold = 120.0f;
+	
+	float YawLowerBound = -180.f;
+	float YawUpperBound = 180.f;
+	
 	FVector2D DitherCameraThresholdSquared ={MaxDitherCameraThreshold * MaxDitherCameraThreshold,
 											MinDitherCameraThreshold * MinDitherCameraThreshold};
 	FTimerHandle DitherTimerHandler;

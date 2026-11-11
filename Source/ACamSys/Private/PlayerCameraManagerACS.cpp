@@ -241,9 +241,10 @@ void APlayerCameraManagerACS::DisableDitherFX()
 	GetWorldTimerManager().ClearTimer(DitherTimerHandler);
 }
 
-void APlayerCameraManagerACS::PostInitializeComponents()
+void APlayerCameraManagerACS::UpdateMinAndMaxYaw(const float NewYaw)
 {
-	Super::PostInitializeComponents();
+	ViewYawMin = NewYaw + YawLowerBound;
+	ViewYawMax = NewYaw + YawUpperBound;
 }
 
 void APlayerCameraManagerACS::AssignViewTarget(AActor* NewTarget, FTViewTarget& VT,
@@ -433,8 +434,10 @@ void APlayerCameraManagerACS::UpdateCameraSettings(const FCameraConfig& NewCamer
 		IsValid(Player))
 	{
 		const float PlayerYaw = Player->GetActorRotation().Yaw;
-		ViewYawMin = PlayerYaw + NewCameraConfig.CamRotationSettings.YawRange.GetLowerBoundValue();
-		ViewYawMax = PlayerYaw + NewCameraConfig.CamRotationSettings.YawRange.GetUpperBoundValue();
+		YawLowerBound = NewCameraConfig.CamRotationSettings.YawRange.GetLowerBoundValue();
+		ViewYawMin = PlayerYaw + YawLowerBound;
+		YawUpperBound = NewCameraConfig.CamRotationSettings.YawRange.GetUpperBoundValue();
+		ViewYawMax = PlayerYaw + YawUpperBound;
 	}
 	else
 	{
