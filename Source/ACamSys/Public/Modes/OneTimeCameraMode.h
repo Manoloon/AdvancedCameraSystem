@@ -39,9 +39,19 @@ public:
 	bool bCameraModeDisable = true;
 	/// If true, disables all active Camera Modifiers to prevent them from interfering with this camera effect.
 	UPROPERTY(EditAnywhere , meta = (EditCondition = "bCameraModeDisable == false",EditConditionHides))
-	bool bCameraModifierDisable = false;
+	bool bCameraModifierDisable = true;
 	/// Settings
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCameraConfig CameraConfig;
+	
+#if WITH_EDITOR
+	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override
+	{
+		if (bCameraModeDisable == true)
+		{
+			bCameraModifierDisable = true;
+		}
+	};
+#endif
 };
 /// @}
