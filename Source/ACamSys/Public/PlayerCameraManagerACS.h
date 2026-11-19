@@ -163,6 +163,9 @@ private:
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
 	float GetCameraToPawnDistSquared() const;
+	
+	//bool CanRemoveFromWaitingList(UOneTimeCameraMode* ToRemove);
+	bool CanInsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
 	void ApplyOneTimeCameraModeFromTheList();
 	UFUNCTION()
 	void CalculateDitherEffect();
@@ -174,7 +177,7 @@ private:
 	UPROPERTY()
 	TMap<uint32, const UOneTimeCameraMode*> OneTimeCameraModesApplied;
 	UPROPERTY()
-	TArray<const UOneTimeCameraMode*> SortedOneTimeCameraModesApplied;
+	TArray<const UOneTimeCameraMode*> OneTimeWaitingList;
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;
 
@@ -188,14 +191,14 @@ private:
 	float CurrentDistCameraToOwnerPawn = 0.0f;
 	float MinDitherCameraThreshold = 30.0f;
 	float MaxDitherCameraThreshold = 120.0f;
-	
+	int CurrentPriority = 0;
 	float YawLowerBound = -180.f;
 	float YawUpperBound = 180.f;
 	
 	FVector2D DitherCameraThresholdSquared ={MaxDitherCameraThreshold * MaxDitherCameraThreshold,
 											MinDitherCameraThreshold * MinDitherCameraThreshold};
 	FTimerHandle DitherTimerHandler;
-	
+
 	#if !UE_BUILD_SHIPPING
 	void PrintAllOneTimeCamera() const;
 	void DebugAndPrintCameraSettings() const;

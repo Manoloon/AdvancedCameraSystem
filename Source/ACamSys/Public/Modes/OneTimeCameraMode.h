@@ -32,6 +32,7 @@ public:
 	/// and any with lower priority will be save on a sorted array to be apply when the higher priority have finished.
 	UPROPERTY(EditAnywhere)
 	int Priority=1;
+	double CreationTime = 0.0f;
 	/// if true disable the Permanent camera mode set at that time.
 	/// If true  the Arm length will apply changes using target length, otherwise, it only will limit the spring arm 
 	/// length by new minimum and maximum.
