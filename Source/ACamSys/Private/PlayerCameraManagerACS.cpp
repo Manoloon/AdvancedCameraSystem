@@ -119,12 +119,12 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
 		return;
 	}
-
+	
 	if (!OneTimeCameraModesApplied.IsEmpty())
 	{
 		if (!CanInsertInWaitingList(OneTimeCameraMode))
 		{
-			UE_LOG(LogACS,Warning,TEXT("Apply OTCM : OneTimeCameraMode cannot be added to the waiting list"));
+			UE_LOG(LogACS,Warning,TEXT("Apply OTCM : %s cannot be added to the waiting list"),*OneTimeCameraMode->GetName());
 		}
 	}
 }
@@ -135,16 +135,19 @@ void APlayerCameraManagerACS::RemoveOneTimeCameraMode(const UOneTimeCameraMode* 
 	{
 		return;
 	}
+	if (IsInTheWaitingList(OneTimeCameraMode))
+	{
+		OneTimeRemoveHandlers.FindAndRemoveChecked(OneTimeCameraMode->GetUniqueID());
+		OneTimeWaitingList.RemoveSingleSwap(OneTimeCameraMode);
+		return;
+	}
+	
 	if (IsOneTimeCameraModeApplied(OneTimeCameraMode))
 	{
 #if !UE_BUILD_SHIPPING
 		DebugCameraModeType(OneTimeCameraMode, true);
 #endif
 		InternalRemoveOneTimeCameraMode(OneTimeCameraMode);
-	}
-	else if (OneTimeWaitingList.Contains(OneTimeCameraMode))
-	{
-		OneTimeWaitingList.RemoveSingleSwap(OneTimeCameraMode,EAllowShrinking::Yes);
 	}
 }
 
@@ -366,6 +369,8 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	{
 		FTimerDelegate RemoveDelegate;
 		FTimerHandle OneTimeModeHandler;
+		UE_LOG(LogACS, Error, TEXT("Internal Apply: timer to OTCM %s, with priority : %d"), *OneTimeCameraMode->GetName(),
+				   OneTimeCameraMode->Priority);
 		RemoveDelegate.BindUObject(this, &ThisClass::RemoveOneTimeCameraMode, OneTimeCameraMode);
 		GetWorldTimerManager().SetTimer(OneTimeModeHandler, RemoveDelegate, OneTimeCameraMode->EffectDuration, false);
 	}
@@ -568,6 +573,19 @@ float APlayerCameraManagerACS::GetCameraToPawnDistSquared() const
 	return FVector::DistSquared(GetCameraLocation(), GetViewTarget()->GetActorLocation());
 }
 
+bool APlayerCameraManagerACS::IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const
+{
+	if (OneTimeWaitingList.IsEmpty())
+	{
+		return false;
+	}
+	const bool Found = OneTimeWaitingList.ContainsByPredicate([&](const UOneTimeCameraMode* Item)
+	{
+	return Item && Item->GetUniqueID() == OneTimeCameraMode->GetUniqueID();
+	});
+	return Found;
+}
+
 void APlayerCameraManagerACS::ApplyOneTimeCameraModeFromTheList()
 {
 	int NewPriority = OneTimeWaitingList[0]->Priority;
@@ -578,7 +596,7 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraModeFromTheList()
 #if !UE_BUILD_SHIPPING
 		if (ACSCvars::ACSDebug)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("TO APPly next OTCM %s, with priority : %d"), *CurrentOneTime->GetName(),
+			UE_LOG(LogACS, Warning, TEXT("TO APPly next OTCM %s, with priority : %d"), *CurrentOneTime->GetName(),
 				   CurrentOneTime->Priority);
 		}
 		DebugCameraModeType(CurrentOneTime);
@@ -603,6 +621,22 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 			FVector2D{1.0f, 0.f},
 			CurrentDistCameraToOwnerPawn);
 		OnCameraDistanceToDitherFX.Execute(ResultFromDistance);
+	}
+}
+
+void APlayerCameraManagerACS::AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode)
+{
+	UE_LOG(LogACS, Error, TEXT("AddToRemoveDelegate: timer to OTCM %s, with priority : %d"), *OneTimeCameraMode->GetName(),
+		   OneTimeCameraMode->Priority);
+	
+	if (OneTimeCameraMode->EffectDuration > 0.0f)
+	{
+		FTimerHandle& TimerHandle = OneTimeRemoveHandlers.FindOrAdd(OneTimeCameraMode->GetUniqueID());
+		FTimerDelegate RemoveDelegate;
+		
+		UE_LOG(LogACS, Warning, TEXT("AddToRemoveDelegate: timer to OTCM %s, Has timer added"), *OneTimeCameraMode->GetName());
+		RemoveDelegate.BindUObject(this, &ThisClass::RemoveOneTimeCameraMode, OneTimeCameraMode);
+		GetWorldTimerManager().SetTimer(TimerHandle, RemoveDelegate, OneTimeCameraMode->EffectDuration, false);
 	}
 }
 
@@ -664,6 +698,7 @@ bool APlayerCameraManagerACS::CanInsertInWaitingList(const UOneTimeCameraMode* N
 		if (NewPriority == WaiterPriority)
 		{
 			OneTimeWaitingList.Add(NewOTCM);
+			AddToRemoveDelegate(NewOTCM);
 			return true;
 		}
 		if (NewPriority < WaiterPriority)
@@ -673,13 +708,11 @@ bool APlayerCameraManagerACS::CanInsertInWaitingList(const UOneTimeCameraMode* N
 		if (NewPriority > WaiterPriority)
 		{
 			OneTimeWaitingList.Empty();
-			OneTimeWaitingList.Add(NewOTCM);
-			UE_LOG(LogACS,Warning,TEXT("CanInsertInWaitingList : One time camera mode has been added to the waiting list"));
-			return true;
 		}
 	}
-	// first entry to the waiting list
+	// First entry or new entry base on priority
 	OneTimeWaitingList.Add(NewOTCM);
+	AddToRemoveDelegate(NewOTCM);
 	UE_LOG(LogACS,Warning,TEXT("CanInsertInWaitingList : One time camera mode has been added to the waiting list"));
 	return true;
 }
@@ -712,6 +745,17 @@ void APlayerCameraManagerACS::PrintAllOneTimeCamera() const
 		}
 		GEngine->AddOnScreenDebugMessage(key++, 0.0f, FColor::Orange,
 								 FString::Printf(TEXT("One Time CM Applied :")));
+	}
+	key = 300;
+	if (!OneTimeRemoveHandlers.IsEmpty())
+	{
+		for (auto Otcm : OneTimeRemoveHandlers)
+		{
+			GEngine->AddOnScreenDebugMessage(key++, 0.0f, FColor::Cyan,
+											 FString::Printf(TEXT(" UniqueID %u"), Otcm.Key));
+		}
+		GEngine->AddOnScreenDebugMessage(key++, 0.0f, FColor::Cyan,
+								 FString::Printf(TEXT("Timers Handler:")));
 	}
 }
 

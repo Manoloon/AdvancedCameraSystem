@@ -163,13 +163,12 @@ private:
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
 	float GetCameraToPawnDistSquared() const;
-	
-	//bool CanRemoveFromWaitingList(UOneTimeCameraMode* ToRemove);
+	bool IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
 	bool CanInsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
 	void ApplyOneTimeCameraModeFromTheList();
 	UFUNCTION()
 	void CalculateDitherEffect();
-	
+	void AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
 	UPROPERTY(EditAnywhere, Category = Settings)
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
 	UPROPERTY()
@@ -180,7 +179,8 @@ private:
 	TArray<const UOneTimeCameraMode*> OneTimeWaitingList;
 	UPROPERTY()
 	USpringArmComponentACS* CurrentSpringArm;
-
+	UPROPERTY()
+	TMap<uint32,FTimerHandle> OneTimeRemoveHandlers;
 	UPROPERTY()
 	UCameraComponent* CurrentCamera;
 	bool bEnabledDitherFX = false;
