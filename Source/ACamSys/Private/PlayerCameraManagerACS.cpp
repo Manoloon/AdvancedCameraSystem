@@ -110,10 +110,11 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 	}
 	if (OneTimeCameraMode->Priority >= CurrentPriority)
 	{
-		OneTimeCameraModesApplied.Reset();
-		UE_LOG(LogACS,Warning,TEXT("Apply OTCM : OneTimeCameraMode applied %s when priority was %d"),*OneTimeCameraMode->GetName(),CurrentPriority);
+		if (OneTimeCameraMode->Priority > CurrentPriority)
+		{
+			OneTimeCameraModesApplied.Reset();
+		}
 		CurrentPriority = OneTimeCameraMode->Priority;
-		OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetUniqueID(), OneTimeCameraMode);
 #if !UE_BUILD_SHIPPING
 		DebugCameraModeType(OneTimeCameraMode);
 #endif
@@ -385,7 +386,7 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 {
 	const FCameraConfig& CurrentModeConfig = CurrentCameraModeSettings->CameraConfig;
 	const FCameraConfig& CurrentOneTimeCMConfig = OneTimeCameraMode->CameraConfig;
-	OneTimeCameraModesApplied.Remove(OneTimeCameraMode->GetUniqueID());
+	OneTimeCameraModesApplied.FindAndRemoveChecked(OneTimeCameraMode->GetUniqueID());
 	if (!ModifierList.IsEmpty())
 	{
 		TSet<UCameraModifier*> ToBeRemove;
@@ -592,6 +593,11 @@ bool APlayerCameraManagerACS::IsInTheWaitingList(const UOneTimeCameraMode* OneTi
 void APlayerCameraManagerACS::ApplyOneTimeCameraModeFromTheList()
 {
 	int NewPriority = OneTimeWaitingList[0]->Priority;
+	if (CurrentPriority > NewPriority)
+	{
+		UE_LOG(LogACS, Warning, TEXT("TO APPly next OTCM FAILED because priority"));
+		return;
+	}
 	for (const UOneTimeCameraMode* CurrentOneTime : OneTimeWaitingList)
 	{
 		OneTimeCameraModesApplied.Add(CurrentOneTime->GetUniqueID(), CurrentOneTime);
