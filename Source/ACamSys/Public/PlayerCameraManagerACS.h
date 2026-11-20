@@ -166,6 +166,7 @@ private:
 	bool IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
 	bool CanInsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
 	void ApplyOneTimeCameraModeFromTheList();
+	bool OTCM_RemoveAllAppliedWithLowerPriority();
 	UFUNCTION()
 	void CalculateDitherEffect();
 	void AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
@@ -191,7 +192,7 @@ private:
 	float CurrentDistCameraToOwnerPawn = 0.0f;
 	float MinDitherCameraThreshold = 30.0f;
 	float MaxDitherCameraThreshold = 120.0f;
-	int CurrentPriority = 0;
+	int CurrentPriority =0;
 	float YawLowerBound = -180.f;
 	float YawUpperBound = 180.f;
 	
