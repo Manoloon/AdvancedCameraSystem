@@ -163,10 +163,11 @@ private:
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
 	float GetCameraToPawnDistSquared() const;
-	bool IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
-	bool CanInsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
-	void ApplyOneTimeCameraModeFromTheList();
-	bool OTCM_RemoveAllAppliedWithLowerPriority();
+	
+	bool OneTimeCamera_IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
+	void OneTimeCamera_InsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
+	void OneTimeCamera_ApplyFromThewatingList();
+	bool OneTimeCamera_MoveAllAppliedToWaitingList();
 	UFUNCTION()
 	void CalculateDitherEffect();
 	void AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
