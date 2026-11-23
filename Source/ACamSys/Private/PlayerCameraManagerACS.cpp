@@ -373,8 +373,8 @@ void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCamer
 	}
 	OneTimeCameraModesApplied.Add(OneTimeCameraMode->GetUniqueID(), OneTimeCameraMode);
 
-	AddToRemoveDelegate(OneTimeCameraMode);
-	ApplyCurrentModifiersOneTimeCM(OneTimeCameraMode);
+	OneTimeCamera_AddToRemoveDelegate(OneTimeCameraMode);
+	OneTimeCamera_ApplyCurrentModifiers(OneTimeCameraMode);
 	UpdateCameraSettings(CurrentConfig);
 }
 
@@ -530,7 +530,7 @@ void APlayerCameraManagerACS::ChangeCurrentModifiers(UPermanentCameraMode* NewCa
 	}
 }
 
-void APlayerCameraManagerACS::ApplyCurrentModifiersOneTimeCM(const UOneTimeCameraMode* NewCameraSettings)
+void APlayerCameraManagerACS::OneTimeCamera_ApplyCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings)
 {
 	// need to know that the currentCameraModeSettings has been used before.
 	// this is invalid when play begins.
@@ -652,7 +652,7 @@ void APlayerCameraManagerACS::CalculateDitherEffect()
 	}
 }
 
-void APlayerCameraManagerACS::AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode)
+void APlayerCameraManagerACS::OneTimeCamera_AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	if (OneTimeCameraMode->EffectDuration > 0.0f)
 	{
@@ -683,7 +683,7 @@ void APlayerCameraManagerACS::OneTimeCamera_InsertInWaitingList(const UOneTimeCa
 		if (NewPriority == WaiterPriority)
 		{
 			OneTimeWaitingList.Add(NewOTCM);
-			AddToRemoveDelegate(NewOTCM);
+			OneTimeCamera_AddToRemoveDelegate(NewOTCM);
 			return;
 		}
 		if (NewPriority < WaiterPriority)
@@ -697,7 +697,7 @@ void APlayerCameraManagerACS::OneTimeCamera_InsertInWaitingList(const UOneTimeCa
 	}
 	// First entry or new entry base on priority
 	OneTimeWaitingList.Add(NewOTCM);
-	AddToRemoveDelegate(NewOTCM);
+	OneTimeCamera_AddToRemoveDelegate(NewOTCM);
 }
 
 #if !UE_BUILD_SHIPPING

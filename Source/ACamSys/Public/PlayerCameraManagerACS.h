@@ -158,19 +158,21 @@ private:
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
 	void ChangeCurrentModifiers(UPermanentCameraMode* NewCameraSettings);
-	void ApplyCurrentModifiersOneTimeCM(const UOneTimeCameraMode* NewCameraSettings);
+	
 	void AddFOV(const float Value);
 	void SubFOV(const float Value);
 	void UpdateCameraFOV(float DeltaTime);
 	float GetCameraToPawnDistSquared() const;
 	
+	void OneTimeCamera_ApplyCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings);
 	bool OneTimeCamera_IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
 	void OneTimeCamera_InsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
 	void OneTimeCamera_ApplyFromThewatingList();
 	bool OneTimeCamera_MoveAllAppliedToWaitingList();
+	void OneTimeCamera_AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
 	UFUNCTION()
 	void CalculateDitherEffect();
-	void AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
+	
 	UPROPERTY(EditAnywhere, Category = Settings)
 	TEnumAsByte<ECollisionChannel> LostOfSightProbeChannel = ECC_Camera;
 	UPROPERTY()
