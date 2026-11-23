@@ -664,6 +664,42 @@ void APlayerCameraManagerACS::AddToRemoveDelegate(const UOneTimeCameraMode* OneT
 	}
 }
 
+void APlayerCameraManagerACS::OneTimeCamera_InsertInWaitingList(const UOneTimeCameraMode* NewOTCM)
+{
+	// puedo anadirla a la waitinglist
+	if (!OneTimeWaitingList.IsEmpty())
+	{
+		const int NewPriority = NewOTCM->Priority;
+		const int WaiterPriority = OneTimeWaitingList[0]->Priority;
+		const bool bIsUnique = OneTimeWaitingList.ContainsByPredicate([&](const UOneTimeCameraMode* Item)
+		{
+			return Item && Item->GetUniqueID() != NewOTCM->GetUniqueID();
+		});
+		if (!bIsUnique)
+		{
+			UE_LOG(LogACS,Warning,TEXT("CanInsertInWaitingList : One time camera mode IS already in the waitingList"));
+			return;
+		}
+		if (NewPriority == WaiterPriority)
+		{
+			OneTimeWaitingList.Add(NewOTCM);
+			AddToRemoveDelegate(NewOTCM);
+			return;
+		}
+		if (NewPriority < WaiterPriority)
+		{
+			return;
+		}
+		if (NewPriority > WaiterPriority)
+		{
+			OneTimeWaitingList.Empty();
+		}
+	}
+	// First entry or new entry base on priority
+	OneTimeWaitingList.Add(NewOTCM);
+	AddToRemoveDelegate(NewOTCM);
+}
+
 #if !UE_BUILD_SHIPPING
 void APlayerCameraManagerACS::DebugCameraModifiers(const UCameraModifier* Modifier, bool ToBeRemoved)
 {
@@ -703,42 +739,6 @@ void APlayerCameraManagerACS::DebugCameraModeType(const UDataAsset* CameraMode, 
 #endif
 
 #if !UE_BUILD_SHIPPING
-void APlayerCameraManagerACS::OneTimeCamera_InsertInWaitingList(const UOneTimeCameraMode* NewOTCM)
-{
-	// puedo anadirla a la waitinglist
-	if (!OneTimeWaitingList.IsEmpty())
-	{
-		const int NewPriority = NewOTCM->Priority;
-		const int WaiterPriority = OneTimeWaitingList[0]->Priority;
-		const bool bIsUnique = OneTimeWaitingList.ContainsByPredicate([&](const UOneTimeCameraMode* Item)
-		{
-			return Item && Item->GetUniqueID() != NewOTCM->GetUniqueID();
-		});
-		if (!bIsUnique)
-		{
-			UE_LOG(LogACS,Warning,TEXT("CanInsertInWaitingList : One time camera mode IS already in the waitingList"));
-			return;
-		}
-		if (NewPriority == WaiterPriority)
-		{
-			OneTimeWaitingList.Add(NewOTCM);
-			AddToRemoveDelegate(NewOTCM);
-			return;
-		}
-		if (NewPriority < WaiterPriority)
-		{
-			return;
-		}
-		if (NewPriority > WaiterPriority)
-		{
-			OneTimeWaitingList.Empty();
-		}
-	}
-	// First entry or new entry base on priority
-	OneTimeWaitingList.Add(NewOTCM);
-	AddToRemoveDelegate(NewOTCM);
-}
-
 void APlayerCameraManagerACS::PrintAllOneTimeCamera() const
 {
 	int key = 100;
