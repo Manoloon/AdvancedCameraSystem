@@ -48,7 +48,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettingsByClass(
 		return;
 	}
 	UPermanentCameraMode* NewCameraSettings = NewObject<UPermanentCameraMode>(this, PermanentCameraModeClass);
-	InternalApplyPermanentCameraMode(NewCameraSettings);
+	Internal_ApplyPermanentCameraMode(NewCameraSettings);
 }
 
 void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* PermanentCameraMode)
@@ -57,7 +57,7 @@ void APlayerCameraManagerACS::ApplyCameraModeSettings(UPermanentCameraMode* Perm
 	{
 		return;
 	}
-	InternalApplyPermanentCameraMode(PermanentCameraMode);
+	Internal_ApplyPermanentCameraMode(PermanentCameraMode);
 }
 
 bool APlayerCameraManagerACS::IsOneTimeCameraModeApplied(const UOneTimeCameraMode* OneTimeCameraMode) const
@@ -119,7 +119,7 @@ void APlayerCameraManagerACS::ApplyOneTimeCameraMode(const UOneTimeCameraMode* O
 #if !UE_BUILD_SHIPPING
 		DebugCameraModeType(OneTimeCameraMode);
 #endif
-		InternalApplyOneTimeCameraMode(OneTimeCameraMode);
+		Internal_ApplyOneTimeCameraMode(OneTimeCameraMode);
 		return;
 	}
 	
@@ -305,10 +305,10 @@ void APlayerCameraManagerACS::Internal_ToggleOneTimeCameraMode(const UOneTimeCam
 {
 	IsOneTimeCameraModeApplied(OneTimeCameraMode)
 		? InternalRemoveOneTimeCameraMode(OneTimeCameraMode)
-		: InternalApplyOneTimeCameraMode(OneTimeCameraMode);
+		: Internal_ApplyOneTimeCameraMode(OneTimeCameraMode);
 }
 
-void APlayerCameraManagerACS::InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode)
+void APlayerCameraManagerACS::Internal_ApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode)
 {
 	const FCameraConfig& CurrentModeConfig = NewPermanentMode->CameraConfig;
 	if (IsValid(CurrentSpringArm))
@@ -331,7 +331,7 @@ void APlayerCameraManagerACS::InternalApplyPermanentCameraMode(UPermanentCameraM
 	CurrentCameraModeSettings = NewPermanentMode;
 }
 
-void APlayerCameraManagerACS::InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
+void APlayerCameraManagerACS::Internal_ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode)
 {
 	const FCameraConfig& CurrentConfig = OneTimeCameraMode->CameraConfig;
 	// It will disable the current permanent mode active and override with the One Time mode
@@ -424,6 +424,10 @@ void APlayerCameraManagerACS::InternalRemoveOneTimeCameraMode(const UOneTimeCame
 		{
 			OneTimeCamera_ApplyFromThewatingList();
 		}
+	}
+	else
+	{
+		OneTimeCamera_ApplyTheOtherCamInList();
 	}
 }
 
@@ -596,7 +600,7 @@ void APlayerCameraManagerACS::OneTimeCamera_ApplyFromThewatingList()
 	for (const UOneTimeCameraMode* CurrentOneTime : OneTimeWaitingList)
 	{
 		OneTimeCameraModesApplied.Add(CurrentOneTime->GetUniqueID(), CurrentOneTime);
-		InternalApplyOneTimeCameraMode(CurrentOneTime);
+		Internal_ApplyOneTimeCameraMode(CurrentOneTime);
 #if !UE_BUILD_SHIPPING
 		if (ACSCvars::ACSDebug)
 		{
@@ -698,6 +702,21 @@ void APlayerCameraManagerACS::OneTimeCamera_InsertInWaitingList(const UOneTimeCa
 	// First entry or new entry base on priority
 	OneTimeWaitingList.Add(NewOTCM);
 	OneTimeCamera_AddToRemoveDelegate(NewOTCM);
+}
+
+void APlayerCameraManagerACS::OneTimeCamera_ApplyTheOtherCamInList()
+{
+	for (auto It = OneTimeCameraModesApplied.CreateIterator();It;++It)
+	{
+		const UOneTimeCameraMode* Current = It.Value();
+		if (!IsValid(Current))
+		{
+			continue;
+		}
+		// apply the config from this cam.
+		Internal_ApplyOneTimeCameraMode(Current);
+		break;
+	}
 }
 
 #if !UE_BUILD_SHIPPING

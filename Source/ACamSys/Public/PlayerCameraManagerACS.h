@@ -152,8 +152,8 @@ private:
 									const float LagMaxDistance) const;
 	void DisableSpringArmLocationLag() const;
 	void Internal_ToggleOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
-	void InternalApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
-	void InternalApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
+	void Internal_ApplyPermanentCameraMode(UPermanentCameraMode* NewPermanentMode);
+	void Internal_ApplyOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 
 	void InternalRemoveOneTimeCameraMode(const UOneTimeCameraMode* OneTimeCameraMode);
 	void UpdateCameraSettings(const FCameraConfig& NewCameraConfig);
@@ -167,6 +167,7 @@ private:
 	void OneTimeCamera_ApplyCurrentModifiers(const UOneTimeCameraMode* NewCameraSettings);
 	bool OneTimeCamera_IsInTheWaitingList(const UOneTimeCameraMode* OneTimeCameraMode) const;
 	void OneTimeCamera_InsertInWaitingList(const UOneTimeCameraMode* NewOTCM);
+	void OneTimeCamera_ApplyTheOtherCamInList();
 	void OneTimeCamera_ApplyFromThewatingList();
 	bool OneTimeCamera_MoveAllAppliedToWaitingList();
 	void OneTimeCamera_AddToRemoveDelegate(const UOneTimeCameraMode* OneTimeCameraMode);
